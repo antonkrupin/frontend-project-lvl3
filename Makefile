@@ -1,10 +1,10 @@
-develop:
-        npx webpack serve
 install:
-        npm ci
+	npm ci
+develop:
+	npx webpack serve
 lint:
-        npx eslint
+	npx eslint
 test:
-        npx jest
+	npx jest
 test-coverage:
-        npm run coverage
+	npm run coverage
