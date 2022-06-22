@@ -15,7 +15,6 @@ const feedBackField = document.querySelector('.feedback');
 const watchedState = onChange(state, (path, value, prev) => {
   switch (path) {
     case 'urlInput':
-      console.log('test')
       break;
     case 'feeds':
       break;
@@ -27,7 +26,7 @@ const watchedState = onChange(state, (path, value, prev) => {
 });
 
 inputField.addEventListener('change', (e) => {
-  if (e.target.value) {
+  if (e.target.value !== '') {
     watchedState.urlInput = 'filled';
   }
 });
@@ -35,13 +34,25 @@ inputField.addEventListener('change', (e) => {
 sendBtn.addEventListener('click', (e) => {
   if (state.urlInput !== 'blank') {
     e.preventDefault();
+    state.activeLink = inputField.value;
+    validate({ link: state.activeLink }).then((el) => {
+      if (el.link !== '') {
+        state.feeds.push(el.link);
+      }
+    });
+    console.log(state.feeds);
   }
 
-  state.activeLink = inputField.value;
-  const validationResult = validate({ link: state.activeLink });
-  validationResult.then((el) => { 
-    console.log(el);
+  
+  /*const validationResult = validate({ link: state.activeLink });
+  let test;
+  validationResult.then((el) => {
+    console.log('Testing');
+    test = el;
   });
+  console.log(`test - ${test}`);
+  console.log('state feeds')
+  console.log(state.feeds);*/
   //console.log(validationResult);
   /*validationResult.then((et) => {
     console.log(et);
