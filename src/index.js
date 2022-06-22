@@ -34,14 +34,14 @@ inputField.addEventListener('change', (e) => {
 sendBtn.addEventListener('click', (e) => {
   if (state.urlInput !== 'blank') {
     e.preventDefault();
-    state.activeLink = inputField.value;
-    validate({ link: state.activeLink }).then((el) => {
-      if (el.link !== '') {
-        state.feeds.push(el.link);
-      }
-    });
-    console.log(state.feeds);
   }
+  state.activeLink = inputField.value;
+  validate({ link: state.activeLink }).then((el) => {
+    if (el.link !== '') {
+      state.feeds.push(el.link);
+    }
+  });
+  console.log(state);
 
   
   /*const validationResult = validate({ link: state.activeLink });
