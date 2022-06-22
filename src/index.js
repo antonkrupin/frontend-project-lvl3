@@ -74,7 +74,7 @@ sendBtn.addEventListener('click', (e) => {
       feedsWatcher.feeds.push(el.link);
     }
   }).catch(() => {
-    errorsWatcher.errors = 'Wrong link format';
+    errorsWatcher.errors1.formatErrors += 1;
   });
   console.log(state);
 });
