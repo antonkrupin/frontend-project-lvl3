@@ -4,8 +4,7 @@ export default () => {
     activeLink: null,
     urlInput: 'blank',
     feeds: [],
-    errors: null,
-    errors1: {
+    errors: {
       formatErrors: 0,
       repeatErrors: 0,
     },
