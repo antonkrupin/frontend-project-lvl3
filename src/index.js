@@ -15,6 +15,8 @@ const feedBackField = document.querySelector('.feedback');
 const watchedState = onChange(state, (path, value, prev) => {
   switch (path) {
     case 'urlInput':
+      inputField.classList.add('is-invalid');
+      feedBackField.innerText = 'Ссылка дложна быть валидным URL';
       break;
     case 'feeds':
       break;
@@ -40,46 +42,8 @@ sendBtn.addEventListener('click', (e) => {
     if (el.link !== '') {
       state.feeds.push(el.link);
     }
+  }).catch(() => {
+    state.errors = 'Wrong link format';
   });
   console.log(state);
-
-  
-  /*const validationResult = validate({ link: state.activeLink });
-  let test;
-  validationResult.then((el) => {
-    console.log('Testing');
-    test = el;
-  });
-  console.log(`test - ${test}`);
-  console.log('state feeds')
-  console.log(state.feeds);*/
-  //console.log(validationResult);
-  /*validationResult.then((et) => {
-    console.log(et);
-  });*/
-  //console.log(validationResult);
-  /*const object = {
-    link: '',
-  };
-
-  switch (state.urlInput) {
-    case 'blank':
-      break;
-    default:
-      console.log('test');
-  }*/
-
-  /*const validationResult = validate({ object });
-  console.log(validationResult);
-  switch (validationResult) {
-    case {}:
-      feedBackField.innerText = 'RSS успешно загружен';
-      feedBackField.classList.remove('text-danger');
-      feedBackField.classList.add('text-success');
-      inputField.value = '';
-    default:
-      console.log('test');
-      feedBackField.innerText = 'Ссылка дложна быть валидным URL';
-  }*/
-  
 });
