@@ -34,7 +34,6 @@ const feedsWatcher = onChange(state, (path, value, prev) => {
 });
 
 const errorsWatcher = onChange(state, (path, value, prev) => {
-  console.log(path);
   inputField.classList.add('is-invalid');
 
   feedBackField.classList.remove('text-success');
