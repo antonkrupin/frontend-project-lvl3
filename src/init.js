@@ -5,6 +5,10 @@ export default () => {
     urlInput: 'blank',
     feeds: [],
     errors: null,
+    errors1: {
+      typeErrors: 0,
+      repeatErrors: 0,
+    },
   };
 
   return state;
