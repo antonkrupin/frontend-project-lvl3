@@ -6,7 +6,7 @@ export default () => {
     feeds: [],
     errors: null,
     errors1: {
-      typeErrors: 0,
+      formatErrors: 0,
       repeatErrors: 0,
     },
   };
