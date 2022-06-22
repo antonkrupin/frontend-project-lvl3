@@ -18,28 +18,26 @@ const fieldText = [
   'RSS успешно загружен',
 ];
 
+const fieldsRender = (target, addedClass, removedClass = 'test') => {
+  target.classList.add(addedClass);
+  target.classList.remove(removedClass);
+};
+
 const inputWatcher = onChange(state, (path, value, prev) => {
   console.log('inputwatcher');
   console.log(path);
 });
 
-const successRender = (target, removedClass, addedClass) => {
-  target.classList.remove(removedClass);
-  target.classList.add(addedClass);
-};
-
 const feedsWatcher = onChange(state, (path, value, prev) => {
-  successRender(inputField, 'is-invalid', 'is-valid');
-  successRender(feedBackField, 'text-danger', 'text-success');
+  fieldsRender(inputField, 'is-valid', 'is-invalid');
+  fieldsRender(feedBackField, 'text-success', 'text-danger');
 
   [, , feedBackField.innerText] = fieldText;
 });
 
 const errorsWatcher = onChange(state, (path, value, prev) => {
-  inputField.classList.add('is-invalid');
-
-  feedBackField.classList.remove('text-success');
-  feedBackField.classList.add('text-danger');
+  fieldsRender(inputField, 'is-invalid');
+  fieldsRender(feedBackField, 'text-danger', 'text-success');
 
   if (path === 'errors.repeatErrors') {
     [, feedBackField.innerText] = fieldText;
