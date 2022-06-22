@@ -11,6 +11,8 @@ html {
   justify-content: center;
   align-content: center;
   flex-direction: column;
+  padding-top: 10rem;
+  padding-bottom: 10rem;
 }
 
 .main h1 {
@@ -23,14 +25,24 @@ html {
   font-weight: 200;
 }
 
-.form-floating input{
+#url-input {
   font-size: 2rem;
-  height: 10rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  height: 5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
-.form-floating button {
-  height: 2rem;
+#url-input + label{
+  font-size: 1.5rem;
 }
+
+#submit-btn {
+  font-size: 2rem;
+}
+
+#example-text {
+  font-size: 2rem;
+  font-weight: 400;
+}
+
 
