@@ -23,19 +23,14 @@ const inputWatcher = onChange(state, (path, value, prev) => {
   console.log(path);
 });
 
-const inputFieldSuccessRender = (target, removedClass, addedClass) => {
+const successRender = (target, removedClass, addedClass) => {
   target.classList.remove(removedClass);
   target.classList.add(addedClass);
 };
 
-const feedBackFieldSuccessRender = (target, removedClass, addedClass) => {
-  target.classList.remove(removedClass);
-  target.classList.add(addedClass);
-}
-
 const feedsWatcher = onChange(state, (path, value, prev) => {
-  inputFieldSuccessRender(inputField, 'is-invalid', 'is-valid');
-  feedBackFieldSuccessRender(feedBackField, 'text-danger', 'text-success');
+  successRender(inputField, 'is-invalid', 'is-valid');
+  successRender(feedBackField, 'text-danger', 'text-success');
 
   [, , feedBackField.innerText] = fieldText;
 });
