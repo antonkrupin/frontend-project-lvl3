@@ -1,3 +1,36 @@
-* {
-  background-color: red;
+html {
+  box-sizing: border-box;
+  font-size: 10px;
 }
+
+.main {
+  display: flex;
+  height: 100%;
+  background-color: #000;
+  color: white;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+}
+
+.main h1 {
+  font-size: 6.4rem;
+  font-weight: 200;
+}
+
+.main h3 {
+  font-size: 2rem;
+  font-weight: 200;
+}
+
+.form-floating input{
+  font-size: 2rem;
+  height: 10rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.form-floating button {
+  height: 2rem;
+}
+
