@@ -13,31 +13,14 @@ const sendBtn = document.querySelector('#submit-btn');
 const feedBackField = document.querySelector('.feedback');
 
 const fieldText = [
-  'Ссылка дложна быть валидным URL',
+  'Ссылка должна быть валидным URL',
   'RSS уже существует',
   'RSS успешно загружен',
-]
+];
 
 const inputWatcher = onChange(state, (path, value, prev) => {
   console.log('inputwatcher');
   console.log(path);
-  /*switch (path) {
-    case 'urlInput':
-      console.log('urlInput');
-      inputField.classList.add('is-invalid');
-      [feedBackField.innerText] = fieldText;
-      break;
-    case 'feeds':
-      console.log('feeds');
-      inputField.classList.add('is-valid');
-      [, , feedBackField.innerText] = fieldText;
-      break;
-    case 'errors':
-      console.log('errors');
-      break;
-    default:
-      throw new Error('Error');
-  }*/
 });
 
 const feedsWatcher = onChange(state, (path, value, prev) => {
@@ -51,13 +34,16 @@ const feedsWatcher = onChange(state, (path, value, prev) => {
 });
 
 const errorsWatcher = onChange(state, (path, value, prev) => {
+  console.log(path);
   inputField.classList.add('is-invalid');
 
   feedBackField.classList.remove('text-success');
   feedBackField.classList.add('text-danger');
-
-  [feedBackField.innerText] = fieldText;
-  errorsWatcher.errors = '';
+  if (path === 'errors.repeatErrors') {
+    [, feedBackField.innerText] = fieldText;
+  } else {
+    [feedBackField.innerText] = fieldText;
+  }
 });
 
 inputField.addEventListener('change', (e) => {
@@ -71,10 +57,14 @@ sendBtn.addEventListener('click', (e) => {
   state.activeLink = inputField.value;
   validate({ link: state.activeLink }).then((el) => {
     if (el.link !== '') {
-      feedsWatcher.feeds.push(el.link);
+      if (feedsWatcher.feeds.indexOf(el.link) === -1) {
+        feedsWatcher.feeds.push(el.link);
+      } else {
+        errorsWatcher.errors.repeatErrors += 1;
+      }
     }
   }).catch(() => {
-    errorsWatcher.errors1.formatErrors += 1;
+    errorsWatcher.errors.formatErrors += 1;
   });
   console.log(state);
 });
