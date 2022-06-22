@@ -1,18 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import './style.css';
 
-import onChange from 'on-change';
-
 import init from './init';
-import validate from './validate';
+import app from './view';
 
 const state = init();
 
-const inputField = document.querySelector('#url-input');
+/*const inputField = document.querySelector('#url-input');
 const sendBtn = document.querySelector('#submit-btn');
-const feedBackField = document.querySelector('.feedback');
+const feedBackField = document.querySelector('.feedback');*/
 
-const fieldText = [
+app(state);
+
+/*const fieldText = [
   'Ссылка должна быть валидным URL',
   'RSS уже существует',
   'RSS успешно загружен',
@@ -44,9 +44,9 @@ const errorsWatcher = onChange(state, (path, value, prev) => {
   } else {
     [feedBackField.innerText] = fieldText;
   }
-});
+});*/
 
-inputField.addEventListener('change', (e) => {
+/*inputField.addEventListener('change', (e) => {
   inputWatcher.urlInput = e.target.value;
 });
 
@@ -67,4 +67,4 @@ sendBtn.addEventListener('click', (e) => {
     errorsWatcher.errors.formatErrors += 1;
   });
   console.log(state);
-});
+});*/
