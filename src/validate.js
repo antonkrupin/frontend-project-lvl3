@@ -1,13 +1,12 @@
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
-  link: yup.string().url().required(),
+  link: yup.string().url(),
 });
 
 const validate = (fields) => {
   try {
-    schema.validate(fields);
-    return {};
+    return schema.validate(fields);
   } catch (e) {
     return e;
   }
