@@ -14,11 +14,12 @@ const feedBackField = document.querySelector('.feedback');
 
 const watchedState = onChange(state, (path, value, prev) => {
   switch (path) {
-    case state.urlInput:
+    case 'urlInput':
+      console.log('test')
       break;
-    case state.feeds:
+    case 'feeds':
       break;
-    case state.errors:
+    case 'errors':
       break;
     default:
       throw new Error('Error');
@@ -35,7 +36,17 @@ sendBtn.addEventListener('click', (e) => {
   if (state.urlInput !== 'blank') {
     e.preventDefault();
   }
-  console.log(state);
+
+  state.activeLink = inputField.value;
+  const validationResult = validate({ link: state.activeLink });
+  validationResult.then((el) => { 
+    console.log(el);
+  });
+  //console.log(validationResult);
+  /*validationResult.then((et) => {
+    console.log(et);
+  });*/
+  //console.log(validationResult);
   /*const object = {
     link: '',
   };
