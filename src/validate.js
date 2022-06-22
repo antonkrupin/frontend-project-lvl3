@@ -6,7 +6,7 @@ const schema = yup.object().shape({
 
 const validate = (fields) => {
   try {
-    return schema.validate(fields);
+    return schema.validate(fields).then((e) => e);
   } catch (e) {
     return e;
   }
