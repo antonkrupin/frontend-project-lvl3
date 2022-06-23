@@ -41,9 +41,11 @@ const app = (state) => {
 
   axios({
     method: 'get',
-    url: 'http://lorem-rss.herokuapp.com/feed',
+    url: 'https://lorem-rss.herokuapp.com/feed',
+    responseType: 'stream',
   }).then((response) => {
     console.log(response);
+    console.log(response.data);
   });
 
   const fieldsRender = (target, addedClass, removedClass = 'test') => {
