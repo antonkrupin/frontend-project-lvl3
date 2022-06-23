@@ -1,6 +1,7 @@
 import onChange from 'on-change';
 import * as yup from 'yup';
 import i18next from 'i18next';
+import axios from 'axios';
 
 import resources from './locales/index';
 
@@ -37,6 +38,13 @@ const app = (state) => {
       return e;
     }
   };
+
+  axios({
+    method: 'get',
+    url: 'http://lorem-rss.herokuapp.com/feed',
+  }).then((response) => {
+    console.log(response);
+  });
 
   const fieldsRender = (target, addedClass, removedClass = 'test') => {
     target.classList.add(addedClass);
