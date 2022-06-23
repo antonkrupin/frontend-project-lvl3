@@ -26,8 +26,8 @@ const handler = (event, state) => {
 
   validateRss({ link }).then(() => {
     // test link, don`t forget remove after end project;
-    const testLink = 'http://lorem-rss.herokuapp.com/feed';
-    const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${testLink}`;
+    // const testLink = 'http://lorem-rss.herokuapp.com/feed';
+    const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${link}`;
     state.errorValue = 'Rss добавлен';
     axios({
       method: 'get',
