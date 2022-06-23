@@ -4,8 +4,6 @@ export default {
       urlFormat: 'Ссылка должна быть валидным URL',
       urlRepeat: 'RSS уже существует',
     },
-    success: {
-      urlAdded: 'RSS успешно загружен',
-    },
+    urlAdded: 'RSS успешно загружен',
   },
 };
