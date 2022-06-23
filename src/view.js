@@ -1,13 +1,19 @@
 import onChange from 'on-change';
 import * as yup from 'yup';
 import i18next from 'i18next';
-import axios from 'axios';
 
 import resources from './locales/index';
+import handler from './handlers';
 
-const app = (state) => {
+const app = () => {
+  const state = {
+    feeds: [],
+    feedsObjects: [],
+    errorValue: '',
+    formStatus: 'filling',
+  };
+
   const inputField = document.querySelector('#url-input');
-  const sendBtn = document.querySelector('#submit-btn');
   const feedBackField = document.querySelector('.feedback');
 
   const i18Instance = i18next.createInstance();
@@ -26,71 +32,36 @@ const app = (state) => {
     },
   });
 
-  const schema = yup.object().shape({
-    // разобраться с работой notOneOf
-    link: yup.string().url().notOneOf(['http://google.ru']),
-  });
-
-  const validate = (fields) => {
-    try {
-      return schema.validate(fields).then((e) => e);
-    } catch (e) {
-      return e;
-    }
-  };
-  const raw = encodeURIComponent('https://lorem-rss.herokuapp.com/feed');
-  const link = `https://allorigins.hexlet.app/get?disableCache=true&url=${raw}`;
-
-  axios({
-    method: 'get',
-    url: link,
-  }).then((response) => {
-    const data = response.data.contents;
-    const parser = new DOMParser();
-    const channel = (parser.parseFromString(data, 'application/xml')).querySelector('channel');
-    console.log(channel);
-    const title = channel.getElementsByTagName('title')[0].textContent;
-    const description = channel.getElementsByTagName('description')[0].textContent;
-    console.log(title);
-    console.log(description);
-  });
-
   const fieldsRender = (target, addedClass, removedClass = 'test') => {
     target.classList.add(addedClass);
     target.classList.remove(removedClass);
   };
 
-  const feedsWatcher = onChange(state, () => {
-    fieldsRender(inputField, 'is-valid', 'is-invalid');
-    fieldsRender(feedBackField, 'text-success', 'text-danger');
-    feedBackField.innerText = state.errorValue;
-  });
-
-  const errorsWatcher = onChange(state, () => {
-    fieldsRender(inputField, 'is-invalid');
-    fieldsRender(feedBackField, 'text-danger', 'text-success');
-    feedBackField.innerText = state.errorValue;
-  });
-
-  sendBtn.addEventListener('click', (e) => {
-    if (inputField.value !== '') {
-      e.preventDefault();
-    }
-    validate({ link: inputField.value }).then((el) => {
-      if (el.link !== '') {
-        if (feedsWatcher.feeds.indexOf(el.link) === -1) {
-          errorsWatcher.errorValue = i18Instance.t('urlAdded');
-          feedsWatcher.feeds.push(el.link);
-          inputField.value = '';
-          inputField.focus();
-        } else {
-          inputField.focus();
+  const watchedState = onChange(state, (path, value) => {
+    // eslint-disable-next-line default-case
+    switch (path) {
+      case 'formStatus':
+        if (value === 'processing') {
+          fieldsRender(inputField, 'is-valid', 'is-invalid');
+          fieldsRender(feedBackField, 'text-success', 'text-danger');
+          feedBackField.textContent = state.errorValue;
         }
-      }
-    }).catch((error) => {
-      errorsWatcher.errorValue = error.errors;
-      inputField.focus();
-    });
+        if (value === 'processed') {
+          fieldsRender(inputField, 'is-valid', 'is-invalid');
+          fieldsRender(feedBackField, 'text-success', 'text-danger');
+          feedBackField.textContent = state.errorValue;
+        }
+        if (value === 'failure') {
+          fieldsRender(inputField, 'is-invalid');
+          fieldsRender(feedBackField, 'text-danger', 'text-success');
+          feedBackField.textContent = state.errorValue;
+        }
+    }
+  });
+  const form = document.querySelector('.rss-form');
+
+  form.addEventListener('submit', (e) => {
+    handler(e, watchedState);
   });
 };
 
