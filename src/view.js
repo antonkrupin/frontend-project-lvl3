@@ -36,7 +36,7 @@ const app = (state) => {
   const feedsWatcher = onChange(state, () => {
     fieldsRender(inputField, 'is-valid', 'is-invalid');
     fieldsRender(feedBackField, 'text-success', 'text-danger');
-    feedBackField.innerText = 'RSS успешно загружен';
+    feedBackField.innerText = state.errorValue;
   });
 
   const errorsWatcher = onChange(state, () => {
@@ -52,6 +52,8 @@ const app = (state) => {
     validate({ link: inputField.value }).then((el) => {
       if (el.link !== '') {
         if (feedsWatcher.feeds.indexOf(el.link) === -1) {
+          // подумать как передать успешное завешение
+          errorsWatcher.errorValue = 'RSS успешно загружен';
           feedsWatcher.feeds.push(el.link);
           inputField.value = '';
           inputField.focus();
