@@ -41,20 +41,19 @@ const app = () => {
     // eslint-disable-next-line default-case
     switch (path) {
       case 'formStatus':
-        if (value === 'processing') {
-          fieldsRender(inputField, 'is-valid', 'is-invalid');
-          fieldsRender(feedBackField, 'text-success', 'text-danger');
-          feedBackField.textContent = state.errorValue;
-        }
-        if (value === 'processed') {
-          fieldsRender(inputField, 'is-valid', 'is-invalid');
-          fieldsRender(feedBackField, 'text-success', 'text-danger');
-          feedBackField.textContent = state.errorValue;
-        }
-        if (value === 'failure') {
-          fieldsRender(inputField, 'is-invalid');
-          fieldsRender(feedBackField, 'text-danger', 'text-success');
-          feedBackField.textContent = state.errorValue;
+        switch (value) {
+          case 'processed':
+            fieldsRender(inputField, 'is-valid', 'is-invalid');
+            fieldsRender(feedBackField, 'text-success', 'text-danger');
+            feedBackField.textContent = state.errorValue;
+            break;
+          case 'failure':
+            fieldsRender(inputField, 'is-invalid');
+            fieldsRender(feedBackField, 'text-danger', 'text-success');
+            feedBackField.textContent = state.errorValue;
+            break;
+          default:
+            console.log('tst');
         }
     }
   });
