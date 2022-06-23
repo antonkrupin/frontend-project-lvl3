@@ -49,7 +49,7 @@ const app = () => {
           case 'processed':
             fieldsRender(inputField, 'is-valid', 'is-invalid');
             fieldsRender(feedBackField, 'text-success', 'text-danger');
-            feedBackField.textContent = state.errorValue;
+            feedBackField.textContent = i18Instance.t('urlAdded');
             break;
           case 'failure':
             fieldsRender(inputField, 'is-invalid');
