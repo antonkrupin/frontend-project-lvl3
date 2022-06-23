@@ -39,18 +39,16 @@ const app = (state) => {
     }
   };
 
-  /*axios({
+  axios({
     method: 'get',
-    url: 'https://google.ru',
+    url: 'https://lorem-rss.herokuapp.com/feed',
   }).then((response) => {
     console.log(response);
     console.log(response.data);
+    console.log(response.status);
   }).catch((error) => {
     console.log(error);
-  });*/
-  const test = axios.get('https://google.ru');
-  const test1 = test.data;
-  console.log(test1);
+  });
 
   const fieldsRender = (target, addedClass, removedClass = 'test') => {
     target.classList.add(addedClass);
