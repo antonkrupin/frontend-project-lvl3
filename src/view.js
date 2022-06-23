@@ -41,7 +41,7 @@ const app = (state) => {
 
   axios({
     method: 'get',
-    url: 'https://lorem-rss.herokuapp.com/feed',
+    url: 'https://google.ru',
     responseType: 'stream',
   }).then((response) => {
     console.log(response);
