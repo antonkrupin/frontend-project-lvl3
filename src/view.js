@@ -40,7 +40,6 @@ const app = (state) => {
   };
   const raw = encodeURIComponent('https://lorem-rss.herokuapp.com/feed');
   const link = `https://allorigins.hexlet.app/get?disableCache=true&url=${raw}`;
-  const test = [];
 
   axios({
     method: 'get',
@@ -48,10 +47,11 @@ const app = (state) => {
   }).then((response) => {
     const data = response.data.contents;
     const parser = new DOMParser();
-    test.push(parser.parseFromString(data, 'application/xml'));
+    const test = (parser.parseFromString(data, 'application/xml'));
+    console.log(test);
+    const test1 = test.querySelector('channel');
+    console.log(test1);
   });
-
-  console.log(test);
 
   const fieldsRender = (target, addedClass, removedClass = 'test') => {
     target.classList.add(addedClass);
