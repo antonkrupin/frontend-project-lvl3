@@ -38,17 +38,20 @@ const app = (state) => {
       return e;
     }
   };
-
+  const raw = encodeURIComponent('https://lorem-rss.herokuapp.com/feed');
+  const link = `https://allorigins.hexlet.app/get?disableCache=true&url=${raw}`;
+  let test = [];
+  
   axios({
     method: 'get',
-    url: 'https://lorem-rss.herokuapp.com/feed',
+    url: link,
   }).then((response) => {
-    console.log(response);
-    console.log(response.data);
     console.log(response.status);
-  }).catch((error) => {
-    console.log(error);
+    //console.log(response.data.contents);
+    test.push(response.data.contents);
   });
+
+  console.log(test);
 
   const fieldsRender = (target, addedClass, removedClass = 'test') => {
     target.classList.add(addedClass);
