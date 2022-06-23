@@ -1,14 +1,11 @@
 export default {
   translation: {
-    name: {
-      asc: 'Name (Asc)',
-      desc: 'Name (Desc)',
-      unsorted: 'Name (Unsorted)',
+    errors: {
+      urlFormat: 'Ссылка должна быть валидным URL',
+      urlRepeat: 'RSS уже существует',
     },
-    value: {
-      asc: 'Value (Asc)',
-      desc: 'Value (Desc)',
-      unsorted: 'Value (Unsorted)',
+    success: {
+      urlAdded: 'RSS успешно загружен',
     },
   },
 };
