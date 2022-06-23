@@ -40,14 +40,12 @@ const app = (state) => {
   };
   const raw = encodeURIComponent('https://lorem-rss.herokuapp.com/feed');
   const link = `https://allorigins.hexlet.app/get?disableCache=true&url=${raw}`;
-  let test = [];
+  const test = [];
 
   axios({
     method: 'get',
     url: link,
   }).then((response) => {
-    console.log(response.status);
-    //console.log(response.data.contents);
     const data = response.data.contents;
     const parser = new DOMParser();
     test.push(parser.parseFromString(data, 'application/xml'));
