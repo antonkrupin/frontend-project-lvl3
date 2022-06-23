@@ -6,15 +6,18 @@ const app = (state) => {
   const sendBtn = document.querySelector('#submit-btn');
   const feedBackField = document.querySelector('.feedback');
 
-  const fieldText = [
-    'Ссылка должна быть валидным URL',
-    'RSS уже существует',
-    'RSS успешно загружен',
-  ];
+  yup.setLocale({
+    string: {
+      url: 'Ссылка должна быть валидным URL',
+    },
+    mixed: {
+      notOneOf: 'RSS уже существует',
+    },
+  });
 
   const schema = yup.object().shape({
     // разобраться с работой notOneOf
-    link: yup.string().url().notOneOf(state.feeds),
+    link: yup.string().url().notOneOf(['http://google.ru']),
   });
 
   const validate = (fields) => {
@@ -33,24 +36,13 @@ const app = (state) => {
   const feedsWatcher = onChange(state, () => {
     fieldsRender(inputField, 'is-valid', 'is-invalid');
     fieldsRender(feedBackField, 'text-success', 'text-danger');
-
-    [, , feedBackField.innerText] = fieldText;
+    feedBackField.innerText = 'RSS успешно загружен';
   });
 
-  const errorsWatcher = onChange(state, (path) => {
+  const errorsWatcher = onChange(state, () => {
     fieldsRender(inputField, 'is-invalid');
     fieldsRender(feedBackField, 'text-danger', 'text-success');
-
-    switch (path) {
-      case 'errors.repeatErrors':
-        [, feedBackField.innerText] = fieldText;
-        break;
-      case 'errors.formatErrors':
-        [feedBackField.innerText] = fieldText;
-        break;
-      default:
-        throw new Error('Wrong error typs');
-    }
+    feedBackField.innerText = state.errorValue;
   });
 
   sendBtn.addEventListener('click', (e) => {
@@ -64,12 +56,11 @@ const app = (state) => {
           inputField.value = '';
           inputField.focus();
         } else {
-          errorsWatcher.errors.repeatErrors += 1;
           inputField.focus();
         }
       }
-    }).catch(() => {
-      errorsWatcher.errors.formatErrors += 1;
+    }).catch((error) => {
+      errorsWatcher.errorValue = error.errors;
       inputField.focus();
     });
   });
