@@ -47,10 +47,12 @@ const app = (state) => {
   }).then((response) => {
     const data = response.data.contents;
     const parser = new DOMParser();
-    const test = (parser.parseFromString(data, 'application/xml'));
-    console.log(test);
-    const test1 = test.querySelector('channel');
-    console.log(test1);
+    const channel = (parser.parseFromString(data, 'application/xml')).querySelector('channel');
+    console.log(channel);
+    const title = channel.querySelector('title').innerHTML;
+    const description = channel.querySelector('description').innerHTML;
+    console.log(title);
+    console.log(description);
   });
 
   const fieldsRender = (target, addedClass, removedClass = 'test') => {
