@@ -62,12 +62,15 @@ const app = (state) => {
         if (feedsWatcher.feeds.indexOf(el.link) === -1) {
           feedsWatcher.feeds.push(el.link);
           inputField.value = '';
+          inputField.focus();
         } else {
           errorsWatcher.errors.repeatErrors += 1;
+          inputField.focus();
         }
       }
     }).catch(() => {
       errorsWatcher.errors.formatErrors += 1;
+      inputField.focus();
     });
   });
 };
