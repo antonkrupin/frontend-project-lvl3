@@ -1,6 +1,5 @@
 import onChange from 'on-change';
 import * as yup from 'yup';
-//import validate from './validate';
 
 const app = (state) => {
   const inputField = document.querySelector('#url-input');
@@ -14,7 +13,8 @@ const app = (state) => {
   ];
 
   const schema = yup.object().shape({
-    link: yup.string().url(),
+    // разобраться с работой notOneOf
+    link: yup.string().url().notOneOf(state.feeds),
   });
 
   const validate = (fields) => {
@@ -30,14 +30,14 @@ const app = (state) => {
     target.classList.remove(removedClass);
   };
 
-  const feedsWatcher = onChange(state, (path, value, prev) => {
+  const feedsWatcher = onChange(state, () => {
     fieldsRender(inputField, 'is-valid', 'is-invalid');
     fieldsRender(feedBackField, 'text-success', 'text-danger');
 
     [, , feedBackField.innerText] = fieldText;
   });
 
-  const errorsWatcher = onChange(state, (path, value, prev) => {
+  const errorsWatcher = onChange(state, (path) => {
     fieldsRender(inputField, 'is-invalid');
     fieldsRender(feedBackField, 'text-danger', 'text-success');
 
@@ -57,11 +57,11 @@ const app = (state) => {
     if (inputField.value !== '') {
       e.preventDefault();
     }
-
     validate({ link: inputField.value }).then((el) => {
       if (el.link !== '') {
         if (feedsWatcher.feeds.indexOf(el.link) === -1) {
           feedsWatcher.feeds.push(el.link);
+          inputField.value = '';
         } else {
           errorsWatcher.errors.repeatErrors += 1;
         }
