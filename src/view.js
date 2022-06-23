@@ -49,8 +49,8 @@ const app = (state) => {
     const parser = new DOMParser();
     const channel = (parser.parseFromString(data, 'application/xml')).querySelector('channel');
     console.log(channel);
-    const title = channel.querySelector('title').innerHTML;
-    const description = channel.querySelector('description').innerHTML;
+    const title = channel.getElementsByTagName('title')[0].textContent;
+    const description = channel.getElementsByTagName('description')[0].textContent;
     console.log(title);
     console.log(description);
   });
