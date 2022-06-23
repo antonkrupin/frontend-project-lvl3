@@ -1,17 +1,27 @@
 import onChange from 'on-change';
 import * as yup from 'yup';
+import i18next from 'i18next';
+
+import resources from './locales/index';
 
 const app = (state) => {
   const inputField = document.querySelector('#url-input');
   const sendBtn = document.querySelector('#submit-btn');
   const feedBackField = document.querySelector('.feedback');
 
+  const i18Instance = i18next.createInstance();
+
+  i18Instance.init({
+    lng: 'ru',
+    resources,
+  });
+
   yup.setLocale({
     string: {
-      url: 'Ссылка должна быть валидным URL',
+      url: i18Instance.t('errors.urlFormat'),
     },
     mixed: {
-      notOneOf: 'RSS уже существует',
+      notOneOf: i18Instance.t('errors.urlRepeat'),
     },
   });
 
@@ -52,8 +62,7 @@ const app = (state) => {
     validate({ link: inputField.value }).then((el) => {
       if (el.link !== '') {
         if (feedsWatcher.feeds.indexOf(el.link) === -1) {
-          // подумать как передать успешное завешение
-          errorsWatcher.errorValue = 'RSS успешно загружен';
+          errorsWatcher.errorValue = i18Instance.t('urlAdded');
           feedsWatcher.feeds.push(el.link);
           inputField.value = '';
           inputField.focus();
