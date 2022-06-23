@@ -38,10 +38,14 @@ const app = () => {
   };
 
   const watchedState = onChange(state, (path, value) => {
+    console.log(path);
+    console.log(value);
     // eslint-disable-next-line default-case
     switch (path) {
       case 'formStatus':
         switch (value) {
+          case 'processing':
+            break;
           case 'processed':
             fieldsRender(inputField, 'is-valid', 'is-invalid');
             fieldsRender(feedBackField, 'text-success', 'text-danger');
@@ -53,7 +57,7 @@ const app = () => {
             feedBackField.textContent = state.errorValue;
             break;
           default:
-            console.log('tst');
+            throw new Error('Unexpected formStatus value');
         }
     }
   });
