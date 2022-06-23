@@ -30,11 +30,6 @@ const app = (state) => {
     target.classList.remove(removedClass);
   };
 
-  const inputWatcher = onChange(state, (path, value, prev) => {
-    //console.log('inputwatcher');
-    //console.log(path);
-  });
-
   const feedsWatcher = onChange(state, (path, value, prev) => {
     fieldsRender(inputField, 'is-valid', 'is-invalid');
     fieldsRender(feedBackField, 'text-success', 'text-danger');
@@ -58,12 +53,8 @@ const app = (state) => {
     }
   });
 
-  inputField.addEventListener('change', (e) => {
-    inputWatcher.urlInput = e.target.value;
-  });
-
   sendBtn.addEventListener('click', (e) => {
-    if (state.urlInput !== 'blank') {
+    if (inputField.value !== '') {
       e.preventDefault();
     }
 
