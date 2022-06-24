@@ -25,8 +25,7 @@ const handler = (event, state) => {
   };
 
   validateRss({ link }).then(() => {
-    // test link, don`t forget remove after end project;
-    // const testLink = 'http://lorem-rss.herokuapp.com/feed';
+    state.networkError = false;
     const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${link}`;
 
     axios({
@@ -37,8 +36,8 @@ const handler = (event, state) => {
       parserXML(data);
       state.feeds.push(link);
       state.formStatus = 'processed';
-    }).catch((axiosError) => {
-      state.errorValue = axiosError;
+    }).catch(() => {
+      state.networkError = true;
       state.formStatus = 'failure';
     });
   }).catch((error) => {
