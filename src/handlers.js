@@ -33,7 +33,7 @@ const handler = (event, state) => {
       url: rssLink,
     }).then((response) => {
       const data = response.data.contents;
-      parserXML(data);
+      state.feedsObjects.push(parserXML(data));
       state.feeds.push(link);
       state.formStatus = 'processed';
     }).catch(() => {
