@@ -4,10 +4,23 @@ const parserXML = (data) => {
   const id = _.uniqueId();
   const parser = new DOMParser();
   const XMLdata = parser.parseFromString(data, 'application/xml');
-  const title = XMLdata.querySelector('channel').querySelector('title').textContent;
-  const description = XMLdata.querySelector('channel').querySelector('description').textContent;
-  // добавить обработку каждого item
-  return { id, title, description };
+  const channel = XMLdata.querySelector('channel');
+  const title = channel.querySelector('title').textContent;
+  const description = channel.querySelector('description').textContent;
+
+  const items = [];
+
+  channel.querySelectorAll('item').forEach((elem) => {
+    const itemTitle = elem.querySelector('title').textContent;
+    const itemDescription = elem.querySelector('description').textContent;
+    const itemLink = elem.querySelector('link').textContent;
+
+    items.push([itemTitle, itemDescription, itemLink]);
+  });
+
+  return {
+    id, title, description, items,
+  };
 };
 
 export default parserXML;
