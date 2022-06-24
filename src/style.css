@@ -49,4 +49,22 @@ html {
   font-size: 2rem;
 }
 
+.feedsSection {
+  margin-top: 5rem;
+  
+}
+
+.feedsSection #posts h4 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.feedsSection #posts button {
+  font-size: 1.5rem;
+}
+
+.feedsSection #posts .post {
+  margin: 1rem;
+}
+
 
