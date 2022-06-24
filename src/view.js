@@ -4,6 +4,7 @@ import i18next from 'i18next';
 
 import resources from './locales/index';
 import handler from './handlers';
+import renderFeeds from './renders';
 
 const app = () => {
   const state = {
@@ -49,7 +50,7 @@ const app = () => {
             fieldsRender(inputField, 'is-valid', 'is-invalid');
             fieldsRender(feedBackField, 'text-success', 'text-danger');
             feedBackField.textContent = i18Instance.t('urlAdded');
-            console.log(state.feedsObjects);
+            renderFeeds(state.feedsObjects);
             break;
           case 'failure':
             fieldsRender(inputField, 'is-invalid');
