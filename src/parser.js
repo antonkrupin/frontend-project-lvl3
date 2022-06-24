@@ -20,7 +20,7 @@ const parserXML = (data) => {
   });
 
   return {
-    id, title, description, items,
+    id, title, description, items, render: false,
   };
 };
 
