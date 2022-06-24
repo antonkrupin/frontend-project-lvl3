@@ -39,8 +39,6 @@ const app = () => {
   };
 
   const watchedState = onChange(state, (path, value) => {
-    console.log(path);
-    console.log(value);
     // eslint-disable-next-line default-case
     switch (path) {
       case 'formStatus':
@@ -51,6 +49,7 @@ const app = () => {
             fieldsRender(inputField, 'is-valid', 'is-invalid');
             fieldsRender(feedBackField, 'text-success', 'text-danger');
             feedBackField.textContent = i18Instance.t('urlAdded');
+            console.log(state.feedsObjects);
             break;
           case 'failure':
             fieldsRender(inputField, 'is-invalid');
