@@ -10,6 +10,7 @@ const app = () => {
     feeds: [],
     feedsObjects: [],
     errorValue: '',
+    networkError: false,
     formStatus: 'filling',
   };
 
@@ -54,7 +55,11 @@ const app = () => {
           case 'failure':
             fieldsRender(inputField, 'is-invalid');
             fieldsRender(feedBackField, 'text-danger', 'text-success');
-            feedBackField.textContent = state.errorValue;
+            if (state.networkError) {
+              feedBackField.textContent = i18Instance.t('errors.networkProblems');
+            } else {
+              feedBackField.textContent = state.errorValue;
+            }
             break;
           default:
             throw new Error('Unexpected formStatus value');
