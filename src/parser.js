@@ -4,6 +4,7 @@ const parserXML = (data) => {
   const id = _.uniqueId();
   const parser = new DOMParser();
   const XMLdata = parser.parseFromString(data, 'application/xml');
+
   const channel = XMLdata.querySelector('channel');
   const title = channel.querySelector('title').textContent;
   const description = channel.querySelector('description').textContent;
