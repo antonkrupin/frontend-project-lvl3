@@ -1,7 +1,5 @@
+/* eslint-disable no-param-reassign */
 const createMarkupFeed = (text) => {
-  /*const div = document.createElement('div');
-  div.classList.add('row', 'feed');*/
-
   const row = document.createElement('div');
   row.classList.add('row');
 
@@ -14,7 +12,7 @@ const createMarkupFeed = (text) => {
 
   col.append(h3);
   row.append(col);
-  
+
   return row;
 };
 
