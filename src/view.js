@@ -45,6 +45,7 @@ const app = () => {
       case 'formStatus':
         switch (value) {
           case 'processing':
+            state.networkError = false;
             break;
           case 'processed':
             fieldsRender(inputField, 'is-valid', 'is-invalid');
