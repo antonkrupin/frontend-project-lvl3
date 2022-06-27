@@ -72,6 +72,8 @@ const app = () => {
   form.addEventListener('submit', (e) => {
     handler(e, watchedState);
   });
+
+  console.log(state.feedsObjects);
 };
 
 export default app;
