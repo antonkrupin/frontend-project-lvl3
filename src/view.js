@@ -58,6 +58,8 @@ const app = () => {
               setTimeout(reconnect, 10000, state, link);
               setTimeout(reconnect, 15000, state, link);
               setTimeout(reconnect, 20000, state, link);
+              setTimeout(reconnect, 25000, state, link);
+              setTimeout(reconnect, 30000, state, link);
             });
             break;
           case 'failure':
