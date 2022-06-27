@@ -3,7 +3,7 @@ export default {
     errors: {
       urlFormat: 'Ссылка должна быть валидным URL',
       urlRepeat: 'RSS уже существует',
-      networkProblems: 'Проблемы с загрузкой RSS',
+      networkProblems: 'Не удалось загрузить RSS.',
     },
     urlAdded: 'RSS успешно загружен',
   },
