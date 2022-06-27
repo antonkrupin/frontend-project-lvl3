@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-const createMarkupFeed = (title, description) => {
+const renderMarkupFeed = (title, description) => {
   const row = document.createElement('div');
   row.classList.add('row', 'feed');
 
@@ -32,10 +32,7 @@ const createMarkupFeed = (title, description) => {
   return row;
 };
 
-// перекинуть функции
-// создания разметки в отдельную папку
-
-const createMarkupPost = (text, link, buttonText = 'Просмотр') => {
+const renderMarkupPost = (text, link, buttonText = 'Просмотр') => {
   const row = document.createElement('div');
   row.classList.add('row', 'post');
 
@@ -65,26 +62,24 @@ const createMarkupPost = (text, link, buttonText = 'Просмотр') => {
   return row;
 };
 
-// добавить разделение по фидам
-// чтобы все посты от одного фида были в одной секции
-
-const renderPost = (theme, link) => {
-  const postsSection = document.querySelector('#posts');
-  postsSection.append(createMarkupPost(theme, link));
-};
+const renderPost = (theme, link) => renderMarkupPost(theme, link);
 
 const renderFeed = (title, description) => {
   const feedsSection = document.querySelector('#feeds');
-  feedsSection.prepend(createMarkupFeed(title, description));
+  feedsSection.prepend(renderMarkupFeed(title, description));
 };
 
 const renderFeeds = (state) => {
-  state.map((el) => {
+  state.forEach((el) => {
     if (!el.render) {
       renderFeed(el.title, el.description);
-      el.items.map((item) => {
-        renderPost(item[0], item[2]);
+      const postsSection = document.querySelector('#posts');
+      const div = document.createElement('div');
+      div.classList.add('one-feed');
+      el.items.forEach((item) => {
+        div.append(renderPost(item[0], item[2]));
       });
+      postsSection.prepend(div);
       el.render = true;
     }
   });
