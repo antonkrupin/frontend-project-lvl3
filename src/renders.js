@@ -71,21 +71,15 @@ const renderFeed = (title, description) => {
 
 const renderFeeds = (state) => {
   state.forEach((el) => {
-    /* if (!el.render) {
-      renderFeed(el.title, el.description);
-      const postsSection = document.querySelector('#posts');
-      const div = document.createElement('div');
-      div.classList.add('one-feed');
-      el.items.forEach((item) => {
-        div.append(renderPost(item[0], item[2]));
-      });
-      postsSection.prepend(div);
-      el.render = true;
-    } */
     renderFeed(el.title, el.description);
     const postsSection = document.querySelector('#posts');
-    const div = document.createElement('div');
-    div.classList.add('one-feed');
+    let div = document.getElementById(`${el.link}`);
+
+    if (div === null) {
+      div = document.createElement('div');
+      div.setAttribute('id', `${el.link}`);
+    }
+
     el.items.forEach((item) => {
       if (!item[4].rendered) {
         div.append(renderPost(item[0], item[2]));
