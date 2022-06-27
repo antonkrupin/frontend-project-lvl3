@@ -83,6 +83,8 @@ const renderFeeds = (state) => {
       div.setAttribute('id', `${el.link}`);
     }
 
+    div.innerHTML = '';
+
     el.items.forEach((item) => {
       if (!item[4].rendered) {
         div.append(renderPost(item[0], item[2]));
