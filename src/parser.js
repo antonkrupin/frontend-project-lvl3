@@ -4,7 +4,6 @@ const parserXML = (data, rssLink) => {
   const id = _.uniqueId();
   const parser = new DOMParser();
   const XMLdata = parser.parseFromString(data, 'application/xml');
-  console.log(XMLdata);
   const channel = XMLdata.querySelector('channel');
   const link = channel.querySelector('link').textContent;
   const title = channel.querySelector('title').textContent;
