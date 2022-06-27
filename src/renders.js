@@ -66,14 +66,17 @@ const renderPost = (theme, link) => renderMarkupPost(theme, link);
 
 const renderFeed = (title, description) => {
   const feedsSection = document.querySelector('#feeds');
-  feedsSection.prepend(renderMarkupFeed(title, description));
+  if (feedsSection.children.length === 0) {
+    feedsSection.prepend(renderMarkupFeed(title, description));
+  }
 };
 
 const renderFeeds = (state) => {
   state.forEach((el) => {
-    renderFeed(el.title, el.description);
     const postsSection = document.querySelector('#posts');
     let div = document.getElementById(`${el.link}`);
+
+    renderFeed(el.title, el.description);
 
     if (div === null) {
       div = document.createElement('div');

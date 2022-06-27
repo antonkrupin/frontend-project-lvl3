@@ -2,6 +2,7 @@
 import axios from 'axios';
 
 import parserXML from './parser';
+import renderPost from './renders';
 
 export default (state, link) => {
   const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${link}`;
@@ -13,9 +14,10 @@ export default (state, link) => {
     const data = response.data.contents;
     const test = parserXML(data);
     state.feedsObjects.forEach((el) => {
-      console.log(el.items);
+      if (el.rssLink === link) {
+        el.items = test.items;
+        renderPost(state.feedsObjects);
+      }
     });
-    console.log('новое');
-    console.log(test);
   });
 };
