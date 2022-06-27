@@ -53,13 +53,12 @@ const app = () => {
             fieldsRender(feedBackField, 'text-success', 'text-danger');
             feedBackField.textContent = i18Instance.t('urlAdded');
             renderFeeds(state.feedsObjects);
-            /* state.feeds.forEach((link) => {
-              //reconnect(state, link);
+            state.feeds.forEach((link) => {
+              setTimeout(reconnect, 5000, state, link);
               setTimeout(reconnect, 10000, state, link);
+              setTimeout(reconnect, 15000, state, link);
               setTimeout(reconnect, 20000, state, link);
-              setTimeout(reconnect, 30000, state, link);
-              setTimeout(reconnect, 40000, state, link);
-            }); */
+            });
             break;
           case 'failure':
             fieldsRender(inputField, 'is-invalid');
