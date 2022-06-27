@@ -5,6 +5,7 @@ import i18next from 'i18next';
 import resources from './locales/index';
 import handler from './handlers';
 import renderFeeds from './renders';
+import reconnect from './reconnect';
 
 const app = () => {
   const state = {
@@ -52,6 +53,9 @@ const app = () => {
             fieldsRender(feedBackField, 'text-success', 'text-danger');
             feedBackField.textContent = i18Instance.t('urlAdded');
             renderFeeds(state.feedsObjects);
+            state.feeds.forEach((link) => {
+              setTimeout(reconnect, 5000, state, link);
+            });
             break;
           case 'failure':
             fieldsRender(inputField, 'is-invalid');
@@ -72,8 +76,6 @@ const app = () => {
   form.addEventListener('submit', (e) => {
     handler(e, watchedState);
   });
-
-  console.log(state.feedsObjects);
 };
 
 export default app;
