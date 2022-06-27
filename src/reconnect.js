@@ -5,7 +5,7 @@ import parserXML from './parser';
 import renderPost from './renders';
 
 export default (state, link) => {
-  const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${link}`;
+  const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
 
   axios({
     method: 'get',
