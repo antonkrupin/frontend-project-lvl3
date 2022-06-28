@@ -32,7 +32,7 @@ const renderMarkupFeed = (title, description) => {
   return row;
 };
 
-const renderMarkupPost = (text, link, buttonText = 'Просмотр') => {
+const renderMarkupPost = (text, description, link, buttonText = 'Просмотр') => {
   const row = document.createElement('div');
   row.classList.add('row', 'post');
 
@@ -42,8 +42,10 @@ const renderMarkupPost = (text, link, buttonText = 'Просмотр') => {
   const themeH4 = document.createElement('h4');
 
   const themeLink = document.createElement('a');
+  themeLink.classList.add('fw-bold');
   themeLink.setAttribute('href', link);
   themeLink.setAttribute('target', '_blank');
+  themeLink.setAttribute('data-description', description);
   themeLink.textContent = text;
 
   const buttonCol = document.createElement('div');
@@ -51,6 +53,9 @@ const renderMarkupPost = (text, link, buttonText = 'Просмотр') => {
 
   const button = document.createElement('button');
   button.classList.add('btn', 'btn-outline-primary');
+  button.setAttribute('type', 'button');
+  button.setAttribute('data-bs-toggle', 'modal');
+  button.setAttribute('data-bs-target', '#exampleModal');
   button.textContent = buttonText;
 
   themeH4.append(themeLink);
@@ -62,7 +67,7 @@ const renderMarkupPost = (text, link, buttonText = 'Просмотр') => {
   return row;
 };
 
-const renderPost = (theme, link) => renderMarkupPost(theme, link);
+const renderPost = (theme, description, link) => renderMarkupPost(theme, description, link);
 
 const renderFeed = (title, description) => {
   const feedsSection = document.querySelector('#feeds');
@@ -77,16 +82,17 @@ const renderFeeds = (state) => {
     const postsSection = document.querySelector('#posts');
     let div = document.getElementById(`${el.link}`);
 
-    renderFeed(el.title, el.description);
+    if (!el.render) {
+      renderFeed(el.title, el.description);
+    }
 
     if (div === null) {
       div = document.createElement('div');
       div.setAttribute('id', `${el.link}`);
     }
-
     el.items.forEach((item) => {
       if (!item[4].rendered) {
-        div.append(renderPost(item[0], item[2]));
+        div.append(renderPost(item[0], item[1], item[2]));
       }
       item[4].rendered = true;
     });
