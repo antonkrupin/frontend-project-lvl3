@@ -6,6 +6,7 @@ import resources from './locales/index';
 import handler from './handlers';
 import renderFeeds from './renders';
 import reconnect from './reconnect';
+import getTimeout from './reconnectionTimer';
 
 const app = () => {
   const state = {
@@ -54,12 +55,9 @@ const app = () => {
             feedBackField.textContent = i18Instance.t('urlAdded');
             renderFeeds(state.feedsObjects);
             state.feeds.forEach((link) => {
-              setTimeout(reconnect, 5000, state, link);
-              setTimeout(reconnect, 10000, state, link);
-              setTimeout(reconnect, 15000, state, link);
-              setTimeout(reconnect, 20000, state, link);
-              setTimeout(reconnect, 25000, state, link);
-              setTimeout(reconnect, 30000, state, link);
+              // const { start: onSubmitSuccess } = getTimeout(reconnect(state, link));
+              const { start: onConnectSuccess } = getTimeout(() => { reconnect(state, link); });
+              onConnectSuccess();
             });
             break;
           case 'failure':
