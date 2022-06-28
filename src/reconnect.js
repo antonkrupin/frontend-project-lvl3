@@ -16,9 +16,7 @@ export default (state, link) => {
     state.feedsObjects.forEach((el) => {
       if (el.rssLink === link) {
         el.items = test.items;
-        //renderPost(state.feedsObjects);
         renderFeeds(state.feedsObjects);
-        //newRenderFeeds(state.feedsObjects);
       }
     });
   });

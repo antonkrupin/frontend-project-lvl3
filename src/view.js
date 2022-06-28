@@ -5,7 +5,9 @@ import i18next from 'i18next';
 import resources from './locales/index';
 import handler, { buttonHandler } from './handlers';
 import renderFeeds from './renders';
+// eslint-disable-next-line no-unused-vars
 import reconnect from './reconnect';
+// eslint-disable-next-line no-unused-vars
 import getTimeout from './reconnectionTimer';
 
 const app = () => {
@@ -17,7 +19,7 @@ const app = () => {
     formStatus: 'filling',
     buttons: [],
   };
-  
+
   const inputField = document.querySelector('#url-input');
   const feedBackField = document.querySelector('.feedback');
 
@@ -56,6 +58,7 @@ const app = () => {
             feedBackField.textContent = i18Instance.t('urlAdded');
 
             renderFeeds(state.feedsObjects);
+            // eslint-disable-next-line no-case-declarations
             const buttons = document.querySelectorAll('#posts button');
             if (state.buttons.length === 0) {
               buttons.forEach((button) => {
@@ -74,6 +77,7 @@ const app = () => {
               });
             });
 
+            // eslint-disable-next-line no-unused-vars
             state.feeds.forEach((link) => {
               // const { start: onSubmitSuccess } = getTimeout(reconnect(state, link));
               // const { start: onConnectSuccess } = getTimeout(() => { reconnect(state, link); });
