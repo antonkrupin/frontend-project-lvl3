@@ -10,7 +10,6 @@ const parserXML = (data, rssLink) => {
   const description = channel.querySelector('description').textContent;
 
   const items = [];
-  console.log(channel);
 
   channel.querySelectorAll('item').forEach((elem) => {
     const itemTitle = elem.querySelector('title').textContent;
