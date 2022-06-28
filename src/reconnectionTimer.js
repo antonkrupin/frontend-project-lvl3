@@ -1,5 +1,6 @@
 const getTimeout = (callback) => {
   let timeout = null;
+  const delay = 5000;
 
   const stop = () => {
     if (timeout) {
@@ -14,7 +15,7 @@ const getTimeout = (callback) => {
     timeout = setTimeout(() => {
       callback();
       start();
-    }, 5000);
+    }, delay);
   };
 
   return { start, stop };
