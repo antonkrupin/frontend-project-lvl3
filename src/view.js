@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import i18next from 'i18next';
 
 import resources from './locales/index';
-import handler from './handlers';
+import handler, { buttonHandler } from './handlers';
 import renderFeeds from './renders';
 import reconnect from './reconnect';
 import getTimeout from './reconnectionTimer';
@@ -15,8 +15,9 @@ const app = () => {
     errorValue: '',
     networkError: false,
     formStatus: 'filling',
+    buttons: [],
   };
-
+  
   const inputField = document.querySelector('#url-input');
   const feedBackField = document.querySelector('.feedback');
 
@@ -53,11 +54,30 @@ const app = () => {
             fieldsRender(inputField, 'is-valid', 'is-invalid');
             fieldsRender(feedBackField, 'text-success', 'text-danger');
             feedBackField.textContent = i18Instance.t('urlAdded');
+
             renderFeeds(state.feedsObjects);
+            const buttons = document.querySelectorAll('#posts button');
+            if (state.buttons.length === 0) {
+              buttons.forEach((button) => {
+                state.buttons.push(button);
+              });
+            } else {
+              state.buttons = [];
+              buttons.forEach((button) => {
+                state.buttons.push(button);
+              });
+            }
+
+            state.buttons.forEach((button) => {
+              button.addEventListener('click', (e) => {
+                buttonHandler(e.target);
+              });
+            });
+
             state.feeds.forEach((link) => {
               // const { start: onSubmitSuccess } = getTimeout(reconnect(state, link));
-              //const { start: onConnectSuccess } = getTimeout(() => { reconnect(state, link); });
-              //onConnectSuccess();
+              // const { start: onConnectSuccess } = getTimeout(() => { reconnect(state, link); });
+              // onConnectSuccess();
             });
             break;
           case 'failure':
