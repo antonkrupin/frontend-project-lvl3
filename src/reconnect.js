@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 import parserXML from './parser';
-import renderPost from './renders';
+import renderFeeds from './renders';
 
 export default (state, link) => {
   const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
@@ -16,7 +16,8 @@ export default (state, link) => {
     state.feedsObjects.forEach((el) => {
       if (el.rssLink === link) {
         el.items = test.items;
-        renderPost(state.feedsObjects);
+        //renderPost(state.feedsObjects);
+        renderFeeds(state.feedsObjects);
       }
     });
   });

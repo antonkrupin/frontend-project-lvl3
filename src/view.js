@@ -56,8 +56,8 @@ const app = () => {
             renderFeeds(state.feedsObjects);
             state.feeds.forEach((link) => {
               // const { start: onSubmitSuccess } = getTimeout(reconnect(state, link));
-              const { start: onConnectSuccess } = getTimeout(() => { reconnect(state, link); });
-              onConnectSuccess();
+              //const { start: onConnectSuccess } = getTimeout(() => { reconnect(state, link); });
+              //onConnectSuccess();
             });
             break;
           case 'failure':

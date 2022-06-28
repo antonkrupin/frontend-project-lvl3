@@ -66,9 +66,10 @@ const renderPost = (theme, link) => renderMarkupPost(theme, link);
 
 const renderFeed = (title, description) => {
   const feedsSection = document.querySelector('#feeds');
-  if (feedsSection.children.length === 0) {
+  /* if (feedsSection.children.length === 0) {
     feedsSection.prepend(renderMarkupFeed(title, description));
-  }
+  } */
+  feedsSection.prepend(renderMarkupFeed(title, description));
 };
 
 const renderFeeds = (state) => {
@@ -82,8 +83,6 @@ const renderFeeds = (state) => {
       div = document.createElement('div');
       div.setAttribute('id', `${el.link}`);
     }
-
-    div.innerHTML = '';
 
     el.items.forEach((item) => {
       if (!item[4].rendered) {
