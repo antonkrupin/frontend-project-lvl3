@@ -43,7 +43,6 @@ const handler = (event, state) => {
         state.errorValue = error.name;
         state.formStatus = 'failure';
       }
-      state.networkError = true;
     });
   }).catch((error) => {
     [state.errorValue] = error.errors;
