@@ -45,7 +45,7 @@ const app = () => {
     target.classList.remove(removedClass);
   };
 
-  const watchedState = onChange(state, (path, value, prev) => {
+  const watchedState = onChange(state, (path, value) => {
     // eslint-disable-next-line default-case
     switch (path) {
       case 'formStatus':
