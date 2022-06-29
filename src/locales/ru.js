@@ -4,10 +4,10 @@ export default {
       urlFormat: 'Ссылка должна быть валидным URL',
       urlRepeat: 'RSS уже существует',
       emptyUrl: 'Не должно быть пустым',
-      notRssUrl: 'Ссылка должна быть валидным URL',
+      notRssUrl: 'Ресурс не содержит валидный RSS',
       networkProblems: 'Ошибка сети',
-      watching: 'Просмотр',
     },
+    watching: 'Просмотр',
     urlAdded: 'RSS успешно загружен',
   },
 };
