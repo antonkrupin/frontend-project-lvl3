@@ -1,4 +1,6 @@
 /* eslint-disable no-param-reassign */
+import { buttonHandler } from "./handlers";
+
 const renderMarkupFeed = (title, description) => {
   const row = document.createElement('div');
   row.classList.add('row', 'feed');
@@ -56,6 +58,11 @@ const renderMarkupPost = (text, description, link, buttonText = 'Просмот�
   button.setAttribute('type', 'button');
   button.setAttribute('data-bs-toggle', 'modal');
   button.setAttribute('data-bs-target', '#exampleModal');
+
+  button.addEventListener('click', (event) => {
+    buttonHandler(event.target);
+  });
+
   button.textContent = buttonText;
 
   themeH4.append(themeLink);
