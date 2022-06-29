@@ -50,6 +50,8 @@ const app = () => {
         switch (value) {
           case 'processing':
             state.networkError = false;
+            fieldsRender(feedBackField, 'text-success', 'text-danger');
+            feedBackField.textContent = i18Instance.t('errors.watching');
             break;
           case 'processed':
             fieldsRender(inputField, 'is-valid', 'is-invalid');
@@ -96,7 +98,7 @@ const app = () => {
     handler(e, watchedState);
   });
 
-  updateRss(state);
+  // updateRss(state);
 };
 
 export default app;

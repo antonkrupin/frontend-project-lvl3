@@ -6,6 +6,7 @@ export default {
       emptyUrl: 'Не должно быть пустым',
       notRssUrl: 'Ссылка должна быть валидным URL',
       networkProblems: 'Ошибка сети',
+      watching: 'Просмотр',
     },
     urlAdded: 'RSS успешно загружен',
   },
