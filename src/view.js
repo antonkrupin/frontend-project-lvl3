@@ -14,6 +14,7 @@ const app = () => {
   const state = {
     feeds: [],
     feedsObjects: [],
+    posts: [],
     errorValue: '',
     networkError: false,
     formStatus: 'filling',
@@ -98,7 +99,7 @@ const app = () => {
     handler(e, watchedState);
   });
 
-  updateRss(state);
+  //updateRss(state);
 };
 
 export default app;
