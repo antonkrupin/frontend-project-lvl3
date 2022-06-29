@@ -62,15 +62,19 @@ const app = () => {
           case 'networkFailure':
             fieldsRender(inputField, 'is-invalid');
             fieldsRender(feedBackField, 'text-danger', 'text-success');
-            feedBackField.textContent = i18Instance.t('errors.notRssUrl');
+            feedBackField.textContent = i18Instance.t('errors.networkProblems');
             break;
           case 'failure':
             fieldsRender(inputField, 'is-invalid');
             fieldsRender(feedBackField, 'text-danger', 'text-success');
-            if (state.errorValue[0] === i18Instance.t('errors.urlRepeat')) {
+
+            if (state.errorValue === i18Instance.t('errors.urlRepeat')) {
               feedBackField.textContent = i18Instance.t('errors.urlRepeat');
             } else {
               feedBackField.textContent = i18Instance.t('errors.urlFormat');
+            }
+            if (state.errorValue === 'TypeError') {
+              feedBackField.textContent = i18Instance.t('errors.notRssUrl');
             }
             break;
           default:
