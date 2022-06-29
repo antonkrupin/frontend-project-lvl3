@@ -6,19 +6,12 @@ import parserXML from './parser';
 import { updateFeeds } from './renders';
 
 const handler = (event, state) => {
-  //event.preventDefault();
+  event.preventDefault();
 
   state.formStatus = 'processing';
 
   const formData = new FormData(event.target);
   const link = formData.get('url').trim();
-
-  if (link === '') {
-    console.log('test');
-    //event.preventDefault();
-  }
-
-  console.log('test');
 
   const rssValidateSchema = yup.object().shape({
     link: yup.string().url().notOneOf(state.feeds),
