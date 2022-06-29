@@ -14,7 +14,6 @@ const app = () => {
     feedsObjects: [],
     posts: [],
     errorValue: '',
-    networkError: false,
     formStatus: 'filling',
     buttons: [],
   };
@@ -49,7 +48,6 @@ const app = () => {
       case 'formStatus':
         switch (value) {
           case 'processing':
-            state.networkError = false;
             fieldsRender(feedBackField, 'text-success', 'text-danger');
             feedBackField.textContent = i18Instance.t('watching');
             break;
