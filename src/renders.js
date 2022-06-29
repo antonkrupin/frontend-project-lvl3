@@ -71,9 +71,6 @@ const renderPost = (theme, description, link) => renderMarkupPost(theme, descrip
 
 const renderFeed = (title, description) => {
   const feedsSection = document.querySelector('#feeds');
-  /* if (feedsSection.children.length === 0) {
-    feedsSection.prepend(renderMarkupFeed(title, description));
-  } */
   feedsSection.prepend(renderMarkupFeed(title, description));
 };
 
@@ -81,8 +78,10 @@ const renderFeeds = (state) => {
   state.forEach((el) => {
     const postsSection = document.querySelector('#posts');
     let div = document.getElementById(`${el.rssLink}`);
-
-    renderFeed(el.feed.title, el.feed.description);
+    if (!el.feed.rendered) {
+      renderFeed(el.feed.title, el.feed.description);
+      el.feed.rendered = true;
+    }
 
     if (div === null) {
       div = document.createElement('div');
@@ -102,18 +101,18 @@ const renderFeeds = (state) => {
 
 export const updateFeeds = (state) => {
   const postsSection = document.querySelector('#posts');
-  const test = [];
+  const divs = [];
   state.forEach((elem) => {
     const div = document.getElementById(`${elem.rssLink}`);
     div.innerHTML = '';
     elem.items.forEach((item) => {
       div.append(renderPost(item[0], item[1], item[2]));
     });
-    test.map((el) => {
+    // eslint-disable-next-line array-callback-return
+    divs.map((el) => {
       postsSection.prepend(el);
     });
   });
-  console.log(test);
 };
 
 export default renderFeeds;
