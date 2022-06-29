@@ -4,7 +4,7 @@ import axios from 'axios';
 import _ from 'lodash';
 
 import parserXML from './parser';
-import renderFeeds from './renders';
+import renderFeeds, { updateFeeds } from './renders';
 
 const handler = (event, state) => {
   event.preventDefault();
@@ -36,6 +36,8 @@ const handler = (event, state) => {
     }).then((response) => {
       const data = response.data.contents;
       state.feedsObjects.push(parserXML(data, link));
+      console.log(parserXML(data, link));
+      console.log(state);
       state.feeds.push(link);
       state.formStatus = 'processed';
     }).catch(() => {
@@ -77,7 +79,8 @@ export const updateRss = (state) => {
         state.feedsObjects.map((elem) => {
           if (elem.rssLink === link) {
             elem.items = posts;
-            console.log(elem.items);
+            //renderFeeds(state.feedsObjects);
+            updateFeeds(state.feedsObjects);
           }
         });
       });
