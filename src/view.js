@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import i18next from 'i18next';
 
 import resources from './locales/index';
-import handler, { buttonHandler, updateRss } from './handlers';
+import handler, { updateRss } from './handlers';
 import renderFeeds from './renders';
 // eslint-disable-next-line no-unused-vars
 import getTimeout from './reconnectionTimer';
