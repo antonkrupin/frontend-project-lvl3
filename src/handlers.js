@@ -28,7 +28,6 @@ const handler = (event, state) => {
   validateRss({ link }).then(() => {
     state.networkError = false;
     const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
-
     axios({
       method: 'get',
       url: rssLink,
@@ -37,12 +36,17 @@ const handler = (event, state) => {
       state.feedsObjects.push(parserXML(data, link));
       state.feeds.push(link);
       state.formStatus = 'processed';
-    }).catch(() => {
+    }).catch((error) => {
+      if (error.name === 'AxiosError') {
+        state.formStatus = 'networkFailure';
+      } else {
+        state.errorValue = error.name;
+        state.formStatus = 'failure';
+      }
       state.networkError = true;
-      state.formStatus = 'networkFailure';
     });
   }).catch((error) => {
-    state.errorValue = error.errors;
+    [state.errorValue] = error.errors;
     state.formStatus = 'failure';
   });
 };
