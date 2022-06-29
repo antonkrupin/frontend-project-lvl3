@@ -47,24 +47,6 @@ const handler = (event, state) => {
   });
 };
 
-export const buttonHandler = (button) => {
-  const modal = document.querySelector('#exampleModal');
-  const modalTitle = modal.querySelector('.modal-title');
-  const modalBody = modal.querySelector('.modal-body');
-  const readButton = modal.querySelector('.modal-footer a');
-
-  const closest = button.closest('.post');
-  const link = closest.querySelector('a');
-
-  link.classList.remove('fw-bold');
-  link.classList.add('fw-normal');
-
-  modalTitle.textContent = link.textContent;
-  modalBody.textContent = link.getAttribute('data-description');
-
-  readButton.setAttribute('href', link.getAttribute('href'));
-};
-
 export const updateRss = (state) => {
   // eslint-disable-next-line array-callback-return
   Promise.all(state.feeds.map((link) => {
