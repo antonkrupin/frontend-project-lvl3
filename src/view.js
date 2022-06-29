@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import i18next from 'i18next';
 
 import resources from './locales/index';
-import handler, { buttonHandler } from './handlers';
+import handler, { buttonHandler, updateRss } from './handlers';
 import renderFeeds from './renders';
 // eslint-disable-next-line no-unused-vars
 import reconnect from './reconnect';
@@ -78,11 +78,9 @@ const app = () => {
             });
 
             // eslint-disable-next-line no-unused-vars
-            state.feeds.forEach((link) => {
-              // const { start: onSubmitSuccess } = getTimeout(reconnect(state, link));
-              // const { start: onConnectSuccess } = getTimeout(() => { reconnect(state, link); });
-              // onConnectSuccess();
-            });
+            /* state.feeds.forEach((link) => {
+              renderFeeds(state.feedsObjects);
+            }); */
             break;
           case 'failure':
             fieldsRender(inputField, 'is-invalid');
@@ -103,6 +101,8 @@ const app = () => {
   form.addEventListener('submit', (e) => {
     handler(e, watchedState);
   });
+
+  updateRss(state);
 };
 
 export default app;
