@@ -30,10 +30,10 @@ const app = () => {
 
   yup.setLocale({
     string: {
-      url: i18Instance.t('errors.urlFormat'),
+      url: i18Instance.t('errors.notValidUrlFormat'),
     },
     mixed: {
-      notOneOf: i18Instance.t('errors.urlRepeat'),
+      notOneOf: i18Instance.t('errors.rssRepeat'),
     },
   });
 
@@ -54,7 +54,7 @@ const app = () => {
           case 'processed':
             fieldsRender(inputField, 'is-valid', 'is-invalid');
             fieldsRender(feedBackField, 'text-success', 'text-danger');
-            feedBackField.textContent = i18Instance.t('urlAdded');
+            feedBackField.textContent = i18Instance.t('rssAdded');
             renderFeeds(state.feedsObjects);
             break;
           case 'networkFailure':
@@ -66,13 +66,13 @@ const app = () => {
             fieldsRender(inputField, 'is-invalid');
             fieldsRender(feedBackField, 'text-danger', 'text-success');
 
-            if (state.errorValue === i18Instance.t('errors.urlRepeat')) {
-              feedBackField.textContent = i18Instance.t('errors.urlRepeat');
+            if (state.errorValue === i18Instance.t('errors.rssRepeat')) {
+              feedBackField.textContent = i18Instance.t('errors.rssRepeat');
             } else {
-              feedBackField.textContent = i18Instance.t('errors.urlFormat');
+              feedBackField.textContent = i18Instance.t('errors.notValidUrlFormat');
             }
             if (state.errorValue === 'TypeError') {
-              feedBackField.textContent = i18Instance.t('errors.notRssUrl');
+              feedBackField.textContent = i18Instance.t('errors.notHaveValidRss');
             }
             break;
           default:
