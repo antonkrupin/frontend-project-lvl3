@@ -58,24 +58,6 @@ const app = () => {
             fieldsRender(feedBackField, 'text-success', 'text-danger');
             feedBackField.textContent = i18Instance.t('urlAdded');
             renderFeeds(state.feedsObjects);
-            // eslint-disable-next-line no-case-declarations
-            const buttons = document.querySelectorAll('#posts button');
-            if (state.buttons.length === 0) {
-              buttons.forEach((button) => {
-                state.buttons.push(button);
-              });
-            } else {
-              state.buttons = [];
-              buttons.forEach((button) => {
-                state.buttons.push(button);
-              });
-            }
-
-            state.buttons.forEach((button) => {
-              button.addEventListener('click', (e) => {
-                buttonHandler(e.target);
-              });
-            });
             break;
           case 'networkFailure':
             fieldsRender(inputField, 'is-invalid');
