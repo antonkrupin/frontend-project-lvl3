@@ -6,8 +6,6 @@ import resources from './locales/index';
 import handler, { buttonHandler, updateRss } from './handlers';
 import renderFeeds from './renders';
 // eslint-disable-next-line no-unused-vars
-import reconnect from './reconnect';
-// eslint-disable-next-line no-unused-vars
 import getTimeout from './reconnectionTimer';
 
 const app = () => {
