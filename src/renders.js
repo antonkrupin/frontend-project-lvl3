@@ -90,6 +90,7 @@ const renderFeeds = (state) => {
       div = document.createElement('div');
       div.setAttribute('id', `${el.link}`);
     }
+
     el.items.forEach((item) => {
       if (!item[4].rendered) {
         div.append(renderPost(item[0], item[1], item[2]));
@@ -98,6 +99,20 @@ const renderFeeds = (state) => {
     });
     postsSection.prepend(div);
     el.render = true;
+  });
+};
+
+export const updateFeeds = (state) => {
+  state.forEach((el) => {
+    const div = document.getElementById(`${el.link}`);
+    const div1 = document.createElement('div');
+    el.items.forEach((item) => {
+      if (!item[4].rendered) {
+        div1.append(renderPost(item[0], item[1], item[2]));
+      }
+      item[4].rendered = true;
+    });
+    div.replaceWith(div1);
   });
 };
 
