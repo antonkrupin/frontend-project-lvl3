@@ -25,11 +25,6 @@ const parserXML = (data, rssLink) => {
   return {
     id, rssLink, feed, items,
   };
-
-  /*
-  если сделать такой объект
-  return { id,  feed, items }
-  */
 };
 
 export default parserXML;
