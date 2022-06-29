@@ -9,6 +9,8 @@ const parserXML = (data, rssLink) => {
   const title = channel.querySelector('title').textContent;
   const description = channel.querySelector('description').textContent;
 
+  const feed = { link, title, description };
+
   const items = [];
 
   channel.querySelectorAll('item').forEach((elem) => {
@@ -21,8 +23,13 @@ const parserXML = (data, rssLink) => {
   });
 
   return {
-    id, link, rssLink, title, description, items, render: false,
+    id, rssLink, feed, items,
   };
+
+  /*
+  если сделать такой объект
+  return { id,  feed, items }
+  */
 };
 
 export default parserXML;
