@@ -1,10 +1,9 @@
 /* eslint-disable no-param-reassign */
 import * as yup from 'yup';
 import axios from 'axios';
-import _ from 'lodash';
 
 import parserXML from './parser';
-import renderFeeds, { updateFeeds } from './renders';
+import { updateFeeds } from './renders';
 
 const handler = (event, state) => {
   event.preventDefault();
@@ -68,6 +67,7 @@ export const buttonHandler = (button) => {
 };
 
 export const updateRss = (state) => {
+  // eslint-disable-next-line array-callback-return
   Promise.all(state.feeds.map((link) => {
     const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
     axios({
@@ -75,10 +75,10 @@ export const updateRss = (state) => {
       url: rssLink,
     }).then((response) => parserXML(response.data.contents).items)
       .then((posts) => {
+        // eslint-disable-next-line array-callback-return
         state.feedsObjects.map((elem) => {
           if (elem.rssLink === link) {
             elem.items = posts;
-            //renderFeeds(state.feedsObjects);
             updateFeeds(state.feedsObjects);
           }
         });
