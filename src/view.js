@@ -83,10 +83,13 @@ const app = () => {
             feedBackField.textContent = i18Instance.t('errors.notRssUrl');
             break;
           case 'failure':
-            console.log(value);
             fieldsRender(inputField, 'is-invalid');
             fieldsRender(feedBackField, 'text-danger', 'text-success');
-            feedBackField.textContent = i18Instance.t('errors.notRssUrl');
+            if (state.errorValue[0] === i18Instance.t('errors.urlRepeat')) {
+              feedBackField.textContent = i18Instance.t('errors.urlRepeat');
+            } else {
+              feedBackField.textContent = i18Instance.t('errors.urlFormat');
+            }
             break;
           default:
             throw new Error('Unexpected formStatus value');
@@ -99,7 +102,7 @@ const app = () => {
     handler(e, watchedState);
   });
 
-  // updateRss(state);
+  updateRss(state);
 };
 
 export default app;
