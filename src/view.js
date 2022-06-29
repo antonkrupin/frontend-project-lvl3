@@ -19,6 +19,7 @@ const app = () => {
 
   const inputField = document.querySelector('#url-input');
   const feedBackField = document.querySelector('.feedback');
+  const form = document.querySelector('.rss-form');
 
   const i18Instance = i18next.createInstance();
 
@@ -55,6 +56,7 @@ const app = () => {
             fieldsRender(feedBackField, 'text-success', 'text-danger');
             feedBackField.textContent = i18Instance.t('rssAdded');
             renderFeeds(state.feedsObjects);
+            form.elements.url.value = '';
             break;
           case 'networkFailure':
             fieldsRender(inputField, 'is-invalid');
@@ -79,7 +81,6 @@ const app = () => {
         }
     }
   });
-  const form = document.querySelector('.rss-form');
 
   form.addEventListener('submit', (e) => {
     handler(e, watchedState);
