@@ -77,10 +77,6 @@ const app = () => {
               });
             });
 
-            // eslint-disable-next-line no-unused-vars
-            /* state.feeds.forEach((link) => {
-              renderFeeds(state.feedsObjects);
-            }); */
             break;
           case 'failure':
             fieldsRender(inputField, 'is-invalid');

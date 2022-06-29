@@ -67,23 +67,6 @@ export const buttonHandler = (button) => {
 };
 
 export const updateRss = (state) => {
-  /*Promise.all(state.feeds.map((link) => {
-    axios.get(`https://allorigins.hexlet.app/get?disableCache=true&url=${link}`)
-      .then((response) => {
-        const { posts } = parseFeed(response);
-        return posts;
-      })
-      .then((updatedPosts) => {
-        const allPosts = _.union(updatedPosts, state.posts);
-        const newPosts = _.differenceBy(allPosts, state.posts, 'link');
-
-        if (newPosts.length > 0) {
-          state.posts = [...newPosts, ...state.posts];
-        }
-      })
-      .catch((er) => console.error(er));
-    return null;
-  }));*/
   Promise.all(state.feeds.map((link) => {
     const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
     axios({
