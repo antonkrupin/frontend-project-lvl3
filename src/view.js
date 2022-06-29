@@ -57,7 +57,7 @@ const app = () => {
             fieldsRender(inputField, 'is-valid', 'is-invalid');
             fieldsRender(feedBackField, 'text-success', 'text-danger');
             feedBackField.textContent = i18Instance.t('urlAdded');
-
+            console.log(state);
             renderFeeds(state.feedsObjects);
             // eslint-disable-next-line no-case-declarations
             const buttons = document.querySelectorAll('#posts button');
