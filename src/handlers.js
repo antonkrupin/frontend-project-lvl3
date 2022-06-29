@@ -6,13 +6,19 @@ import parserXML from './parser';
 import { updateFeeds } from './renders';
 
 const handler = (event, state) => {
-  event.preventDefault();
+  //event.preventDefault();
 
   state.formStatus = 'processing';
 
-  const feedBackField = document.querySelector('.feedback');
   const formData = new FormData(event.target);
   const link = formData.get('url').trim();
+
+  if (link === '') {
+    console.log('test');
+    //event.preventDefault();
+  }
+
+  console.log('test');
 
   const rssValidateSchema = yup.object().shape({
     link: yup.string().url().notOneOf(state.feeds),
@@ -40,10 +46,9 @@ const handler = (event, state) => {
       state.formStatus = 'processed';
     }).catch(() => {
       state.networkError = true;
-      state.formStatus = 'failure';
+      state.formStatus = 'networkFailure';
     });
   }).catch((error) => {
-    feedBackField.textContent = 'fdsfsf';
     state.errorValue = error.errors;
     state.formStatus = 'failure';
   });
