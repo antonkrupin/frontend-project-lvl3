@@ -11,6 +11,7 @@ const handler = (event, state) => {
   state.formStatus = 'processing';
 
   const formData = new FormData(event.target);
+
   const link = formData.get('url').trim();
 
   const rssValidateSchema = yup.object().shape({
