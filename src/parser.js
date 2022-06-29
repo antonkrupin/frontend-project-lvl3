@@ -9,7 +9,9 @@ const parserXML = (data, rssLink) => {
   const title = channel.querySelector('title').textContent;
   const description = channel.querySelector('description').textContent;
 
-  const feed = { link, title, description };
+  const feed = {
+    link, title, description, rendered: false,
+  };
 
   const items = [];
 
