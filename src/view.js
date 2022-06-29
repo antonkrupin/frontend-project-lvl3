@@ -15,7 +15,6 @@ const app = () => {
     posts: [],
     errorValue: '',
     formStatus: 'filling',
-    buttons: [],
   };
 
   const inputField = document.querySelector('#url-input');
