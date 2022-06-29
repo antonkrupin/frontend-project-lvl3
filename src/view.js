@@ -45,7 +45,7 @@ const app = () => {
     target.classList.remove(removedClass);
   };
 
-  const watchedState = onChange(state, (path, value) => {
+  const watchedState = onChange(state, (path, value, prev) => {
     // eslint-disable-next-line default-case
     switch (path) {
       case 'formStatus':
@@ -57,7 +57,6 @@ const app = () => {
             fieldsRender(inputField, 'is-valid', 'is-invalid');
             fieldsRender(feedBackField, 'text-success', 'text-danger');
             feedBackField.textContent = i18Instance.t('urlAdded');
-            console.log(state);
             renderFeeds(state.feedsObjects);
             // eslint-disable-next-line no-case-declarations
             const buttons = document.querySelectorAll('#posts button');
@@ -99,7 +98,7 @@ const app = () => {
     handler(e, watchedState);
   });
 
-  //updateRss(state);
+  updateRss(state);
 };
 
 export default app;
