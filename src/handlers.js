@@ -37,7 +37,6 @@ const handler = (event, state) => {
       const data = response.data.contents;
       state.feedsObjects.push(parserXML(data, link));
       console.log(parserXML(data, link));
-      console.log(state);
       state.feeds.push(link);
       state.formStatus = 'processed';
     }).catch(() => {
