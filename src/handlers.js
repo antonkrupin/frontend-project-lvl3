@@ -10,6 +10,7 @@ const handler = (event, state) => {
 
   state.formStatus = 'processing';
 
+  const feedBackField = document.querySelector('.feedback');
   const formData = new FormData(event.target);
   const link = formData.get('url').trim();
 
@@ -35,7 +36,6 @@ const handler = (event, state) => {
     }).then((response) => {
       const data = response.data.contents;
       state.feedsObjects.push(parserXML(data, link));
-      console.log(parserXML(data, link));
       state.feeds.push(link);
       state.formStatus = 'processed';
     }).catch(() => {
@@ -43,6 +43,7 @@ const handler = (event, state) => {
       state.formStatus = 'failure';
     });
   }).catch((error) => {
+    feedBackField.textContent = 'fdsfsf';
     state.errorValue = error.errors;
     state.formStatus = 'failure';
   });
