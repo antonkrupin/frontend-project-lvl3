@@ -51,7 +51,7 @@ const app = () => {
           case 'processing':
             state.networkError = false;
             fieldsRender(feedBackField, 'text-success', 'text-danger');
-            feedBackField.textContent = i18Instance.t('errors.watching');
+            feedBackField.textContent = i18Instance.t('watching');
             break;
           case 'processed':
             fieldsRender(inputField, 'is-valid', 'is-invalid');
@@ -76,16 +76,17 @@ const app = () => {
                 buttonHandler(e.target);
               });
             });
-
             break;
-          case 'failure':
+          case 'networkFailure':
             fieldsRender(inputField, 'is-invalid');
             fieldsRender(feedBackField, 'text-danger', 'text-success');
-            if (state.networkError) {
-              feedBackField.textContent = i18Instance.t('errors.networkProblems');
-            } else {
-              feedBackField.textContent = state.errorValue;
-            }
+            feedBackField.textContent = i18Instance.t('errors.notRssUrl');
+            break;
+          case 'failure':
+            console.log(value);
+            fieldsRender(inputField, 'is-invalid');
+            fieldsRender(feedBackField, 'text-danger', 'text-success');
+            feedBackField.textContent = i18Instance.t('errors.notRssUrl');
             break;
           default:
             throw new Error('Unexpected formStatus value');
