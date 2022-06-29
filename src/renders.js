@@ -1,6 +1,4 @@
 /* eslint-disable no-param-reassign */
-// import { buttonHandler } from "./handlers";
-
 const buttonHandler = (button) => {
   const modal = document.querySelector('#exampleModal');
   const modalTitle = modal.querySelector('.modal-title');
