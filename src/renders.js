@@ -80,15 +80,13 @@ const renderFeed = (title, description) => {
 const renderFeeds = (state) => {
   state.forEach((el) => {
     const postsSection = document.querySelector('#posts');
-    let div = document.getElementById(`${el.link}`);
+    let div = document.getElementById(`${el.rssLink}`);
 
-    if (!el.render) {
-      renderFeed(el.title, el.description);
-    }
+    renderFeed(el.feed.title, el.feed.description);
 
     if (div === null) {
       div = document.createElement('div');
-      div.setAttribute('id', `${el.link}`);
+      div.setAttribute('id', `${el.rssLink}`);
     }
 
     el.items.forEach((item) => {
@@ -103,17 +101,19 @@ const renderFeeds = (state) => {
 };
 
 export const updateFeeds = (state) => {
-  state.forEach((el) => {
-    const div = document.getElementById(`${el.link}`);
-    const div1 = document.createElement('div');
-    el.items.forEach((item) => {
-      if (!item[4].rendered) {
-        div1.append(renderPost(item[0], item[1], item[2]));
-      }
-      item[4].rendered = true;
+  const postsSection = document.querySelector('#posts');
+  const test = [];
+  state.forEach((elem) => {
+    const div = document.getElementById(`${elem.rssLink}`);
+    div.innerHTML = '';
+    elem.items.forEach((item) => {
+      div.append(renderPost(item[0], item[1], item[2]));
     });
-    div.replaceWith(div1);
+    test.map((el) => {
+      postsSection.prepend(el);
+    });
   });
+  console.log(test);
 };
 
 export default renderFeeds;
