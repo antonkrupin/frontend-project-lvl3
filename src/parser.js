@@ -13,7 +13,7 @@ const parserXML = (data, rssLink) => {
     link, title, description, rendered: false,
   };
 
-  const posts = [];
+  const items = [];
 
   channel.querySelectorAll('item').forEach((elem) => {
     const itemTitle = elem.querySelector('title').textContent;
@@ -21,11 +21,11 @@ const parserXML = (data, rssLink) => {
     const itemLink = elem.querySelector('link').textContent;
     const itemDate = elem.querySelector('pubDate').textContent;
 
-    posts.push([itemTitle, itemDescription, itemLink, itemDate, { rendered: false }]);
+    items.push([itemTitle, itemDescription, itemLink, itemDate, { rendered: false }]);
   });
 
   return {
-    id, rssLink, feed, posts,
+    id, rssLink, feed, items,
   };
 };
 
