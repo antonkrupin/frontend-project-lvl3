@@ -131,8 +131,7 @@ export const updateFeeds = (state) => {
     elem.items.forEach((item) => {
       div.append(renderPost(item[0], item[1], item[2]));
     });
-    // eslint-disable-next-line array-callback-return
-    divs.map((el) => {
+    divs.forEach((el) => {
       postsSection.prepend(el);
     });
   });
