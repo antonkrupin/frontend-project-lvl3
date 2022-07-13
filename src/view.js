@@ -5,8 +5,6 @@ import i18next from 'i18next';
 import resources from './locales/index';
 import handler, { updateRss } from './handlers';
 import renderFeeds from './renders';
-// eslint-disable-next-line no-unused-vars
-import getTimeout from './reconnectionTimer';
 
 const app = () => {
   const state = {
