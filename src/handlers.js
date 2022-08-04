@@ -60,10 +60,6 @@ export const updateRss = (state) => {
       url: rssLink,
     }).then((response) => parserXML(response.data.contents).posts)
       .then((posts) => {
-        console.log('this is new posts');
-        console.log(posts);
-        console.log('this is old posts');
-        console.log(state.feedsObjects);
         state.feedsObjects.forEach((elem) => {
           if (elem.rssLink === link) {
             elem.posts = posts;
