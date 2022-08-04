@@ -152,6 +152,7 @@ const renderFeeds = (state) => {
       if (!rendered) {
         div.append(renderPost(postTitle, postDescription, postLink));
       }
+
       rendered = true;
     });
     postsSection.prepend(div);
