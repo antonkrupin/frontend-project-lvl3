@@ -129,6 +129,7 @@ const renderFeeds = (state) => {
   }
 
   state.forEach((el) => {
+    console.log(el);
     const postsSection = document.querySelector('#posts');
     let div = document.getElementById(`${el.rssLink}`);
     if (!el.feed.rendered) {
@@ -141,11 +142,17 @@ const renderFeeds = (state) => {
       div.setAttribute('id', `${el.rssLink}`);
     }
 
-    el.items.forEach((item) => {
-      if (!item[4].rendered) {
-        div.append(renderPost(item[0], item[1], item[2]));
+    el.posts.forEach((item) => {
+      const {
+        postTitle, postDescription, postLink,
+      } = item;
+
+      let { rendered } = item;
+
+      if (!rendered) {
+        div.append(renderPost(postTitle, postDescription, postLink));
       }
-      item[4].rendered = true;
+      rendered = true;
     });
     postsSection.prepend(div);
     el.render = true;
@@ -158,8 +165,9 @@ export const updateFeeds = (state) => {
   state.forEach((elem) => {
     const div = document.getElementById(`${elem.rssLink}`);
     div.innerHTML = '';
-    elem.items.forEach((item) => {
-      div.append(renderPost(item[0], item[1], item[2]));
+    elem.posts.forEach((item) => {
+      const { postTitle, postDescription, postLink } = item;
+      div.append(renderPost(postTitle, postDescription, postLink));
     });
     divs.forEach((el) => {
       postsSection.prepend(el);
