@@ -35,6 +35,7 @@ const handler = (event, state) => {
     }).then((response) => {
       const data = response.data.contents;
       state.feedsObjects.push(parserXML(data, link));
+      console.log(state.feedsObjects);
       state.feeds.push(link);
       state.formStatus = 'processed';
     }).catch((error) => {
@@ -51,8 +52,8 @@ const handler = (event, state) => {
   });
 };
 
-export const updateRss = (state) => {
-  Promise.all(state.feeds.forEach((link) => {
+/* export const updateRss1 = (state) => {
+  Promise.all(state.feeds.map((link) => {
     const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
     axios({
       method: 'get',
@@ -67,6 +68,26 @@ export const updateRss = (state) => {
         });
       });
   }));
+
+  setTimeout(() => updateRss(state), 5000);
+}; */
+
+export const updateRss = (state) => {
+  state.feeds.forEach((link) => {
+    const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
+    axios({
+      method: 'get',
+      url: rssLink,
+    }).then((response) => parserXML(response.data.contents).items)
+      .then((posts) => {
+        state.feedsObjects.forEach((elem) => {
+          if (elem.rssLink === link) {
+            elem.items = posts;
+            updateFeeds(state.feedsObjects);
+          }
+        });
+      });
+  });
 
   setTimeout(() => updateRss(state), 5000);
 };
