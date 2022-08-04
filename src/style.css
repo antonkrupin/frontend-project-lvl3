@@ -6,13 +6,13 @@ html {
 .main {
   display: flex;
   height: 100%;
-  background-color: #000;
+  background-color: #212529;
   color: white;
   justify-content: center;
   align-content: center;
   flex-direction: column;
   padding-top: 10rem;
-  padding-bottom: 10rem;
+  padding-bottom: 5rem;
 }
 
 .main h1 {
@@ -26,18 +26,17 @@ html {
 }
 
 #url-input {
+  width: 600px;
   font-size: 2rem;
-  height: 5rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  height: 6rem;
 }
 
-#url-input + label{
+#url-input + label {
   font-size: 1.5rem;
 }
 
 #submit-btn {
-  font-size: 2rem;
+  font-size: 1.7rem;
 }
 
 #example-text {
