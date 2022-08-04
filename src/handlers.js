@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import * as yup from 'yup';
 import axios from 'axios';
+import _ from 'lodash';
 
 import parserXML from './parser';
 import { updateFeeds } from './renders';
@@ -62,6 +63,9 @@ export const updateRss = (state) => {
       .then((posts) => {
         state.feedsObjects.forEach((elem) => {
           if (elem.rssLink === link) {
+            const keys = posts.map((post) => _.keys(post));
+            console.log(keys);
+            console.log(posts);
             elem.posts = posts;
             updateFeeds(state.feedsObjects);
           }
