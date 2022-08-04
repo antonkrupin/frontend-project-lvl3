@@ -52,37 +52,17 @@ const handler = (event, state) => {
   });
 };
 
-/* export const updateRss1 = (state) => {
-  Promise.all(state.feeds.map((link) => {
-    const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
-    axios({
-      method: 'get',
-      url: rssLink,
-    }).then((response) => parserXML(response.data.contents).items)
-      .then((posts) => {
-        state.feedsObjects.forEach((elem) => {
-          if (elem.rssLink === link) {
-            elem.items = posts;
-            updateFeeds(state.feedsObjects);
-          }
-        });
-      });
-  }));
-
-  setTimeout(() => updateRss1(state), 5000);
-}; */
-
 export const updateRss = (state) => {
   state.feeds.forEach((link) => {
     const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
     axios({
       method: 'get',
       url: rssLink,
-    }).then((response) => parserXML(response.data.contents).items)
+    }).then((response) => parserXML(response.data.contents).posts)
       .then((posts) => {
         state.feedsObjects.forEach((elem) => {
           if (elem.rssLink === link) {
-            elem.items = posts;
+            elem.posts = posts;
             updateFeeds(state.feedsObjects);
           }
         });
