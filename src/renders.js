@@ -1,4 +1,28 @@
 /* eslint-disable no-param-reassign */
+const createFeedsAndPostsTitle = () => {
+  const row = document.createElement('div');
+  row.classList.add('row');
+
+  const col8 = document.createElement('div');
+  col8.classList.add('col-8');
+
+  const col4 = document.createElement('div');
+  col4.classList.add('col-4');
+
+  const postsTitle = document.createElement('h1');
+  postsTitle.textContent = 'Посты';
+
+  const feedsTitle = document.createElement('h1');
+  feedsTitle.textContent = 'Фиды';
+
+  col8.append(postsTitle);
+  col4.append(feedsTitle);
+  row.append(col8);
+  row.append(col4);
+
+  return row;
+};
+
 const buttonHandler = (button) => {
   const modal = document.querySelector('#exampleModal');
   const modalTitle = modal.querySelector('.modal-title');
@@ -98,6 +122,12 @@ const renderFeed = (title, description) => {
 };
 
 const renderFeeds = (state) => {
+  let feedsAndPostsTitle = document.querySelector('.feedsSection .container .row .col-8 h1');
+  if (feedsAndPostsTitle === null) {
+    feedsAndPostsTitle = document.querySelector('.feedsSection .container');
+    feedsAndPostsTitle.prepend(createFeedsAndPostsTitle());
+  }
+
   state.forEach((el) => {
     const postsSection = document.querySelector('#posts');
     let div = document.getElementById(`${el.rssLink}`);
