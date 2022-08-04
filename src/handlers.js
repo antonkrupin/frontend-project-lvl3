@@ -52,16 +52,14 @@ const handler = (event, state) => {
 };
 
 export const updateRss = (state) => {
-  // eslint-disable-next-line array-callback-return
-  Promise.all(state.feeds.map((link) => {
+  Promise.all(state.feeds.forEach((link) => {
     const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
     axios({
       method: 'get',
       url: rssLink,
     }).then((response) => parserXML(response.data.contents).items)
       .then((posts) => {
-        // eslint-disable-next-line array-callback-return
-        state.feedsObjects.map((elem) => {
+        state.feedsObjects.forEach((elem) => {
           if (elem.rssLink === link) {
             elem.items = posts;
             updateFeeds(state.feedsObjects);
