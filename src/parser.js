@@ -22,7 +22,7 @@ const parserXML = (data, rssLink) => {
     const postLink = elem.querySelector('link').textContent;
     const postDate = elem.querySelector('pubDate').textContent;
     posts[id].push({
-      postTitle, postDescription, postLink, postDate, rendered: false,
+      rssLink, postTitle, postDescription, postLink, postDate, rendered: false,
     });
   });
 
