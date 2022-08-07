@@ -124,7 +124,7 @@ const renderFeed = (title, description) => {
   feedsSection.prepend(renderMarkupFeed(title, description));
 };
 
-export const renderAll = (feeds, posts) => {
+const renderAll = (feeds, posts) => {
   const postsSection = document.querySelector('#posts');
   let feedsAndPostsTitle = document.querySelector('.feedsSection .container .row .col-8 h1');
   if (feedsAndPostsTitle === null) {
@@ -135,15 +135,12 @@ export const renderAll = (feeds, posts) => {
     const {
       id, title, description, rssLink,
     } = feed;
-    let { rendered } = feed;
 
     let div = document.getElementById(`${rssLink}`);
-    if (!rendered) {
+    if (!feed.rendered) {
       renderFeed(title, description);
-      rendered = true;
+      feed.rendered = true;
     }
-
-    rendered = true;
 
     posts.forEach((post) => {
       if (div === null) {
@@ -165,7 +162,7 @@ export const renderAll = (feeds, posts) => {
   });
 };
 
-const renderFeeds = (feeds) => {
+/* const renderFeeds = (feeds) => {
   let feedsAndPostsTitle = document.querySelector('.feedsSection .container .row .col-8 h1');
   if (feedsAndPostsTitle === null) {
     feedsAndPostsTitle = document.querySelector('.feedsSection .container');
@@ -188,21 +185,17 @@ const renderFeeds = (feeds) => {
 
     rendered = true;
   });
-};
+}; */
 
 export const updateFeeds = (posts) => {
-  // console.log(state);
-  // const postsSection = document.querySelector('#posts');
-  // const divs = [];
   posts.forEach((post) => {
     const div = document.getElementById(`${post.rssLink}`);
     const { postTitle, postDescription, postLink } = post;
-    let { rendered } = post;
-    if (!rendered) {
+    if (!post.rendered) {
       div.prepend(renderPost(postTitle, postDescription, postLink));
+      post.rendered = true;
     }
-    rendered = true;
   });
 };
 
-export default renderFeeds;
+export default renderAll;
