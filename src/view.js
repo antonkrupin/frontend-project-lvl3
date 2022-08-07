@@ -10,7 +10,6 @@ const app = () => {
   const state = {
     rssLinks: [],
     feeds: [],
-    feedsObjects: [],
     posts: [],
     errorValue: '',
     formStatus: 'filling',
