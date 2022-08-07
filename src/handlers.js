@@ -67,10 +67,11 @@ export const updateRss = (state) => {
           if (feed.rssLink === link) {
             const updatedFeedId = feed.id;
             // eslint-disable-next-line max-len
-            const postsToCompare = state.posts.filter((post) => post[updatedFeedId])[0][updatedFeedId];
-            const difference = _.differenceBy(posts[id], postsToCompare, 'postDate');
+            const newPosts = posts[id];
+            const oldPosts = state.posts.filter((post) => post[updatedFeedId])[0][updatedFeedId];
+            const difference = _.differenceBy(newPosts, oldPosts, 'postDate');
             if (difference.length !== 0) {
-              postsToCompare.unshift(difference[0]);
+              oldPosts.unshift(difference[0]);
               state.posts.forEach((post) => {
                 if (post[updatedFeedId]) {
                   updateFeeds(post[updatedFeedId]);
