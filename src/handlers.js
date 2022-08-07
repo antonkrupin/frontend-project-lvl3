@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import * as yup from 'yup';
 import axios from 'axios';
-// import _ from 'lodash';
+import _ from 'lodash';
 
 import parserXML from './parser';
 import { updateFeeds } from './renders';
@@ -14,8 +14,6 @@ const handler = (event, state) => {
   const formData = new FormData(event.target);
 
   const link = formData.get('url').trim();
-  console.log('this is link');
-  console.log(link);
 
   const rssValidateSchema = yup.object().shape({
     link: yup.string().url().notOneOf(state.rssLinks),
@@ -40,7 +38,7 @@ const handler = (event, state) => {
       state.posts.push(posts);
       state.feeds.push(feed);
       state.rssLinks.push(feed.rssLink);
-      console.log(state.rawFeeds);
+
       state.formStatus = 'processed';
     }).catch((error) => {
       if (error.name === 'AxiosError') {
@@ -62,13 +60,48 @@ export const updateRss = (state) => {
     axios({
       method: 'get',
       url: rssLink,
-    }).then((response) => parserXML(response.data.contents).posts)
-      .then((posts) => {
-        state.posts.forEach((elem) => {
-          if (elem.rssLink === link) {
-            // const keys = posts.map((post) => _.keys(post));
-            elem.posts = posts;
-            updateFeeds(state.posts);
+    }).then((response) => parserXML(response.data.contents, link))
+      .then((data) => {
+        const { id, posts } = data;
+        state.feeds.forEach((feed) => {
+          if (feed.rssLink === link) {
+            const updatedFeedId = feed.id;
+            // eslint-disable-next-line max-len
+            const postsToCompare = state.posts.filter((post) => post[updatedFeedId])[0][updatedFeedId];
+            const difference = _.differenceBy(posts[id], postsToCompare, 'postDate');
+            if (difference.length !== 0) {
+              console.log('updated');
+              postsToCompare.unshift(difference[0]);
+              state.posts.forEach((post) => {
+                /* console.log('_____');
+                console.log(post[updatedFeedId]);
+                console.log('______'); */
+                if (post[updatedFeedId]) {
+                  updateFeeds(post[updatedFeedId]);
+                }
+              });
+            }
+            /* console.log(postsToCompare);
+            console.log(state.posts); */
+            /* state.posts.forEach((post) => {
+              console.log('_____');
+              console.log(post[updatedFeedId]);
+              console.log('______');
+              if (post[updatedFeedId]) {
+                updateFeeds(post[updatedFeedId]);
+              }
+            }); */
+            // updateFeeds(postsToCompare);
+            /* state.posts.forEach((post) => {
+              console.log('new posts');
+              console.log(posts);
+              console.log('old posts');
+              console.log(state.posts);
+              const test = state.posts.filter((post) => {
+
+              });
+              console.log(_.differenceBy(post[feed.id], posts, 'postDate'));
+            }); */
           }
         });
       });
