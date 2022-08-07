@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import * as yup from 'yup';
 import axios from 'axios';
-import _ from 'lodash';
+// import _ from 'lodash';
 
 import parserXML from './parser';
 import { updateFeeds } from './renders';
@@ -14,9 +14,11 @@ const handler = (event, state) => {
   const formData = new FormData(event.target);
 
   const link = formData.get('url').trim();
+  console.log('this is link');
+  console.log(link);
 
   const rssValidateSchema = yup.object().shape({
-    link: yup.string().url().notOneOf(state.feeds),
+    link: yup.string().url().notOneOf(state.rssLinks),
   });
 
   const validateRss = (fields) => {
@@ -34,10 +36,11 @@ const handler = (event, state) => {
       method: 'get',
       url: rssLink,
     }).then((response) => {
-      const data = response.data.contents;
-      state.feedsObjects.push(parserXML(data, link));
-      console.log(state);
-      state.feeds.push(link);
+      const { feed, posts } = parserXML(response.data.contents, link);
+      state.posts.push(posts);
+      state.feeds.push(feed);
+      state.rssLinks.push(feed.rssLink);
+      console.log(state.rawFeeds);
       state.formStatus = 'processed';
     }).catch((error) => {
       if (error.name === 'AxiosError') {
@@ -63,9 +66,7 @@ export const updateRss = (state) => {
       .then((posts) => {
         state.feedsObjects.forEach((elem) => {
           if (elem.rssLink === link) {
-            const keys = posts.map((post) => _.keys(post));
-            console.log(keys);
-            console.log(posts);
+            // const keys = posts.map((post) => _.keys(post));
             elem.posts = posts;
             updateFeeds(state.feedsObjects);
           }
