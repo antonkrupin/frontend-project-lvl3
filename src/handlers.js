@@ -57,18 +57,18 @@ const handler = (event, state) => {
 };
 
 export const updateRss = (state) => {
-  state.feeds.forEach((link) => {
+  state.rssLinks.forEach((link) => {
     const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
     axios({
       method: 'get',
       url: rssLink,
     }).then((response) => parserXML(response.data.contents).posts)
       .then((posts) => {
-        state.feedsObjects.forEach((elem) => {
+        state.posts.forEach((elem) => {
           if (elem.rssLink === link) {
             // const keys = posts.map((post) => _.keys(post));
             elem.posts = posts;
-            updateFeeds(state.feedsObjects);
+            updateFeeds(state.posts);
           }
         });
       });
