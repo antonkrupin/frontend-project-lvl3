@@ -10,25 +10,23 @@ const parserXML = (data, rssLink) => {
   const description = channel.querySelector('description').textContent;
 
   const feed = {
-    link, title, description, rendered: false,
+    id, link, rssLink, title, description, rendered: false,
   };
 
-  const posts = [];
+  const posts = {};
+  posts[id] = [];
 
   channel.querySelectorAll('item').forEach((elem) => {
     const postTitle = elem.querySelector('title').textContent;
     const postDescription = elem.querySelector('description').textContent;
     const postLink = elem.querySelector('link').textContent;
     const postDate = elem.querySelector('pubDate').textContent;
-
-    posts.push({
+    posts[id].push({
       postTitle, postDescription, postLink, postDate, rendered: false,
     });
   });
 
-  return {
-    id, rssLink, feed, posts,
-  };
+  return { id, feed, posts };
 };
 
 export default parserXML;
