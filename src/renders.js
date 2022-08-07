@@ -91,7 +91,8 @@ const renderMarkupPost = (text, description, link, buttonText = 'Просмот�
   themeLink.setAttribute('href', link);
   themeLink.setAttribute('target', '_blank');
   themeLink.setAttribute('data-description', description);
-  themeLink.textContent = text;
+  // themeLink.textContent = text;
+  themeLink.innerText = text;
 
   const buttonCol = document.createElement('div');
   buttonCol.classList.add('col-3');
@@ -106,7 +107,8 @@ const renderMarkupPost = (text, description, link, buttonText = 'Просмот�
     buttonHandler(event.target);
   });
 
-  button.textContent = buttonText;
+  // button.textContent = buttonText;
+  button.innerText = buttonText;
 
   themeH4.append(themeLink);
   themeCol.append(themeH4);
