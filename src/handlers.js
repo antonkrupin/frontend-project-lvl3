@@ -70,38 +70,14 @@ export const updateRss = (state) => {
             const postsToCompare = state.posts.filter((post) => post[updatedFeedId])[0][updatedFeedId];
             const difference = _.differenceBy(posts[id], postsToCompare, 'postDate');
             if (difference.length !== 0) {
-              console.log('updated');
               postsToCompare.unshift(difference[0]);
               state.posts.forEach((post) => {
-                /* console.log('_____');
-                console.log(post[updatedFeedId]);
-                console.log('______'); */
                 if (post[updatedFeedId]) {
                   updateFeeds(post[updatedFeedId]);
                 }
+                console.log(state.posts);
               });
             }
-            /* console.log(postsToCompare);
-            console.log(state.posts); */
-            /* state.posts.forEach((post) => {
-              console.log('_____');
-              console.log(post[updatedFeedId]);
-              console.log('______');
-              if (post[updatedFeedId]) {
-                updateFeeds(post[updatedFeedId]);
-              }
-            }); */
-            // updateFeeds(postsToCompare);
-            /* state.posts.forEach((post) => {
-              console.log('new posts');
-              console.log(posts);
-              console.log('old posts');
-              console.log(state.posts);
-              const test = state.posts.filter((post) => {
-
-              });
-              console.log(_.differenceBy(post[feed.id], posts, 'postDate'));
-            }); */
           }
         });
       });
