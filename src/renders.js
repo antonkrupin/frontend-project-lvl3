@@ -162,31 +162,6 @@ const renderAll = (feeds, posts) => {
   });
 };
 
-/* const renderFeeds = (feeds) => {
-  let feedsAndPostsTitle = document.querySelector('.feedsSection .container .row .col-8 h1');
-  if (feedsAndPostsTitle === null) {
-    feedsAndPostsTitle = document.querySelector('.feedsSection .container');
-    feedsAndPostsTitle.prepend(createFeedsAndPostsTitle());
-  }
-  feeds.forEach((feed) => {
-    const { title, description, rssLink } = feed;
-    let { rendered } = feed;
-
-    let div = document.getElementById(`${rssLink}`);
-    if (!rendered) {
-      renderFeed(title, description);
-      rendered = true;
-    }
-
-    if (div === null) {
-      div = document.createElement('div');
-      div.setAttribute('id', `${rssLink}`);
-    }
-
-    rendered = true;
-  });
-}; */
-
 export const updateFeeds = (posts) => {
   posts.forEach((post) => {
     const div = document.getElementById(`${post.rssLink}`);
