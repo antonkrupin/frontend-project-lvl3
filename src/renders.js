@@ -219,6 +219,7 @@ const renderFeeds = (feeds) => {
 
 export const updateFeeds = (state) => {
   const postsSection = document.querySelector('#posts');
+  console.log('this is post from updateFeeds');
   const divs = [];
   state.forEach((elem) => {
     const div = document.getElementById(`${elem.rssLink}`);
