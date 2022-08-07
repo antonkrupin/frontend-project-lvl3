@@ -75,7 +75,6 @@ export const updateRss = (state) => {
                 if (post[updatedFeedId]) {
                   updateFeeds(post[updatedFeedId]);
                 }
-                console.log(state.posts);
               });
             }
           }
