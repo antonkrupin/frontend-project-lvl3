@@ -81,21 +81,20 @@ const renderMarkupPost = (text, description, link, buttonText = 'Просмот�
   const row = document.createElement('div');
   row.classList.add('row', 'post');
 
-  const themeCol = document.createElement('div');
-  themeCol.classList.add('col-9');
+  // const themeCol = document.createElement('div');
+  // themeCol.classList.add('col-9');
 
-  const themeH4 = document.createElement('h4');
+  // const themeH4 = document.createElement('h4');
 
   const themeLink = document.createElement('a');
   themeLink.classList.add('fw-bold');
   themeLink.setAttribute('href', link);
   themeLink.setAttribute('target', '_blank');
   themeLink.setAttribute('data-description', description);
-  // themeLink.textContent = text;
-  themeLink.innerText = text;
+  themeLink.textContent = text;
 
-  const buttonCol = document.createElement('div');
-  buttonCol.classList.add('col-3');
+  // const buttonCol = document.createElement('div');
+  // buttonCol.classList.add('col-3');
 
   const button = document.createElement('button');
   button.classList.add('btn', 'btn-outline-primary');
@@ -107,14 +106,13 @@ const renderMarkupPost = (text, description, link, buttonText = 'Просмот�
     buttonHandler(event.target);
   });
 
-  // button.textContent = buttonText;
-  button.innerText = buttonText;
+  button.textContent = buttonText;
 
-  themeH4.append(themeLink);
-  themeCol.append(themeH4);
-  buttonCol.append(button);
-  row.append(themeCol);
-  row.append(buttonCol);
+  // themeH4.append(themeLink);
+  // themeCol.append(themeH4);
+  // buttonCol.append(button);
+  row.append(themeLink);
+  row.append(button);
 
   return row;
 };
