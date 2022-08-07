@@ -1,3 +1,6 @@
+/* eslint-disable max-len */
+import _ from 'lodash';
+
 /* eslint-disable no-param-reassign */
 const createFeedsAndPostsTitle = () => {
   const row = document.createElement('div');
@@ -114,40 +117,95 @@ const renderMarkupPost = (text, description, link, buttonText = 'Просмот�
   return row;
 };
 
-const renderPost = (theme, description, link) => renderMarkupPost(theme, description, link);
+const renderPost = (postTitle, postDescription, postLink) => renderMarkupPost(postTitle, postDescription, postLink);
 
 const renderFeed = (title, description) => {
   const feedsSection = document.querySelector('#feeds');
   feedsSection.prepend(renderMarkupFeed(title, description));
 };
 
-const renderFeeds = (state) => {
+export const renderAll = (feeds, posts) => {
+  const postsSection = document.querySelector('#posts');
   let feedsAndPostsTitle = document.querySelector('.feedsSection .container .row .col-8 h1');
   if (feedsAndPostsTitle === null) {
     feedsAndPostsTitle = document.querySelector('.feedsSection .container');
     feedsAndPostsTitle.prepend(createFeedsAndPostsTitle());
   }
+  feeds.forEach((feed) => {
+    const {
+      id, title, description, rssLink,
+    } = feed;
+    let { rendered } = feed;
 
-  state.forEach((el) => {
-    console.log(el);
-    const postsSection = document.querySelector('#posts');
-    let div = document.getElementById(`${el.rssLink}`);
-    if (!el.feed.rendered) {
-      renderFeed(el.feed.title, el.feed.description);
-      el.feed.rendered = true;
+    let div = document.getElementById(`${rssLink}`);
+    if (!rendered) {
+      renderFeed(title, description);
+      rendered = true;
+    }
+
+    rendered = true;
+    posts.forEach((post) => {
+      if (div === null) {
+        div = document.createElement('div');
+        div.setAttribute('id', `${rssLink}`);
+      }
+      const keys = _.keys(post);
+      console.log(keys[0]);
+      console.log(id);
+      if (keys[0] === id) {
+        post[id].forEach((elem) => {
+          const { postTitle, postDescription, postLink } = elem;
+          if (!elem.rendered) {
+            div.append(renderPost(postTitle, postDescription, postLink));
+          }
+          elem.rendered = true;
+        });
+      }
+      postsSection.prepend(div);
+    });
+  });
+};
+
+const renderFeeds = (feeds) => {
+  let feedsAndPostsTitle = document.querySelector('.feedsSection .container .row .col-8 h1');
+  if (feedsAndPostsTitle === null) {
+    feedsAndPostsTitle = document.querySelector('.feedsSection .container');
+    feedsAndPostsTitle.prepend(createFeedsAndPostsTitle());
+  }
+  feeds.forEach((feed) => {
+    const { title, description, rssLink } = feed;
+    let { rendered } = feed;
+
+    let div = document.getElementById(`${rssLink}`);
+    if (!rendered) {
+      renderFeed(title, description);
+      rendered = true;
     }
 
     if (div === null) {
       div = document.createElement('div');
-      div.setAttribute('id', `${el.rssLink}`);
+      div.setAttribute('id', `${rssLink}`);
     }
 
-    el.posts.forEach((item) => {
-      const {
-        postTitle, postDescription, postLink,
-      } = item;
+    rendered = true;
+  });
+};
 
-      let { rendered } = item;
+/* export const renderPosts = (posts) => {
+  const postsSection = document.querySelector('#posts');
+  console.log(posts);
+  posts.forEach((elem) => {
+    elem.forEach((post) => {
+      const {
+        rssLink, postTitle, postDescription, postLink,
+      } = post;
+
+      let { rendered } = post;
+
+      if (div === null) {
+        div = document.createElement('div');
+        div.setAttribute('id', `${rssLink}`);
+      }
 
       if (!rendered) {
         div.append(renderPost(postTitle, postDescription, postLink));
@@ -156,9 +214,8 @@ const renderFeeds = (state) => {
       rendered = true;
     });
     postsSection.prepend(div);
-    el.render = true;
   });
-};
+}; */
 
 export const updateFeeds = (state) => {
   const postsSection = document.querySelector('#posts');
