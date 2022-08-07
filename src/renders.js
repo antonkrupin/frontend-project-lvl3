@@ -126,11 +126,15 @@ const renderFeed = (title, description) => {
 
 const renderAll = (feeds, posts) => {
   const postsSection = document.querySelector('#posts');
-  let feedsAndPostsTitle = document.querySelector('.feedsSection .container .row .col-8 h1');
+  /* let feedsAndPostsTitle = document.querySelector('.feedsSection .container .row .col-8 h1');
   if (feedsAndPostsTitle === null) {
     feedsAndPostsTitle = document.querySelector('.feedsSection .container');
     feedsAndPostsTitle.prepend(createFeedsAndPostsTitle());
-  }
+  } */
+
+  const feedsAndPostsTitle = document.querySelector('.feedsSection .container .row .col-8 h1') ?? document.querySelector('.feedsSection .container').prepend(createFeedsAndPostsTitle());
+  // feedsAndPostsTitle.prepend(createFeedsAndPostsTitle());
+
   feeds.forEach((feed) => {
     const {
       id, title, description, rssLink,
