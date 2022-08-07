@@ -144,14 +144,13 @@ export const renderAll = (feeds, posts) => {
     }
 
     rendered = true;
+
     posts.forEach((post) => {
       if (div === null) {
         div = document.createElement('div');
         div.setAttribute('id', `${rssLink}`);
       }
       const keys = _.keys(post);
-      console.log(keys[0]);
-      console.log(id);
       if (keys[0] === id) {
         post[id].forEach((elem) => {
           const { postTitle, postDescription, postLink } = elem;
@@ -191,46 +190,18 @@ const renderFeeds = (feeds) => {
   });
 };
 
-/* export const renderPosts = (posts) => {
-  const postsSection = document.querySelector('#posts');
-  console.log(posts);
-  posts.forEach((elem) => {
-    elem.forEach((post) => {
-      const {
-        rssLink, postTitle, postDescription, postLink,
-      } = post;
-
-      let { rendered } = post;
-
-      if (div === null) {
-        div = document.createElement('div');
-        div.setAttribute('id', `${rssLink}`);
-      }
-
-      if (!rendered) {
-        div.append(renderPost(postTitle, postDescription, postLink));
-      }
-
-      rendered = true;
-    });
-    postsSection.prepend(div);
-  });
-}; */
-
-export const updateFeeds = (state) => {
-  const postsSection = document.querySelector('#posts');
-  console.log('this is post from updateFeeds');
-  const divs = [];
-  state.forEach((elem) => {
-    const div = document.getElementById(`${elem.rssLink}`);
-    div.innerHTML = '';
-    elem.posts.forEach((item) => {
-      const { postTitle, postDescription, postLink } = item;
-      div.append(renderPost(postTitle, postDescription, postLink));
-    });
-    divs.forEach((el) => {
-      postsSection.prepend(el);
-    });
+export const updateFeeds = (posts) => {
+  // console.log(state);
+  // const postsSection = document.querySelector('#posts');
+  // const divs = [];
+  posts.forEach((post) => {
+    const div = document.getElementById(`${post.rssLink}`);
+    const { postTitle, postDescription, postLink } = post;
+    let { rendered } = post;
+    if (!rendered) {
+      div.prepend(renderPost(postTitle, postDescription, postLink));
+    }
+    rendered = true;
   });
 };
 
