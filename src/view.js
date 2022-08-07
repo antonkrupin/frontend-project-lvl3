@@ -4,10 +4,12 @@ import i18next from 'i18next';
 
 import resources from './locales/index';
 import handler, { updateRss } from './handlers';
-import renderFeeds from './renders';
+// import renderFeeds, { renderPosts, renderAll } from './renders';
+import { renderAll } from './renders';
 
 const app = () => {
   const state = {
+    rssLinks: [],
     feeds: [],
     feedsObjects: [],
     posts: [],
@@ -53,7 +55,9 @@ const app = () => {
             fieldsRender(inputField, 'is-valid', 'is-invalid');
             fieldsRender(feedBackField, 'text-success', 'text-danger');
             feedBackField.textContent = i18Instance.t('rssAdded');
-            renderFeeds(state.feedsObjects);
+            // renderFeeds(state.feeds);
+            // renderPosts(state.posts);
+            renderAll(state.feeds, state.posts);
             form.elements.url.value = '';
             break;
           case 'networkFailure':
