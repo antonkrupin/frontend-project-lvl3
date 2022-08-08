@@ -28,7 +28,7 @@ const handler = (event, state) => {
   };
 
   validateRss({ link }).then(() => {
-    state.networkError = false;
+    // state.networkError = false;
     const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
     axios({
       method: 'get',
