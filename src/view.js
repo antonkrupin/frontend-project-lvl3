@@ -109,12 +109,6 @@ const app = () => {
       case 'formStatus':
         formStatusHandler(value);
         break;
-      /* case 'networkError':
-        console.log('this is a networkError');
-        console.log(path);
-        console.log(value);
-        console.log('_______');
-        break; */
       case 'errorValue':
         formErrorHandler(value);
         break;
