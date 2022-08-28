@@ -28,7 +28,7 @@ const handler = (event, state) => {
   };
 
   validateRss({ link }).then(() => {
-    state.networkError = false;
+    // state.networkError = false;
     const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
     axios({
       method: 'get',
@@ -38,19 +38,21 @@ const handler = (event, state) => {
       state.posts.push(posts);
       state.feeds.push(feed);
       state.rssLinks.push(feed.rssLink);
-
       state.formStatus = 'processed';
     }).catch((error) => {
-      if (error.name === 'AxiosError') {
-        state.formStatus = 'networkFailure';
+      /* if (error.name === 'AxiosError') {
+        // state.formStatus = 'networkFailure';
+        // добавил
+        state.errorValue = 'AxiosError';
       } else {
         state.errorValue = error.name;
-        state.formStatus = 'failure';
-      }
+        // state.formStatus = 'failure';
+      } */
+      state.errorValue = error.name === 'AxiosError' ? 'AxiosError' : error.name;
     });
   }).catch((error) => {
     [state.errorValue] = error.errors;
-    state.formStatus = 'failure';
+    // state.formStatus = 'failure';
   });
 };
 // test comment

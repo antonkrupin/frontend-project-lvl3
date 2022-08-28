@@ -134,6 +134,7 @@ const renderAll = (feeds, posts) => {
 
   const feedsAndPostsTitle = document.querySelector('.feedsSection .container .row .col-8 h1') ?? document.querySelector('.feedsSection .container').prepend(createFeedsAndPostsTitle());
   // feedsAndPostsTitle.prepend(createFeedsAndPostsTitle());
+  console.log(feedsAndPostsTitle);
 
   feeds.forEach((feed) => {
     const {
