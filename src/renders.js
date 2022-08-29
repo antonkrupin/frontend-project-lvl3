@@ -2,11 +2,22 @@
 import _ from 'lodash';
 
 /* eslint-disable no-param-reassign */
-const createFeedsAndPostsTitle = () => {
-  const row = document.createElement('div');
-  row.classList.add('row');
+const createFeedsAndPostsTitle = (text) => {
+  const div = document.createElement('div');
+  div.classList.add('card');
+  div.classList.add('border-0');
 
-  const col8 = document.createElement('div');
+  const cardBody = document.createElement('div');
+  cardBody.classList.add('card-body');
+
+  const title = document.createElement('h2');
+  title.classList.add('card-title');
+  title.classList.add('h4');
+  title.textContent = text;
+
+  cardBody.append(title);
+  div.append(cardBody);
+  /* const col8 = document.createElement('div');
   col8.classList.add('col-8');
 
   const col4 = document.createElement('div');
@@ -21,9 +32,9 @@ const createFeedsAndPostsTitle = () => {
   col8.append(postsTitle);
   col4.append(feedsTitle);
   row.append(col8);
-  row.append(col4);
+  row.append(col4); */
 
-  return row;
+  return div;
 };
 
 const buttonHandler = (button) => {
@@ -120,21 +131,28 @@ const renderMarkupPost = (text, description, link, buttonText = 'Просмот�
 const renderPost = (postTitle, postDescription, postLink) => renderMarkupPost(postTitle, postDescription, postLink);
 
 const renderFeed = (title, description) => {
-  const feedsSection = document.querySelector('#feeds');
-  feedsSection.prepend(renderMarkupFeed(title, description));
+  const feedsSection = document.querySelector('.feeds');
+  const feedsCard = document.querySelector('.feeds > .card');
+  feedsCard.after(renderMarkupFeed(title, description));
+  feedsSection.prepend(feedsCard);
+  // feedsSection.prepend(renderMarkupFeed(title, description));
 };
 
 const renderAll = (feeds, posts) => {
-  const postsSection = document.querySelector('#posts');
+  const postsSection = document.querySelector('.posts');
+  const feedsSection = document.querySelector('.feeds');
   /* let feedsAndPostsTitle = document.querySelector('.feedsSection .container .row .col-8 h1');
   if (feedsAndPostsTitle === null) {
     feedsAndPostsTitle = document.querySelector('.feedsSection .container');
     feedsAndPostsTitle.prepend(createFeedsAndPostsTitle());
   } */
 
-  const feedsAndPostsTitle = document.querySelector('.feedsSection .container .row .col-8 h1') ?? document.querySelector('.feedsSection .container').prepend(createFeedsAndPostsTitle());
-  // feedsAndPostsTitle.prepend(createFeedsAndPostsTitle());
-  console.log(feedsAndPostsTitle);
+  // const feedsAndPostsTitle = document.querySelector('.feedsSection .container .row .col-8 h1') ?? document.querySelector('.feedsSection .container').prepend(createFeedsAndPostsTitle());
+
+  // eslint-disable-next-line no-unused-expressions
+  document.querySelector('.posts .card') ?? postsSection.prepend(createFeedsAndPostsTitle('Посты'));
+  // eslint-disable-next-line no-unused-expressions
+  document.querySelector('.feeds .card') ?? feedsSection.prepend(createFeedsAndPostsTitle('Фиды'));
 
   feeds.forEach((feed) => {
     const {
@@ -148,6 +166,8 @@ const renderAll = (feeds, posts) => {
     }
 
     posts.forEach((post) => {
+      const postsCard = document.querySelector('.posts > .card');
+
       if (div === null) {
         div = document.createElement('div');
         div.setAttribute('id', `${rssLink}`);
@@ -162,7 +182,9 @@ const renderAll = (feeds, posts) => {
           elem.rendered = true;
         });
       }
-      postsSection.prepend(div);
+
+      postsCard.after(div);
+      postsSection.prepend(postsCard);
     });
   });
 };
