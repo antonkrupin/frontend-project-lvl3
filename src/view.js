@@ -35,20 +35,21 @@ const app = () => {
     },
   });
 
-  const fieldsRender = (target, addedClass, removedClass = 'test') => {
-    target.classList.add(addedClass);
-    target.classList.remove(removedClass);
-  };
-
   const formStatusHandler = (status) => {
     switch (status) {
       case 'processing':
-        fieldsRender(feedBackField, 'text-success', 'text-danger');
+        // fieldsRender(feedBackField, 'text-success', 'text-danger');
+        feedBackField.classList.add('text-success');
+        feedBackField.classList.remove('text-danger');
         feedBackField.textContent = i18Instance.t('watching');
         break;
       case 'processed':
-        fieldsRender(inputField, 'is-valid', 'is-invalid');
-        fieldsRender(feedBackField, 'text-success', 'text-danger');
+        // fieldsRender(inputField, 'is-valid', 'is-invalid');
+        inputField.classList.add('is-valid');
+        inputField.classList.remove('is-invalid');
+        // fieldsRender(feedBackField, 'text-success', 'text-danger');
+        feedBackField.classList.add('text-success');
+        feedBackField.classList.remove('text-danger');
         feedBackField.textContent = i18Instance.t('rssAdded');
         renderAll(state.feeds, state.posts);
         form.elements.url.value = '';
@@ -79,23 +80,35 @@ const app = () => {
   const formErrorHandler = (error) => {
     switch (error) {
       case 'AxiosError':
-        fieldsRender(inputField, 'is-invalid');
-        fieldsRender(feedBackField, 'text-danger', 'text-success');
+        // fieldsRender(inputField, 'is-invalid');
+        inputField.classList.add('is-invalid');
+        // fieldsRender(feedBackField, 'text-danger', 'text-success');
+        feedBackField.classList.add('text-danger');
+        feedBackField.classList.remove('text-success');
         feedBackField.textContent = i18Instance.t('errors.networkProblems');
         break;
       case 'RSS уже существует':
-        fieldsRender(inputField, 'is-invalid');
-        fieldsRender(feedBackField, 'text-danger', 'text-success');
+        // fieldsRender(inputField, 'is-invalid');
+        inputField.classList.add('is-invalid');
+        // fieldsRender(feedBackField, 'text-danger', 'text-success');
+        feedBackField.classList.add('text-danger');
+        feedBackField.classList.remove('text-success');
         feedBackField.textContent = i18Instance.t('errors.rssRepeat');
         break;
       case 'Ссылка должна быть валидным URL':
-        fieldsRender(inputField, 'is-invalid');
-        fieldsRender(feedBackField, 'text-danger', 'text-success');
+        // fieldsRender(inputField, 'is-invalid');
+        inputField.classList.add('is-invalid');
+        // fieldsRender(feedBackField, 'text-danger', 'text-success');
+        feedBackField.classList.add('text-danger');
+        feedBackField.classList.remove('text-success');
         feedBackField.textContent = i18Instance.t('errors.notValidUrlFormat');
         break;
       case 'TypeError':
-        fieldsRender(inputField, 'is-invalid');
-        fieldsRender(feedBackField, 'text-danger', 'text-success');
+        // fieldsRender(inputField, 'is-invalid');
+        inputField.classList.add('is-invalid');
+        // fieldsRender(feedBackField, 'text-danger', 'text-success');
+        feedBackField.classList.add('text-danger');
+        feedBackField.classList.remove('text-success');
         feedBackField.textContent = i18Instance.t('errors.notHaveValidRss');
         break;
       default:
