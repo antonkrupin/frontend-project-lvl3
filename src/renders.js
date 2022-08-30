@@ -22,7 +22,7 @@ const buttonHandler = (button) => {
   const modal = document.querySelector('#exampleModal');
   const modalTitle = modal.querySelector('.modal-title');
   const modalBody = modal.querySelector('.modal-body');
-  const readButton = modal.querySelector('.modal-footer a');
+  const modalButton = modal.querySelector('.modal-footer a');
 
   const closest = button.closest('li');
   const link = closest.querySelector('a');
@@ -33,7 +33,7 @@ const buttonHandler = (button) => {
   modalTitle.textContent = link.textContent;
   modalBody.textContent = link.getAttribute('data-description');
 
-  readButton.setAttribute('href', link.getAttribute('href'));
+  modalButton.setAttribute('href', link.getAttribute('href'));
 };
 
 const renderMarkupFeed = (title, description) => {
