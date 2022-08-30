@@ -26,7 +26,7 @@ const buttonHandler = (button) => {
   const modalBody = modal.querySelector('.modal-body');
   const readButton = modal.querySelector('.modal-footer a');
 
-  const closest = button.closest('.post');
+  const closest = button.closest('li');
   const link = closest.querySelector('a');
 
   link.classList.remove('fw-bold');
@@ -72,8 +72,11 @@ const renderMarkupFeed = (title, description) => {
 };
 
 const renderMarkupPost = (text, description, link, buttonText = 'Просмотр') => {
-  const row = document.createElement('div');
-  row.classList.add('row', 'post');
+  // const row = document.createElement('div');
+  // row.classList.add('row', 'post');
+
+  const li = document.createElement('li');
+  li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
 
   // const themeCol = document.createElement('div');
   // themeCol.classList.add('col-9');
@@ -105,10 +108,10 @@ const renderMarkupPost = (text, description, link, buttonText = 'Просмот�
   // themeH4.append(themeLink);
   // themeCol.append(themeH4);
   // buttonCol.append(button);
-  row.append(themeLink);
-  row.append(button);
+  li.append(themeLink);
+  li.append(button);
 
-  return row;
+  return li;
 };
 
 const renderPost = (postTitle, postDescription, postLink) => renderMarkupPost(postTitle, postDescription, postLink);
