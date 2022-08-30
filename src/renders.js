@@ -39,10 +39,21 @@ const buttonHandler = (button) => {
 };
 
 const renderMarkupFeed = (title, description) => {
-  const row = document.createElement('div');
-  row.classList.add('row', 'feed');
+  // const row = document.createElement('div');
+  // row.classList.add('row', 'feed');
 
-  const titleRow = document.createElement('div');
+  const li = document.createElement('li');
+  li.classList.add('list-group-item', 'border-0', 'border-end-0');
+
+  const h3 = document.createElement('h3');
+  h3.classList.add('h6', 'm-0');
+  h3.textContent = title;
+
+  const p = document.createElement('p');
+  p.classList.add('m-0', 'small', 'text-black-50');
+  p.textContent = description;
+
+  /* const titleRow = document.createElement('div');
   titleRow.classList.add('row');
 
   const titleCol = document.createElement('div');
@@ -55,6 +66,7 @@ const renderMarkupFeed = (title, description) => {
   descriptionCol.classList.add('col');
 
   const h3Title = document.createElement('h3');
+  h3Title.classList.add('h-6', 'm-0');
   h3Title.textContent = title;
 
   const h3Deiscription = document.createElement('h3');
@@ -63,12 +75,12 @@ const renderMarkupFeed = (title, description) => {
   titleCol.append(h3Title);
   descriptionCol.append(h3Deiscription);
   titleRow.append(titleCol);
-  descriptionRow.append(descriptionCol);
+  descriptionRow.append(descriptionCol); */
 
-  row.append(titleRow);
-  row.append(descriptionRow);
+  li.append(h3);
+  li.append(p);
 
-  return row;
+  return li;
 };
 
 const renderMarkupPost = (text, description, link, buttonText = 'Просмотр') => {
