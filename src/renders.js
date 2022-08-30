@@ -4,15 +4,13 @@ import _ from 'lodash';
 /* eslint-disable no-param-reassign */
 const createTitle = (text) => {
   const div = document.createElement('div');
-  div.classList.add('card');
-  div.classList.add('border-0');
+  div.classList.add('card', 'border-0');
 
   const cardBody = document.createElement('div');
   cardBody.classList.add('card-body');
 
   const title = document.createElement('h2');
-  title.classList.add('card-title');
-  title.classList.add('h4');
+  title.classList.add('card-title', 'h4');
   title.textContent = text;
 
   cardBody.append(title);
