@@ -119,8 +119,7 @@ const renderAll = (feeds, posts) => {
         div = document.createElement('div');
         div.setAttribute('id', `${rssLink}`);
       }
-      const keys = _.keys(post);
-      if (keys[0] === id) {
+      if (_.keys(post)[0] === id) {
         post[id].forEach((elem) => {
           const { postTitle, postDescription, postLink } = elem;
           if (!elem.rendered) {
