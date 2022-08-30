@@ -2,7 +2,7 @@
 import _ from 'lodash';
 
 /* eslint-disable no-param-reassign */
-const createFeedsAndPostsTitle = (text) => {
+const createTitle = (text) => {
   const div = document.createElement('div');
   div.classList.add('card');
   div.classList.add('border-0');
@@ -17,23 +17,6 @@ const createFeedsAndPostsTitle = (text) => {
 
   cardBody.append(title);
   div.append(cardBody);
-  /* const col8 = document.createElement('div');
-  col8.classList.add('col-8');
-
-  const col4 = document.createElement('div');
-  col4.classList.add('col-4');
-
-  const postsTitle = document.createElement('h1');
-  postsTitle.textContent = 'Посты';
-
-  const feedsTitle = document.createElement('h1');
-  feedsTitle.textContent = 'Фиды';
-
-  col8.append(postsTitle);
-  col4.append(feedsTitle);
-  row.append(col8);
-  row.append(col4); */
-
   return div;
 };
 
@@ -150,9 +133,9 @@ const renderAll = (feeds, posts) => {
   // const feedsAndPostsTitle = document.querySelector('.feedsSection .container .row .col-8 h1') ?? document.querySelector('.feedsSection .container').prepend(createFeedsAndPostsTitle());
 
   // eslint-disable-next-line no-unused-expressions
-  document.querySelector('.posts .card') ?? postsSection.prepend(createFeedsAndPostsTitle('Посты'));
+  document.querySelector('.posts .card') ?? postsSection.prepend(createTitle('Посты'));
   // eslint-disable-next-line no-unused-expressions
-  document.querySelector('.feeds .card') ?? feedsSection.prepend(createFeedsAndPostsTitle('Фиды'));
+  document.querySelector('.feeds .card') ?? feedsSection.prepend(createTitle('Фиды'));
 
   feeds.forEach((feed) => {
     const {
