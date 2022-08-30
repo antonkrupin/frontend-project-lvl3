@@ -77,39 +77,27 @@ const app = () => {
     }
   };
 
+  const errorsRender = (input, feedback, errorText) => {
+    input.classList.add('is-invalid');
+    feedback.classList.add('text-danger');
+    feedback.classList.remove('text-success');
+    // eslint-disable-next-line no-param-reassign
+    feedback.textContent = errorText;
+  };
+
   const formErrorHandler = (error) => {
     switch (error) {
       case 'AxiosError':
-        // fieldsRender(inputField, 'is-invalid');
-        inputField.classList.add('is-invalid');
-        // fieldsRender(feedBackField, 'text-danger', 'text-success');
-        feedBackField.classList.add('text-danger');
-        feedBackField.classList.remove('text-success');
-        feedBackField.textContent = i18Instance.t('errors.networkProblems');
+        errorsRender(inputField, feedBackField, i18Instance.t('errors.networkProblems'));
         break;
       case 'RSS уже существует':
-        // fieldsRender(inputField, 'is-invalid');
-        inputField.classList.add('is-invalid');
-        // fieldsRender(feedBackField, 'text-danger', 'text-success');
-        feedBackField.classList.add('text-danger');
-        feedBackField.classList.remove('text-success');
-        feedBackField.textContent = i18Instance.t('errors.rssRepeat');
+        errorsRender(inputField, feedBackField, i18Instance.t('errors.rssRepeat'));
         break;
       case 'Ссылка должна быть валидным URL':
-        // fieldsRender(inputField, 'is-invalid');
-        inputField.classList.add('is-invalid');
-        // fieldsRender(feedBackField, 'text-danger', 'text-success');
-        feedBackField.classList.add('text-danger');
-        feedBackField.classList.remove('text-success');
-        feedBackField.textContent = i18Instance.t('errors.notValidUrlFormat');
+        errorsRender(inputField, feedBackField, i18Instance.t('errors.notValidUrlFormat'));
         break;
       case 'TypeError':
-        // fieldsRender(inputField, 'is-invalid');
-        inputField.classList.add('is-invalid');
-        // fieldsRender(feedBackField, 'text-danger', 'text-success');
-        feedBackField.classList.add('text-danger');
-        feedBackField.classList.remove('text-success');
-        feedBackField.textContent = i18Instance.t('errors.notHaveValidRss');
+        errorsRender(inputField, feedBackField, i18Instance.t('errors.notHaveValidRss'));
         break;
       default:
         throw new Error('Unexpected error value');
