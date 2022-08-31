@@ -118,7 +118,7 @@ const renderAll = (feeds, posts) => {
         });
       }
     });
-    postsSection.before(div1);
+    postsSection.after(div1);
   }); */
 
   feeds.forEach((feed) => {
@@ -126,7 +126,6 @@ const renderAll = (feeds, posts) => {
       id, title, description, rssLink,
     } = feed;
 
-    // let div = document.getElementById(`${rssLink}`);
     const div = document.getElementById(`${rssLink}`) ?? document.createElement('div');
     div.setAttribute('id', `${rssLink}`);
 
@@ -138,14 +137,10 @@ const renderAll = (feeds, posts) => {
     posts.forEach((post) => {
       const postsCard = document.querySelector('.posts > .card');
 
-      /* if (div === null) {
-        div = document.createElement('div');
-        div.setAttribute('id', `${rssLink}`);
-      } */
-
       if (_.keys(post)[0] === id) {
         post[id].forEach((elem) => {
           const { postTitle, postDescription, postLink } = elem;
+          console.log(!elem.rendered);
           if (!elem.rendered) {
             div.append(renderPost(postTitle, postDescription, postLink));
           }
