@@ -100,27 +100,6 @@ const renderAll = (feeds, posts) => {
   document.querySelector('.posts .card') ?? postsSection.prepend(createTitle('Посты'));
   // eslint-disable-next-line no-unused-expressions
   document.querySelector('.feeds .card') ?? feedsSection.prepend(createTitle('Фиды'));
-  /* const div1 = document.querySelector('.list-group') ?? document.createElement('ul');
-  div1.classList.add('list-group', 'border-0', 'rounded-0');
-
-  const feedsId = _.flattenDeep(feeds.map((el) => el.id)).reverse();
-
-  feedsId.forEach((feedId) => {
-    posts.forEach((post) => {
-      if (post[feedId] !== undefined) {
-        post[feedId].forEach((p) => {
-          const { postTitle, postDescription, postLink } = p;
-          if (!p.rendered) {
-            postsSection.append(renderPost(postTitle, postDescription, postLink));
-            // div1.append(renderPost(postTitle, postDescription, postLink));
-          }
-          p.rendered = true;
-        });
-      }
-    });
-    postsSection.after(div1);
-  }); */
-
   feeds.forEach((feed) => {
     const {
       id, title, description, rssLink,
@@ -140,14 +119,12 @@ const renderAll = (feeds, posts) => {
       if (_.keys(post)[0] === id) {
         post[id].forEach((elem) => {
           const { postTitle, postDescription, postLink } = elem;
-          console.log(!elem.rendered);
           if (!elem.rendered) {
             div.append(renderPost(postTitle, postDescription, postLink));
           }
           elem.rendered = true;
         });
       }
-
       postsCard.after(div);
       postsSection.prepend(postsCard);
     });
