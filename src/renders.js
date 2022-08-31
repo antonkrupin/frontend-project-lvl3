@@ -100,13 +100,36 @@ const renderAll = (feeds, posts) => {
   document.querySelector('.posts .card') ?? postsSection.prepend(createTitle('Посты'));
   // eslint-disable-next-line no-unused-expressions
   document.querySelector('.feeds .card') ?? feedsSection.prepend(createTitle('Фиды'));
+  /* const div1 = document.querySelector('.list-group') ?? document.createElement('ul');
+  div1.classList.add('list-group', 'border-0', 'rounded-0');
+
+  const feedsId = _.flattenDeep(feeds.map((el) => el.id)).reverse();
+
+  feedsId.forEach((feedId) => {
+    posts.forEach((post) => {
+      if (post[feedId] !== undefined) {
+        post[feedId].forEach((p) => {
+          const { postTitle, postDescription, postLink } = p;
+          if (!p.rendered) {
+            postsSection.append(renderPost(postTitle, postDescription, postLink));
+            // div1.append(renderPost(postTitle, postDescription, postLink));
+          }
+          p.rendered = true;
+        });
+      }
+    });
+    postsSection.before(div1);
+  }); */
 
   feeds.forEach((feed) => {
     const {
       id, title, description, rssLink,
     } = feed;
 
-    let div = document.getElementById(`${rssLink}`);
+    // let div = document.getElementById(`${rssLink}`);
+    const div = document.getElementById(`${rssLink}`) ?? document.createElement('div');
+    div.setAttribute('id', `${rssLink}`);
+
     if (!feed.rendered) {
       renderFeed(title, description);
       feed.rendered = true;
@@ -115,10 +138,11 @@ const renderAll = (feeds, posts) => {
     posts.forEach((post) => {
       const postsCard = document.querySelector('.posts > .card');
 
-      if (div === null) {
+      /* if (div === null) {
         div = document.createElement('div');
         div.setAttribute('id', `${rssLink}`);
-      }
+      } */
+
       if (_.keys(post)[0] === id) {
         post[id].forEach((elem) => {
           const { postTitle, postDescription, postLink } = elem;
