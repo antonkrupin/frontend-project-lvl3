@@ -37,16 +37,13 @@ const app = () => {
     const formStatusHandler = (status) => {
       switch (status) {
         case 'processing':
-          // fieldsRender(feedBackField, 'text-success', 'text-danger');
           feedBackField.classList.add('text-success');
           feedBackField.classList.remove('text-danger');
           feedBackField.textContent = i18Instance.t('watching');
           break;
         case 'processed':
-          // fieldsRender(inputField, 'is-valid', 'is-invalid');
           inputField.classList.add('is-valid');
           inputField.classList.remove('is-invalid');
-          // fieldsRender(feedBackField, 'text-success', 'text-danger');
           feedBackField.classList.add('text-success');
           feedBackField.classList.remove('text-danger');
           feedBackField.textContent = i18Instance.t('rssAdded');
