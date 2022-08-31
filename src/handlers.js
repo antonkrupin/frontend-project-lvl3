@@ -55,7 +55,6 @@ const handler = (event, state) => {
     // state.formStatus = 'failure';
   });
 };
-// test comment
 
 export const updateRss = (state) => {
   state.rssLinks.forEach((link) => {
