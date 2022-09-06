@@ -1,7 +1,4 @@
-import _ from 'lodash';
-
 const parserXML = (data, rssLink) => {
-  const id = _.uniqueId();
   const parser = new DOMParser();
   const XMLdata = parser.parseFromString(data, 'application/xml');
   const channel = XMLdata.querySelector('channel');
@@ -10,10 +7,10 @@ const parserXML = (data, rssLink) => {
   const description = channel.querySelector('description').textContent;
 
   const feed = {
-    id, link, rssLink, title, description,
+    link, rssLink, title, description,
   };
 
-  const posts = {};
+  /* const posts = {};
   posts[id] = [];
 
   channel.querySelectorAll('item').forEach((elem) => {
@@ -24,9 +21,19 @@ const parserXML = (data, rssLink) => {
     posts[id].push({
       rssLink, postTitle, postDescription, postLink, postDate,
     });
+  }); */
+  const posts = [];
+  channel.querySelectorAll('item').forEach((elem) => {
+    const postTitle = elem.querySelector('title').textContent;
+    const postDescription = elem.querySelector('description').textContent;
+    const postLink = elem.querySelector('link').textContent;
+    const postDate = elem.querySelector('pubDate').textContent;
+    posts.push({
+      rssLink, postTitle, postDescription, postLink, postDate,
+    });
   });
 
-  return { id, feed, posts };
+  return { feed, posts };
 };
 
 export default parserXML;
