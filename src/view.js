@@ -42,6 +42,7 @@ const app = () => {
           feedBackField.textContent = i18Instance.t('watching');
           break;
         case 'processed':
+          form.querySelector('fieldset').removeAttribute('disabled', 'disabled');
           inputField.classList.add('is-valid');
           inputField.classList.remove('is-invalid');
           feedBackField.classList.add('text-success');
