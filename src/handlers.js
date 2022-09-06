@@ -17,15 +17,16 @@ const validateRss = (state, url) => {
   });
 };
 
-/* const downloadRss = (rssUrl) => {
+const downloadRss = (rssUrl) => {
   const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(rssUrl)}`;
   return axios
     .get(rssLink)
     .then((response) => response.data.contents)
     .catch((error) => {
+      console.log(error);
       throw error;
     });
-}; */
+};
 
 const handler = (event, state) => {
   event.preventDefault();
@@ -38,7 +39,7 @@ const handler = (event, state) => {
 
   event.target.querySelector('fieldset').setAttribute('disabled', 'disabled');
 
-  /* validateRss(state, { link })
+  validateRss(state, { link })
     .then(() => {
       state.formStatus = 'processing';
       return downloadRss(link);
@@ -53,10 +54,16 @@ const handler = (event, state) => {
       state.formStatus = 'processed';
     })
     .catch((error) => {
-      console.log(error);
-    }); */
+      if (error.name === 'AxiosError') {
+        state.errorValue = 'AxiosError';
+      } else if (error.name === 'TypeError') {
+        state.errorValue = error.name;
+      } else {
+        [state.errorValue] = error.errors;
+      }
+    });
 
-  validateRss(state, { link }).then(() => {
+  /* validateRss(state, { link }).then(() => {
     const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
     axios({
       method: 'get',
@@ -74,7 +81,7 @@ const handler = (event, state) => {
     });
   }).catch((error) => {
     [state.errorValue] = error.errors;
-  });
+  }); */
 };
 
 export const updateRss = (state) => {
