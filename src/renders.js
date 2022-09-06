@@ -108,7 +108,12 @@ const renderAll = (feeds, posts) => {
     const div = document.getElementById(`${rssLink}`) ?? document.createElement('div');
     div.setAttribute('id', `${rssLink}`);
 
-    if (!feed.rendered) {
+    /* if (!feed.rendered) {
+      renderFeed(title, description);
+      feed.rendered = true;
+    } */
+
+    if (!('rendered' in feed)) {
       renderFeed(title, description);
       feed.rendered = true;
     }
@@ -119,10 +124,14 @@ const renderAll = (feeds, posts) => {
       if (_.keys(post)[0] === id) {
         post[id].forEach((elem) => {
           const { postTitle, postDescription, postLink } = elem;
-          if (!elem.rendered) {
+          /* if (!elem.rendered) {
             div.append(renderPost(postTitle, postDescription, postLink));
           }
-          elem.rendered = true;
+          elem.rendered = true; */
+          if (!('rendered' in elem)) {
+            div.append(renderPost(postTitle, postDescription, postLink));
+            elem.rendered = true;
+          }
         });
       }
       postsCard.after(div);
