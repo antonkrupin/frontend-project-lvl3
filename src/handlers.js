@@ -70,7 +70,6 @@ const handler = (event, state) => {
       state.rssLinks.push(feed.rssLink);
       state.formStatus = 'processed';
     }).catch((error) => {
-      console.log(error);
       state.errorValue = error.name === 'AxiosError' ? 'AxiosError' : error.name;
     });
   }).catch((error) => {
