@@ -12,9 +12,20 @@ const validateRss = (state, url) => {
   });
 
   return rssValidateSchema.validate(url).catch((error) => {
+    console.log(error.type);
     throw error;
   });
 };
+
+/* const downloadRss = (rssUrl) => {
+  const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(rssUrl)}`;
+  return axios
+    .get(rssLink)
+    .then((response) => response.data.contents)
+    .catch((error) => {
+      throw error;
+    });
+}; */
 
 const handler = (event, state) => {
   event.preventDefault();
@@ -26,6 +37,25 @@ const handler = (event, state) => {
   const link = formData.get('url').trim();
 
   event.target.querySelector('fieldset').setAttribute('disabled', 'disabled');
+
+  /* validateRss(state, { link })
+    .then(() => {
+      state.formStatus = 'processing';
+      return downloadRss(link);
+    })
+    .then((response) => {
+      const id = _.uniqueId();
+      const { feed, posts } = parserXML(response, link);
+      feed.id = id;
+      state.posts.push({ [id]: posts });
+      state.feeds.push(feed);
+      state.rssLinks.push(feed.rssLink);
+      state.formStatus = 'processed';
+    })
+    .catch((error) => {
+      console.log(error);
+    }); */
+
   validateRss(state, { link }).then(() => {
     const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
     axios({
