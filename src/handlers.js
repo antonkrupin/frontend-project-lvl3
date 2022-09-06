@@ -35,7 +35,11 @@ const handler = (event, state) => {
       url: rssLink,
     }).then((response) => {
       const { feed, posts } = parserXML(response.data.contents, link);
-      state.posts.push(posts);
+      const id = _.uniqueId();
+      feed.id = id;
+      const postObject = {};
+      postObject[id] = posts;
+      state.posts.push(postObject);
       state.feeds.push(feed);
       state.rssLinks.push(feed.rssLink);
       state.formStatus = 'processed';
@@ -55,12 +59,11 @@ export const updateRss = (state) => {
       url: rssLink,
     }).then((response) => {
       const data = parserXML(response.data.contents, link);
-      const { id, posts } = data;
+      const { posts } = data;
       state.feeds.forEach((feed) => {
         if (feed.rssLink === link) {
           const updatedFeedId = feed.id;
-          // eslint-disable-next-line max-len
-          const newPosts = posts[id];
+          const newPosts = posts;
           const oldPosts = state.posts.filter((post) => post[updatedFeedId])[0][updatedFeedId];
           const difference = _.differenceBy(newPosts, oldPosts, 'postDate');
           if (difference.length !== 0) {
