@@ -18,6 +18,7 @@ const app = () => {
   const inputField = document.querySelector('#url-input');
   const feedBackField = document.querySelector('.feedback');
   const form = document.querySelector('.rss-form');
+  const fieldset = form.querySelector('fieldset');
 
   const i18Instance = i18next.createInstance();
 
@@ -42,7 +43,7 @@ const app = () => {
           feedBackField.textContent = i18Instance.t('watching');
           break;
         case 'processed':
-          form.querySelector('fieldset').removeAttribute('disabled', 'disabled');
+          fieldset.removeAttribute('disabled', 'disabled');
           inputField.classList.add('is-valid');
           inputField.classList.remove('is-invalid');
           feedBackField.classList.add('text-success');
@@ -86,15 +87,19 @@ const app = () => {
       switch (error) {
         case 'AxiosError':
           errorsRender(inputField, feedBackField, i18Instance.t('errors.networkProblems'));
+          fieldset.removeAttribute('disabled', 'disabled');
           break;
         case 'RSS уже существует':
           errorsRender(inputField, feedBackField, i18Instance.t('errors.rssRepeat'));
+          fieldset.removeAttribute('disabled', 'disabled');
           break;
         case 'Ссылка должна быть валидным URL':
           errorsRender(inputField, feedBackField, i18Instance.t('errors.notValidUrlFormat'));
+          fieldset.removeAttribute('disabled', 'disabled');
           break;
         case 'TypeError':
           errorsRender(inputField, feedBackField, i18Instance.t('errors.notHaveValidRss'));
+          fieldset.removeAttribute('disabled', 'disabled');
           break;
         default:
           throw new Error('Unexpected error value');
