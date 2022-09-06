@@ -6,6 +6,18 @@ import _ from 'lodash';
 import parserXML from './parser';
 import { updateFeeds } from './renders';
 
+const validateRss = (state, url) => {
+  const rssValidateSchema = yup.object().shape({
+    link: yup.string().url().notOneOf(state.rssLinks),
+  });
+
+  try {
+    return rssValidateSchema.validate(url).then((e) => e);
+  } catch (e) {
+    return e;
+  }
+};
+
 const handler = (event, state) => {
   event.preventDefault();
 
@@ -15,20 +27,8 @@ const handler = (event, state) => {
 
   const link = formData.get('url').trim();
 
-  const rssValidateSchema = yup.object().shape({
-    link: yup.string().url().notOneOf(state.rssLinks),
-  });
-
-  const validateRss = (fields) => {
-    try {
-      return rssValidateSchema.validate(fields).then((e) => e);
-    } catch (e) {
-      return e;
-    }
-  };
-
   event.target.querySelector('fieldset').setAttribute('disabled', 'disabled');
-  validateRss({ link }).then(() => {
+  validateRss(state, { link }).then(() => {
     const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
     axios({
       method: 'get',
