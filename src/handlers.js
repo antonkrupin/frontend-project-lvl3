@@ -27,6 +27,8 @@ const handler = (event, state) => {
     }
   };
 
+  event.target.querySelector('fieldset').setAttribute('disabled', 'disabled');
+
   validateRss({ link }).then(() => {
     // state.networkError = false;
     const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
