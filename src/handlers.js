@@ -11,11 +11,9 @@ const validateRss = (state, url) => {
     link: yup.string().url().notOneOf(state.rssLinks),
   });
 
-  try {
-    return rssValidateSchema.validate(url).then((e) => e);
-  } catch (e) {
-    return e;
-  }
+  return rssValidateSchema.validate(url).catch((error) => {
+    throw error;
+  });
 };
 
 const handler = (event, state) => {
