@@ -10,7 +10,7 @@ const parserXML = (data, rssLink) => {
   const description = channel.querySelector('description').textContent;
 
   const feed = {
-    id, link, rssLink, title, description, rendered: false,
+    id, link, rssLink, title, description,
   };
 
   const posts = {};
@@ -22,7 +22,7 @@ const parserXML = (data, rssLink) => {
     const postLink = elem.querySelector('link').textContent;
     const postDate = elem.querySelector('pubDate').textContent;
     posts[id].push({
-      rssLink, postTitle, postDescription, postLink, postDate, rendered: false,
+      rssLink, postTitle, postDescription, postLink, postDate,
     });
   });
 
