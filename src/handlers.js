@@ -34,12 +34,10 @@ const handler = (event, state) => {
       method: 'get',
       url: rssLink,
     }).then((response) => {
-      const { feed, posts } = parserXML(response.data.contents, link);
       const id = _.uniqueId();
+      const { feed, posts } = parserXML(response.data.contents, link);
       feed.id = id;
-      const postObject = {};
-      postObject[id] = posts;
-      state.posts.push(postObject);
+      state.posts.push({ [id]: posts });
       state.feeds.push(feed);
       state.rssLinks.push(feed.rssLink);
       state.formStatus = 'processed';
