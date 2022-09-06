@@ -56,13 +56,13 @@ export const updateRss = (state) => {
       method: 'get',
       url: rssLink,
     }).then((response) => {
-      const data = parserXML(response.data.contents, link);
-      const { posts } = data;
+      const { posts } = parserXML(response.data.contents, link);
       state.feeds.forEach((feed) => {
         if (feed.rssLink === link) {
           const updatedFeedId = feed.id;
           const newPosts = posts;
           const oldPosts = state.posts.filter((post) => post[updatedFeedId])[0][updatedFeedId];
+          console.log(oldPosts);
           const difference = _.differenceBy(newPosts, oldPosts, 'postDate');
           if (difference.length !== 0) {
             oldPosts.unshift(difference[0]);
