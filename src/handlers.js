@@ -53,27 +53,27 @@ export const updateRss = (state) => {
     axios({
       method: 'get',
       url: rssLink,
-    }).then((response) => parserXML(response.data.contents, link))
-      .then((data) => {
-        const { id, posts } = data;
-        state.feeds.forEach((feed) => {
-          if (feed.rssLink === link) {
-            const updatedFeedId = feed.id;
-            // eslint-disable-next-line max-len
-            const newPosts = posts[id];
-            const oldPosts = state.posts.filter((post) => post[updatedFeedId])[0][updatedFeedId];
-            const difference = _.differenceBy(newPosts, oldPosts, 'postDate');
-            if (difference.length !== 0) {
-              oldPosts.unshift(difference[0]);
-              state.posts.forEach((post) => {
-                if (post[updatedFeedId]) {
-                  updateFeeds(post[updatedFeedId]);
-                }
-              });
-            }
+    }).then((response) => {
+      const data = parserXML(response.data.contents, link);
+      const { id, posts } = data;
+      state.feeds.forEach((feed) => {
+        if (feed.rssLink === link) {
+          const updatedFeedId = feed.id;
+          // eslint-disable-next-line max-len
+          const newPosts = posts[id];
+          const oldPosts = state.posts.filter((post) => post[updatedFeedId])[0][updatedFeedId];
+          const difference = _.differenceBy(newPosts, oldPosts, 'postDate');
+          if (difference.length !== 0) {
+            oldPosts.unshift(difference[0]);
+            state.posts.forEach((post) => {
+              if (post[updatedFeedId]) {
+                updateFeeds(post[updatedFeedId]);
+              }
+            });
           }
-        });
-      }).catch((error) => { state.errorValue = error.name === 'AxiosError' ? 'AxiosError' : error.name; });
+        }
+      });
+    }).catch((error) => { state.errorValue = error.name === 'AxiosError' ? 'AxiosError' : error.name; });
   });
 
   setTimeout(() => updateRss(state), 5000);
