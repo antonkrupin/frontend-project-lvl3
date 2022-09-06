@@ -56,7 +56,14 @@ const renderMarkupFeed = (title, description) => {
 
 const renderMarkupPost = (text, description, link, buttonText = 'Просмотр') => {
   const li = document.createElement('li');
-  li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
+  li.classList.add(
+    'list-group-item',
+    'd-flex',
+    'justify-content-between',
+    'align-items-start',
+    'border-0',
+    'border-end-0',
+  );
 
   const themeLink = document.createElement('a');
   themeLink.classList.add('fw-bold');
@@ -108,11 +115,6 @@ const renderAll = (feeds, posts) => {
     const div = document.getElementById(`${rssLink}`) ?? document.createElement('div');
     div.setAttribute('id', `${rssLink}`);
 
-    /* if (!feed.rendered) {
-      renderFeed(title, description);
-      feed.rendered = true;
-    } */
-
     if (!('rendered' in feed)) {
       renderFeed(title, description);
       feed.rendered = true;
@@ -124,10 +126,6 @@ const renderAll = (feeds, posts) => {
       if (_.keys(post)[0] === id) {
         post[id].forEach((elem) => {
           const { postTitle, postDescription, postLink } = elem;
-          /* if (!elem.rendered) {
-            div.append(renderPost(postTitle, postDescription, postLink));
-          }
-          elem.rendered = true; */
           if (!('rendered' in elem)) {
             div.append(renderPost(postTitle, postDescription, postLink));
             elem.rendered = true;

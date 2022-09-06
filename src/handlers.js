@@ -42,6 +42,7 @@ const handler = (event, state) => {
       state.rssLinks.push(feed.rssLink);
       state.formStatus = 'processed';
     }).catch((error) => {
+      console.log(error);
       state.errorValue = error.name === 'AxiosError' ? 'AxiosError' : error.name;
     });
   }).catch((error) => {
@@ -63,8 +64,8 @@ export const updateRss = (state) => {
           const newPosts = posts;
           const oldPosts = state.posts.map((post) => post[updatedFeedId])[0];
           const difference = _.differenceBy(newPosts, oldPosts, 'postDate');
-          console.log(difference);
-          console.log(difference[0]);
+          // console.log(difference);
+          // console.log(difference[0]);
           if (difference.length !== 0) {
             oldPosts.unshift(difference[0]);
             state.posts.forEach((post) => {
