@@ -107,13 +107,14 @@ const app = () => {
     };
 
     const watchedState = onChange(state, (path, value) => {
-      // eslint-disable-next-line default-case
       switch (path) {
         case 'formStatus':
           formStatusHandler(value);
           break;
         case 'errorValue':
           formErrorHandler(value);
+          break;
+        default:
           break;
       }
     });
