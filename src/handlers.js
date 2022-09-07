@@ -29,8 +29,6 @@ const downloadRss = (rssUrl) => {
 const handler = (event, state) => {
   event.preventDefault();
 
-  state.formStatus = 'processing';
-
   const formData = new FormData(event.target);
 
   const link = formData.get('url').trim();
