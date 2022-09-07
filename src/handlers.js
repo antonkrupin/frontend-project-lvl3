@@ -12,7 +12,6 @@ const validateRss = (state, url) => {
   });
 
   return rssValidateSchema.validate(url).catch((error) => {
-    console.log(error.type);
     throw error;
   });
 };
@@ -23,7 +22,6 @@ const downloadRss = (rssUrl) => {
     .get(rssLink)
     .then((response) => response.data.contents)
     .catch((error) => {
-      console.log(error);
       throw error;
     });
 };
@@ -54,12 +52,17 @@ const handler = (event, state) => {
       state.formStatus = 'processed';
     })
     .catch((error) => {
-      if (error.name === 'AxiosError') {
-        state.errorValue = 'AxiosError';
-      } else if (error.name === 'TypeError') {
-        state.errorValue = error.name;
-      } else {
-        [state.errorValue] = error.errors;
+      switch (error.name) {
+        case 'AxiosError': {
+          state.errorValue = 'AxiosError';
+          break;
+        }
+        case 'TypeError': {
+          state.errorValue = error.name;
+          break;
+        }
+        default:
+          [state.errorValue] = error.errors;
       }
     });
 
