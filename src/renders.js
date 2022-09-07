@@ -115,7 +115,7 @@ const renderAll = (feeds, posts) => {
     const div = document.getElementById(`${rssLink}`) ?? document.createElement('div');
     div.setAttribute('id', `${rssLink}`);
 
-    if (!('rendered' in feed)) {
+    if (!feed.rendered) {
       renderFeed(title, description);
       feed.rendered = true;
     }
@@ -126,7 +126,7 @@ const renderAll = (feeds, posts) => {
       if (_.keys(post)[0] === id) {
         post[id].forEach((elem) => {
           const { postTitle, postDescription, postLink } = elem;
-          if (!('rendered' in elem)) {
+          if (!elem.rendered) {
             div.append(renderPost(postTitle, postDescription, postLink));
             elem.rendered = true;
           }
