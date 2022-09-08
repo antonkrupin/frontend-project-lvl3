@@ -63,27 +63,8 @@ const handler = (event, state) => {
           [state.errorValue] = error.errors;
       }
     });
-
-  /* validateRss(state, { link }).then(() => {
-    const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
-    axios({
-      method: 'get',
-      url: rssLink,
-    }).then((response) => {
-      const id = _.uniqueId();
-      const { feed, posts } = parserXML(response.data.contents, link);
-      feed.id = id;
-      state.posts.push({ [id]: posts });
-      state.feeds.push(feed);
-      state.rssLinks.push(feed.rssLink);
-      state.formStatus = 'processed';
-    }).catch((error) => {
-      state.errorValue = error.name === 'AxiosError' ? 'AxiosError' : error.name;
-    });
-  }).catch((error) => {
-    [state.errorValue] = error.errors;
-  }); */
 };
+
 export const updateRss = (state) => {
   const promises = state.rssLinks.map((link) => downloadRss(link));
   const promise = Promise.all(promises);
