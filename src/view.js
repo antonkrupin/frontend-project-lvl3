@@ -52,24 +52,6 @@ const app = () => {
           renderAll(state.feeds, state.posts);
           form.elements.url.value = '';
           break;
-        /* case 'networkFailure':
-          fieldsRender(inputField, 'is-invalid');
-          fieldsRender(feedBackField, 'text-danger', 'text-success');
-          feedBackField.textContent = i18Instance.t('errors.networkProblems');
-          break;
-        case 'failure':
-          fieldsRender(inputField, 'is-invalid');
-          fieldsRender(feedBackField, 'text-danger', 'text-success');
-
-          if (state.errorValue === i18Instance.t('errors.rssRepeat')) {
-            feedBackField.textContent = i18Instance.t('errors.rssRepeat');
-          } else {
-            feedBackField.textContent = i18Instance.t('errors.notValidUrlFormat');
-          }
-          if (state.errorValue === 'TypeError') {
-            feedBackField.textContent = i18Instance.t('errors.notHaveValidRss');
-          }
-          break; */
         default:
           throw new Error('Unexpected formStatus value');
       }
