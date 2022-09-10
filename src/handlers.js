@@ -94,36 +94,4 @@ export const updateRss = (state) => {
   });
 };
 
-export const updateRss1 = (state) => {
-  state.rssLinks.forEach((link) => {
-    const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
-    axios({
-      method: 'get',
-      url: rssLink,
-    }).then((response) => {
-      const { posts } = parserXML(response.data.contents, link);
-      state.feeds.forEach((feed) => {
-        if (feed.rssLink === link) {
-          const updatedFeedId = feed.id;
-          const newPosts = posts;
-          const oldPosts = state.posts.map((post) => post[updatedFeedId])[0];
-          const difference = _.differenceBy(newPosts, oldPosts, 'postDate');
-          // console.log(difference);
-          // console.log(difference[0]);
-          if (difference.length !== 0) {
-            oldPosts.unshift(difference[0]);
-            state.posts.forEach((post) => {
-              if (post[updatedFeedId]) {
-                updateFeeds(post[updatedFeedId]);
-              }
-            });
-          }
-        }
-      });
-    }).catch((error) => { state.errorValue = error.name === 'AxiosError' ? 'AxiosError' : error.name; });
-  });
-
-  setTimeout(() => updateRss(state), 5000);
-};
-
 export default handler;
