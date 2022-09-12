@@ -7,7 +7,7 @@ export default {
       notHaveValidRss: 'Ресурс не содержит валидный RSS',
       networkProblems: 'Ошибка сети',
     },
-    watching: 'Просмотр',
+    watching: 'Идет загрузка RSS',
     rssAdded: 'RSS успешно загружен',
   },
 };
