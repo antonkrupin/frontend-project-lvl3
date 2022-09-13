@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import _ from 'lodash';
 
 /* eslint-disable no-param-reassign */
@@ -98,8 +97,6 @@ const renderMarkupPost = (text, description, link, buttonText = 'Просмот�
   return li;
 };
 
-const renderPost = (postTitle, postDescription, postLink) => renderMarkupPost(postTitle, postDescription, postLink);
-
 const renderFeed = (title, description) => {
   const feedsSection = document.querySelector('.feeds');
   const feedsCard = document.querySelector('.feeds > .card');
@@ -111,10 +108,13 @@ const renderAll = (feeds, posts) => {
   const postsSection = document.querySelector('.posts');
   const feedsSection = document.querySelector('.feeds');
 
-  // eslint-disable-next-line no-unused-expressions
-  document.querySelector('.posts .card') ?? postsSection.prepend(createTitle('Посты'));
-  // eslint-disable-next-line no-unused-expressions
-  document.querySelector('.feeds .card') ?? feedsSection.prepend(createTitle('Фиды'));
+  if (!document.querySelector('.posts .card')) {
+    postsSection.prepend(createTitle('Посты'));
+  }
+  if (!document.querySelector('.feeds .card')) {
+    feedsSection.prepend(createTitle('Фиды'));
+  }
+
   feeds.forEach((feed) => {
     const {
       id, title, description, rssLink,
@@ -135,7 +135,7 @@ const renderAll = (feeds, posts) => {
         post[id].forEach((elem) => {
           const { postTitle, postDescription, postLink } = elem;
           if (!elem.rendered) {
-            div.append(renderPost(postTitle, postDescription, postLink));
+            div.append(renderMarkupPost(postTitle, postDescription, postLink));
             elem.rendered = true;
           }
         });
@@ -151,7 +151,7 @@ export const updateFeeds = (posts) => {
     const div = document.getElementById(`${post.rssLink}`);
     const { postTitle, postDescription, postLink } = post;
     if (!post.rendered) {
-      div.prepend(renderPost(postTitle, postDescription, postLink));
+      div.prepend(renderMarkupPost(postTitle, postDescription, postLink));
       post.rendered = true;
     }
   });
