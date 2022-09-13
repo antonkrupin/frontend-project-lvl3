@@ -85,14 +85,11 @@ const renderMarkupPost = (text, description, link, buttonText = 'Просмот�
   button.setAttribute('data-bs-toggle', 'modal');
   button.setAttribute('data-bs-target', '#exampleModal');
 
-  button.addEventListener('click', (event) => {
-    buttonHandler(event.target);
-  });
+  button.addEventListener('click', (event) => buttonHandler(event.target));
 
   button.textContent = buttonText;
 
-  li.append(themeLink);
-  li.append(button);
+  li.append(themeLink, button);
 
   return li;
 };
