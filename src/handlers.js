@@ -59,8 +59,12 @@ const handler = (event, state) => {
           state.errorValue = error.name;
           break;
         }
-        default:
+        case 'ValidationError': {
           [state.errorValue] = error.errors;
+          break;
+        }
+        default:
+          throw new Error('Unexpected error type');
       }
     });
 };
