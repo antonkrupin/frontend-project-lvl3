@@ -26,6 +26,16 @@ const downloadRss = (rssUrl) => {
     });
 };
 
+const downloadRss1 = (rssUrl) => {
+  const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(rssUrl)}`;
+  return axios
+    .get(rssLink)
+    .then((response) => [response.data.contents])
+    .catch((error) => {
+      throw error;
+    });
+};
+
 const handler = (event, state) => {
   event.preventDefault();
 
@@ -70,6 +80,30 @@ const handler = (event, state) => {
 };
 
 export const updateRss = (state) => {
+  const promises = state.rssLinks.map((link) => downloadRss1(link).then((response) => {
+    const { posts } = parserXML(response, link);
+    state.feeds.forEach((feed) => {
+      if (feed.rssLink === link) {
+        const updatedFeedId = feed.id;
+        const newPosts = posts;
+        // eslint-disable-next-line max-len
+        const oldPosts = state.posts.filter((post) => updatedFeedId in post ?? post[updatedFeedId])[0][updatedFeedId];
+        const difference = _.differenceBy(newPosts, oldPosts, 'postDate');
+        if (difference.length !== 0) {
+          oldPosts.unshift(difference[0]);
+          state.posts.forEach((post) => {
+            if (post[updatedFeedId]) {
+              updateFeeds(post[updatedFeedId]);
+            }
+          });
+        }
+      }
+    });
+  }).catch((error) => console.log(error)));
+  Promise.all(promises).then(() => setTimeout(() => updateRss(state), 5000));
+};
+
+export const updateRss1 = (state) => {
   const promises = state.rssLinks.map((link) => downloadRss(link));
   Promise.all(promises).then((response) => {
     response.forEach((el) => {
@@ -93,7 +127,7 @@ export const updateRss = (state) => {
       });
     });
   }).then(() => {
-    setTimeout(() => updateRss(state), 5000);
+    setTimeout(() => updateRss1(state), 5000);
   });
 };
 
