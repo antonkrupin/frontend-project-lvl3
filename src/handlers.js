@@ -67,8 +67,7 @@ const handler = (event, state) => {
 
 export const updateRss = (state) => {
   const promises = state.rssLinks.map((link) => downloadRss(link));
-  const promise = Promise.all(promises);
-  promise.then((response) => {
+  Promise.all(promises).then((response) => {
     response.forEach((el) => {
       const { posts } = parserXML(el[0], el[1]);
       state.feeds.forEach((feed) => {
