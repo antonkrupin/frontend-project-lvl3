@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import _ from 'lodash';
 
 /* eslint-disable no-param-reassign */
@@ -38,14 +37,22 @@ const buttonHandler = (button) => {
 
 const renderMarkupFeed = (title, description) => {
   const li = document.createElement('li');
-  li.classList.add('list-group-item', 'border-0', 'border-end-0');
+  li.classList.add(
+    'list-group-item',
+    'border-0',
+    'border-end-0',
+  );
 
   const h3 = document.createElement('h3');
   h3.classList.add('h6', 'm-0');
   h3.textContent = title;
 
   const p = document.createElement('p');
-  p.classList.add('m-0', 'small', 'text-black-50');
+  p.classList.add(
+    'm-0',
+    'small',
+    'text-black-50',
+  );
   p.textContent = description;
 
   li.append(h3);
@@ -78,19 +85,14 @@ const renderMarkupPost = (text, description, link, buttonText = 'Просмот�
   button.setAttribute('data-bs-toggle', 'modal');
   button.setAttribute('data-bs-target', '#exampleModal');
 
-  button.addEventListener('click', (event) => {
-    buttonHandler(event.target);
-  });
+  button.addEventListener('click', (event) => buttonHandler(event.target));
 
   button.textContent = buttonText;
 
-  li.append(themeLink);
-  li.append(button);
+  li.append(themeLink, button);
 
   return li;
 };
-
-const renderPost = (postTitle, postDescription, postLink) => renderMarkupPost(postTitle, postDescription, postLink);
 
 const renderFeed = (title, description) => {
   const feedsSection = document.querySelector('.feeds');
@@ -103,10 +105,13 @@ const renderAll = (feeds, posts) => {
   const postsSection = document.querySelector('.posts');
   const feedsSection = document.querySelector('.feeds');
 
-  // eslint-disable-next-line no-unused-expressions
-  document.querySelector('.posts .card') ?? postsSection.prepend(createTitle('Посты'));
-  // eslint-disable-next-line no-unused-expressions
-  document.querySelector('.feeds .card') ?? feedsSection.prepend(createTitle('Фиды'));
+  if (!document.querySelector('.posts .card')) {
+    postsSection.prepend(createTitle('Посты'));
+  }
+  if (!document.querySelector('.feeds .card')) {
+    feedsSection.prepend(createTitle('Фиды'));
+  }
+
   feeds.forEach((feed) => {
     const {
       id, title, description, rssLink,
@@ -127,7 +132,7 @@ const renderAll = (feeds, posts) => {
         post[id].forEach((elem) => {
           const { postTitle, postDescription, postLink } = elem;
           if (!elem.rendered) {
-            div.append(renderPost(postTitle, postDescription, postLink));
+            div.append(renderMarkupPost(postTitle, postDescription, postLink));
             elem.rendered = true;
           }
         });
@@ -143,7 +148,7 @@ export const updateFeeds = (posts) => {
     const div = document.getElementById(`${post.rssLink}`);
     const { postTitle, postDescription, postLink } = post;
     if (!post.rendered) {
-      div.prepend(renderPost(postTitle, postDescription, postLink));
+      div.prepend(renderMarkupPost(postTitle, postDescription, postLink));
       post.rendered = true;
     }
   });
