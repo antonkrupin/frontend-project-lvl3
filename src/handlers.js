@@ -70,7 +70,7 @@ const handler = (event, state) => {
           break;
         }
         case 'ValidationError': {
-          [state.errorValue] = error.errors;
+					state.errorValue = error.message;
           break;
         }
         default:
@@ -99,7 +99,7 @@ export const updateRss = (state) => {
         }
       }
     });
-  }).catch((error) => console.log(error)));
+  }).catch((error) => state.errorValue = error.name));
   Promise.all(promises).then(() => setTimeout(() => updateRss(state), 5000));
 };
 
