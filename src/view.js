@@ -28,10 +28,10 @@ const app = () => {
   }).then(() => {
     yup.setLocale({
       string: {
-				url: 'notValidUrlFormat',
+        url: 'notValidUrlFormat',
       },
       mixed: {
-				notOneOf: 'rssRepeat',
+        notOneOf: 'rssRepeat',
       },
     });
 

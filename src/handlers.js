@@ -70,7 +70,7 @@ const handler = (event, state) => {
           break;
         }
         case 'ValidationError': {
-					state.errorValue = error.message;
+          state.errorValue = error.message;
           break;
         }
         default:
