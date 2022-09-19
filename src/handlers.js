@@ -11,9 +11,7 @@ const validateRss = (state, url) => {
     link: yup.string().url().notOneOf(state.rssLinks),
   });
 
-  return rssValidateSchema.validate(url).catch((error) => {
-    throw error;
-  });
+  return rssValidateSchema.validate(url);
 };
 
 const downloadRss = (rssUrl) => {
