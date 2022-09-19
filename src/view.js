@@ -28,10 +28,10 @@ const app = () => {
   }).then(() => {
     yup.setLocale({
       string: {
-        url: i18Instance.t('errors.notValidUrlFormat'),
+				url: 'notValidUrlFormat',
       },
       mixed: {
-        notOneOf: i18Instance.t('errors.rssRepeat'),
+				notOneOf: 'rssRepeat',
       },
     });
 
@@ -71,11 +71,11 @@ const app = () => {
           errorsRender(inputField, feedBackField, i18Instance.t('errors.networkProblems'));
           fieldset.removeAttribute('disabled', 'disabled');
           break;
-        case 'RSS уже существует':
+        case 'rssRepeat':
           errorsRender(inputField, feedBackField, i18Instance.t('errors.rssRepeat'));
           fieldset.removeAttribute('disabled', 'disabled');
           break;
-        case 'Ссылка должна быть валидным URL':
+        case 'notValidUrlFormat':
           errorsRender(inputField, feedBackField, i18Instance.t('errors.notValidUrlFormat'));
           fieldset.removeAttribute('disabled', 'disabled');
           break;
