@@ -4,7 +4,7 @@ import i18next from 'i18next';
 
 import resources from './locales/index';
 import handler, { updateRss } from './handlers';
-import renderAll, { errorsRender } from './renders';
+import renderAll, { formErrorRender } from './renders';
 
 const app = () => {
   const state = {
@@ -57,36 +57,13 @@ const app = () => {
       }
     };
 
-    const formErrorHandler = (error) => {
-      switch (error) {
-        case 'AxiosError':
-          errorsRender(inputField, feedBackField, i18Instance.t('errors.networkProblems'));
-          fieldset.removeAttribute('disabled', 'disabled');
-          break;
-        case 'rssRepeat':
-          errorsRender(inputField, feedBackField, i18Instance.t('errors.rssRepeat'));
-          fieldset.removeAttribute('disabled', 'disabled');
-          break;
-        case 'notValidUrlFormat':
-          errorsRender(inputField, feedBackField, i18Instance.t('errors.notValidUrlFormat'));
-          fieldset.removeAttribute('disabled', 'disabled');
-          break;
-        case 'TypeError':
-          errorsRender(inputField, feedBackField, i18Instance.t('errors.notHaveValidRss'));
-          fieldset.removeAttribute('disabled', 'disabled');
-          break;
-        default:
-          throw new Error('Unexpected error value');
-      }
-    };
-
     const watchedState = onChange(state, (path, value) => {
       switch (path) {
         case 'formStatus':
           formStatusHandler(value);
           break;
         case 'errorValue':
-          formErrorHandler(value);
+          formErrorRender(value, inputField, feedBackField, fieldset, i18Instance);
           break;
         default:
           break;
