@@ -78,7 +78,6 @@ export const updateRss = (state) => {
         // const oldPosts = state.posts.filter((post) => post.id === id);
         // const oldTest = oldPosts.map((post) => post.post);
         const oldPosts = state.posts.filter((post) => post.id === id).map((post) => post.post);
-        // console.log(oldPosts1);
         const difference = _.differenceBy(posts, oldPosts, 'postDate');
         if (difference.length !== 0) {
           state.posts.unshift({ id, post: difference[0] });
@@ -87,21 +86,6 @@ export const updateRss = (state) => {
           });
         }
       }
-      /* if (feed.rssLink === link) {
-        const updatedFeedId = feed.id;
-        const newPosts = posts;
-        // eslint-disable-next-line max-len
-        const oldPosts = state.posts.filter((post) => updatedFeedId in post ?? post[updatedFeedId])[0][updatedFeedId];
-        const difference = _.differenceBy(newPosts, oldPosts, 'postDate');
-        if (difference.length !== 0) {
-          oldPosts.unshift(difference[0]);
-          state.posts.forEach((post) => {
-            if (post[updatedFeedId]) {
-              updateFeeds(post[updatedFeedId]);
-            }
-          });
-        }
-      } */
     });
   }).catch((error) => { state.errorValue = error.name; }));
   Promise.all(promises).then(() => setTimeout(() => updateRss(state), 5000));
