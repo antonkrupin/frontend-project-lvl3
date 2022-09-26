@@ -1,4 +1,4 @@
-import _ from 'lodash';
+// import _ from 'lodash';
 
 /* eslint-disable no-param-reassign */
 const createTitle = (text) => {
@@ -127,8 +127,14 @@ const renderAll = (feeds, posts) => {
 
     posts.forEach((post) => {
       const postsCard = document.querySelector('.posts > .card');
-
-      if (_.keys(post)[0] === id) {
+      if (post.id === id) {
+        const { postTitle, postDescription, postLink } = post.post;
+        if (!post.post.rendered) {
+          div.append(renderMarkupPost(postTitle, postDescription, postLink));
+          post.post.rendered = true;
+        }
+      }
+      /* if (_.keys(post)[0] === id) {
         post[id].forEach((elem) => {
           const { postTitle, postDescription, postLink } = elem;
           if (!elem.rendered) {
@@ -136,22 +142,29 @@ const renderAll = (feeds, posts) => {
             elem.rendered = true;
           }
         });
-      }
+      } */
       postsCard.after(div);
       postsSection.prepend(postsCard);
     });
   });
 };
 
-export const updateFeeds = (posts) => {
-  posts.forEach((post) => {
+export const updateFeeds = (post) => {
+  /* posts.forEach((post) => {
+    console.log(post);
     const div = document.getElementById(`${post.rssLink}`);
-    const { postTitle, postDescription, postLink } = post;
-    if (!post.rendered) {
+    const { postTitle, postDescription, postLink } = post.post;
+    if (!post.post.rendered) {
       div.prepend(renderMarkupPost(postTitle, postDescription, postLink));
-      post.rendered = true;
+      post.post.rendered = true;
     }
-  });
+  }); */
+  const div = document.getElementById(`${post.post.rssLink}`);
+  const { postTitle, postDescription, postLink } = post.post;
+  if (!post.post.rendered) {
+    div.prepend(renderMarkupPost(postTitle, postDescription, postLink));
+    post.post.rendered = true;
+  }
 };
 
 export const errorsRender = (input, feedback, errorText) => {
