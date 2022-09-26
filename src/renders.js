@@ -154,4 +154,12 @@ export const updateFeeds = (posts) => {
   });
 };
 
+export const errorsRender = (input, feedback, errorText) => {
+  input.classList.add('is-invalid');
+  feedback.classList.add('text-danger');
+  feedback.classList.remove('text-success');
+  // eslint-disable-next-line no-param-reassign
+  feedback.textContent = errorText;
+};
+
 export default renderAll;
