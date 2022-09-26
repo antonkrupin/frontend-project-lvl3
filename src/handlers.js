@@ -39,7 +39,10 @@ const handler = (event, state) => {
       const id = _.uniqueId();
       const { feed, posts } = parserXML(response, link);
       feed.id = id;
-      state.posts.push({ [id]: posts });
+      // state.posts.push({ [id]: posts });
+      posts.forEach((post) => {
+        state.posts.push({ id, post });
+      });
       state.feeds.push(feed);
       state.rssLinks.push(feed.rssLink);
       state.formStatus = 'processed';
