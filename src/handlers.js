@@ -18,10 +18,7 @@ const downloadRss = (rssUrl) => {
   const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(rssUrl)}`;
   return axios
     .get(rssLink)
-    .then((response) => [response.data.contents])
-    .catch((error) => {
-      throw error;
-    });
+    .then((response) => [response.data.contents]);
 };
 
 const handler = (event, state) => {
