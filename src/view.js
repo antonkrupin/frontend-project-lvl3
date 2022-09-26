@@ -4,7 +4,7 @@ import i18next from 'i18next';
 
 import resources from './locales/index';
 import handler, { updateRss } from './handlers';
-import renderAll from './renders';
+import renderAll, { errorsRender } from './renders';
 
 const app = () => {
   const state = {
@@ -55,14 +55,6 @@ const app = () => {
         default:
           throw new Error('Unexpected formStatus value');
       }
-    };
-
-    const errorsRender = (input, feedback, errorText) => {
-      input.classList.add('is-invalid');
-      feedback.classList.add('text-danger');
-      feedback.classList.remove('text-success');
-      // eslint-disable-next-line no-param-reassign
-      feedback.textContent = errorText;
     };
 
     const formErrorHandler = (error) => {
