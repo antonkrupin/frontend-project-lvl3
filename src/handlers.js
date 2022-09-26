@@ -71,24 +71,22 @@ export const updateRss = (state) => {
   const promises = state.rssLinks.map((link) => downloadRss(link).then((response) => {
     const { posts } = parserXML(response, link);
     state.feeds.forEach((feed) => {
-			if (feed.rssLink === link) {
+      if (feed.rssLink === link) {
         const { id } = feed;
-				const updatedPosts = posts.map((post) => ({ id, post }));
-				const updateTest = updatedPosts.map((post) => post.post);
-				//const oldPosts = state.posts.filter((post) => post.id === id);
-				//const oldTest = oldPosts.map((post) => post.post);
-				const oldPosts = state.posts.filter((post) => post.id === id).map((post) => post.post);
-				// console.log(oldPosts1);
-				const difference = _.differenceBy(posts, oldPosts, 'postDate');
-				if (difference.length !== 0) {
-					state.posts.unshift({ id, post: difference[0] });
-					state.posts.forEach((post) => {
-						if (post.id === id) {
-							updateFeeds(post);
-						}
-					});
-				}
-			}
+        // const updatedPosts = posts.map((post) => ({ id, post }));
+        // const updateTest = updatedPosts.map((post) => post.post);
+        // const oldPosts = state.posts.filter((post) => post.id === id);
+        // const oldTest = oldPosts.map((post) => post.post);
+        const oldPosts = state.posts.filter((post) => post.id === id).map((post) => post.post);
+        // console.log(oldPosts1);
+        const difference = _.differenceBy(posts, oldPosts, 'postDate');
+        if (difference.length !== 0) {
+          state.posts.unshift({ id, post: difference[0] });
+          state.posts.forEach((post) => {
+            updateFeeds(post);
+          });
+        }
+      }
       /* if (feed.rssLink === link) {
         const updatedFeedId = feed.id;
         const newPosts = posts;
