@@ -162,4 +162,27 @@ export const errorsRender = (input, feedback, errorText) => {
   feedback.textContent = errorText;
 };
 
+export const formErrorRender = (error, inputField, feedBackField, fieldset, i18) => {
+  switch (error) {
+    case 'AxiosError':
+      errorsRender(inputField, feedBackField, i18.t('errors.networkProblems'));
+      fieldset.removeAttribute('disabled', 'disabled');
+      break;
+    case 'rssRepeat':
+      errorsRender(inputField, feedBackField, i18.t('errors.rssRepeat'));
+      fieldset.removeAttribute('disabled', 'disabled');
+      break;
+    case 'notValidUrlFormat':
+      errorsRender(inputField, feedBackField, i18.t('errors.notValidUrlFormat'));
+      fieldset.removeAttribute('disabled', 'disabled');
+      break;
+    case 'TypeError':
+      errorsRender(inputField, feedBackField, i18.t('errors.notHaveValidRss'));
+      fieldset.removeAttribute('disabled', 'disabled');
+      break;
+    default:
+      throw new Error('Unexpected error value');
+  }
+};
+
 export default renderAll;
