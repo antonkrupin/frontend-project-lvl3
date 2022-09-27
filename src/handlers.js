@@ -77,7 +77,8 @@ export const updateRss = (state) => {
         // const updateTest = updatedPosts.map((post) => post.post);
         // const oldPosts = state.posts.filter((post) => post.id === id);
         // const oldTest = oldPosts.map((post) => post.post);
-        const oldPosts = state.posts.filter((post) => post.id === id).map((post) => post.post);
+        const oldPosts = state.posts.filter((post) => post.id === id)
+          .map((post) => post.post);
         const difference = _.differenceBy(posts, oldPosts, 'postDate');
         if (difference.length !== 0) {
           state.posts.unshift({ id, post: difference[0] });
