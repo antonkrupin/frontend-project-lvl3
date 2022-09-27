@@ -39,7 +39,6 @@ const handler = (event, state) => {
       const id = _.uniqueId();
       const { feed, posts } = parserXML(response, link);
       feed.id = id;
-      // state.posts.push({ [id]: posts });
       posts.forEach((post) => {
         state.posts.push({ id, post });
       });
@@ -50,19 +49,19 @@ const handler = (event, state) => {
     .catch((error) => {
       switch (error.name) {
         case 'AxiosError': {
-          state.errorValue = 'AxiosError';
+          state.errorValue = 'errors.networkProblems';
           break;
         }
         case 'TypeError': {
-          state.errorValue = error.name;
+          state.errorValue = 'errors.notHaveValidRss';
           break;
         }
         case 'ValidationError': {
-          state.errorValue = error.message;
+          state.errorValue = `errors.${error.message}`;
           break;
         }
         default:
-          throw new Error('Unexpected error type');
+          state.errorValue = 'errors.unknown';
       }
     });
 };
@@ -73,13 +72,11 @@ export const updateRss = (state) => {
     state.feeds.forEach((feed) => {
       if (feed.rssLink === link) {
         const { id } = feed;
-        // const updatedPosts = posts.map((post) => ({ id, post }));
-        // const updateTest = updatedPosts.map((post) => post.post);
-        // const oldPosts = state.posts.filter((post) => post.id === id);
-        // const oldTest = oldPosts.map((post) => post.post);
-        const oldPosts = state.posts.filter((post) => post.id === id)
-          .map((post) => post.post);
+
+        const oldPosts = state.posts.filter((post) => post.id === id).map((post) => post.post);
+
         const difference = _.differenceBy(posts, oldPosts, 'postDate');
+
         if (difference.length !== 0) {
           state.posts.unshift({ id, post: difference[0] });
           state.posts.forEach((post) => {
