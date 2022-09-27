@@ -4,7 +4,7 @@ import i18next from 'i18next';
 
 import resources from './locales/index';
 import handler, { updateRss } from './handlers';
-import renderAll, { formErrorRender } from './renders';
+import renderAll, { errorsRender } from './renders';
 
 const app = () => {
   const state = {
@@ -63,7 +63,12 @@ const app = () => {
           formStatusHandler(value);
           break;
         case 'errorValue':
-          formErrorRender(value, inputField, feedBackField, fieldset, i18Instance);
+          errorsRender(
+            inputField,
+            feedBackField,
+            fieldset,
+            i18Instance.t(value),
+          );
           break;
         default:
           break;
