@@ -134,15 +134,6 @@ const renderAll = (feeds, posts) => {
           post.post.rendered = true;
         }
       }
-      /* if (_.keys(post)[0] === id) {
-        post[id].forEach((elem) => {
-          const { postTitle, postDescription, postLink } = elem;
-          if (!elem.rendered) {
-            div.append(renderMarkupPost(postTitle, postDescription, postLink));
-            elem.rendered = true;
-          }
-        });
-      } */
       postsCard.after(div);
       postsSection.prepend(postsCard);
     });
@@ -150,15 +141,6 @@ const renderAll = (feeds, posts) => {
 };
 
 export const updateFeeds = (post) => {
-  /* posts.forEach((post) => {
-    console.log(post);
-    const div = document.getElementById(`${post.rssLink}`);
-    const { postTitle, postDescription, postLink } = post.post;
-    if (!post.post.rendered) {
-      div.prepend(renderMarkupPost(postTitle, postDescription, postLink));
-      post.post.rendered = true;
-    }
-  }); */
   const div = document.getElementById(`${post.post.rssLink}`);
   const { postTitle, postDescription, postLink } = post.post;
   if (!post.post.rendered) {
@@ -167,35 +149,12 @@ export const updateFeeds = (post) => {
   }
 };
 
-export const errorsRender = (input, feedback, errorText) => {
+export const errorsRender = (input, feedback, fieldset, i18Instance) => {
   input.classList.add('is-invalid');
   feedback.classList.add('text-danger');
   feedback.classList.remove('text-success');
-  // eslint-disable-next-line no-param-reassign
-  feedback.textContent = errorText;
-};
-
-export const formErrorRender = (error, inputField, feedBackField, fieldset, i18) => {
-  switch (error) {
-    case 'AxiosError':
-      errorsRender(inputField, feedBackField, i18.t('errors.networkProblems'));
-      fieldset.removeAttribute('disabled', 'disabled');
-      break;
-    case 'rssRepeat':
-      errorsRender(inputField, feedBackField, i18.t('errors.rssRepeat'));
-      fieldset.removeAttribute('disabled', 'disabled');
-      break;
-    case 'notValidUrlFormat':
-      errorsRender(inputField, feedBackField, i18.t('errors.notValidUrlFormat'));
-      fieldset.removeAttribute('disabled', 'disabled');
-      break;
-    case 'TypeError':
-      errorsRender(inputField, feedBackField, i18.t('errors.notHaveValidRss'));
-      fieldset.removeAttribute('disabled', 'disabled');
-      break;
-    default:
-      throw new Error('Unexpected error value');
-  }
+  feedback.textContent = i18Instance;
+  fieldset.removeAttribute('disabled', 'disabled');
 };
 
 export default renderAll;
