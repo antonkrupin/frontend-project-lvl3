@@ -21,6 +21,25 @@ const downloadRss = (rssUrl) => {
     .then((response) => [response.data.contents]);
 };
 
+const errorHandler = (state, error) => {
+  switch (error.name) {
+    case 'AxiosError': {
+      state.errorValue = 'errors.networkProblems';
+      break;
+    }
+    case 'TypeError': {
+      state.errorValue = 'errors.notHaveValidRss';
+      break;
+    }
+    case 'ValidationError': {
+      state.errorValue = `errors.${error.message}`;
+      break;
+    }
+    default:
+      state.errorValue = 'errors.unknown';
+  }
+};
+
 const handler = (event, state) => {
   event.preventDefault();
 
@@ -47,7 +66,8 @@ const handler = (event, state) => {
       state.formStatus = 'processed';
     })
     .catch((error) => {
-      switch (error.name) {
+      errorHandler(state, error);
+      /* switch (error.name) {
         case 'AxiosError': {
           state.errorValue = 'errors.networkProblems';
           break;
@@ -62,32 +82,9 @@ const handler = (event, state) => {
         }
         default:
           state.errorValue = 'errors.unknown';
-      }
+      } */
     });
 };
-
-/* export const updateRss1 = (state) => {
-  const promises = state.rssLinks.map((link) => downloadRss(link).then((response) => {
-    const { posts } = parserXML(response, link);
-    state.feeds.forEach((feed) => {
-      if (feed.rssLink === link) {
-        const { id } = feed;
-
-        const oldPosts = state.posts.filter((post) => post.id === id).map((post) => post.post);
-
-        const difference = _.differenceBy(posts, oldPosts, 'postDate');
-
-        if (difference.length !== 0) {
-          state.posts.unshift({ id, post: difference[0] });
-          state.posts.forEach((post) => {
-            updateFeeds(post);
-          });
-        }
-      }
-    });
-  }).catch((error) => { state.errorValue = error.name; }));
-  Promise.all(promises).then(() => setTimeout(() => updateRss1(state), 5000));
-}; */
 
 export const updateRss = (state) => {
   const promises = state.feeds.map(({ id, rssLink }) => downloadRss(rssLink).then((response) => {
