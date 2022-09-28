@@ -3,8 +3,8 @@ import * as yup from 'yup';
 import i18next from 'i18next';
 
 import resources from './locales/index';
-import handler, { updateRss } from './handlers';
-import renderAll, { errorsRender } from './renders';
+import handler, { formStatusHandler, updateRss } from './handlers';
+import { errorsRender } from './renders';
 
 const app = () => {
   const state = {
@@ -35,7 +35,7 @@ const app = () => {
       },
     });
 
-    const formStatusHandler = (status) => {
+    /* const formStatusHandler = (status) => {
       switch (status) {
         case 'processing':
           feedBackField.classList.add('text-success');
@@ -55,12 +55,12 @@ const app = () => {
         default:
           throw new Error('Unexpected formStatus value');
       }
-    };
+    }; */
 
     const watchedState = onChange(state, (path, value) => {
       switch (path) {
         case 'formStatus':
-          formStatusHandler(value);
+          formStatusHandler(state, value, form, inputField, feedBackField, fieldset, i18Instance);
           break;
         case 'errorValue':
           errorsRender(
