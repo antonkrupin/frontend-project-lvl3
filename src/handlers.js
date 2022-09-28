@@ -4,7 +4,7 @@ import axios from 'axios';
 import _ from 'lodash';
 
 import parserXML from './parser';
-import { updateFeeds } from './renders';
+import renderAll, { updateFeeds } from './renders';
 
 const validateRss = (state, url) => {
   const rssValidateSchema = yup.object().shape({
@@ -19,6 +19,36 @@ const downloadRss = (rssUrl) => {
   return axios
     .get(rssLink)
     .then((response) => [response.data.contents]);
+};
+
+export const formStatusHandler = (
+  state,
+  formStatus,
+  form,
+  inputField,
+  feedBackField,
+  fieldset,
+  i18Instance,
+) => {
+  switch (formStatus) {
+    case 'processing':
+      feedBackField.classList.add('text-success');
+      feedBackField.classList.remove('text-danger');
+      feedBackField.textContent = i18Instance.t('watching');
+      break;
+    case 'processed':
+      fieldset.removeAttribute('disabled', 'disabled');
+      inputField.classList.add('is-valid');
+      inputField.classList.remove('is-invalid');
+      feedBackField.classList.add('text-success');
+      feedBackField.classList.remove('text-danger');
+      feedBackField.textContent = i18Instance.t('rssAdded');
+      renderAll(state.feeds, state.posts);
+      form.elements.url.value = '';
+      break;
+    default:
+      throw new Error('Unexpected formStatus value');
+  }
 };
 
 const errorHandler = (state, error) => {
