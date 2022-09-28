@@ -35,28 +35,6 @@ const app = () => {
       },
     });
 
-    /* const formStatusHandler = (status) => {
-      switch (status) {
-        case 'processing':
-          feedBackField.classList.add('text-success');
-          feedBackField.classList.remove('text-danger');
-          feedBackField.textContent = i18Instance.t('watching');
-          break;
-        case 'processed':
-          fieldset.removeAttribute('disabled', 'disabled');
-          inputField.classList.add('is-valid');
-          inputField.classList.remove('is-invalid');
-          feedBackField.classList.add('text-success');
-          feedBackField.classList.remove('text-danger');
-          feedBackField.textContent = i18Instance.t('rssAdded');
-          renderAll(state.feeds, state.posts);
-          form.elements.url.value = '';
-          break;
-        default:
-          throw new Error('Unexpected formStatus value');
-      }
-    }; */
-
     const watchedState = onChange(state, (path, value) => {
       switch (path) {
         case 'formStatus':
