@@ -67,22 +67,6 @@ const handler = (event, state) => {
     })
     .catch((error) => {
       errorHandler(state, error);
-      /* switch (error.name) {
-        case 'AxiosError': {
-          state.errorValue = 'errors.networkProblems';
-          break;
-        }
-        case 'TypeError': {
-          state.errorValue = 'errors.notHaveValidRss';
-          break;
-        }
-        case 'ValidationError': {
-          state.errorValue = `errors.${error.message}`;
-          break;
-        }
-        default:
-          state.errorValue = 'errors.unknown';
-      } */
     });
 };
 
