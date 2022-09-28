@@ -66,7 +66,7 @@ const handler = (event, state) => {
     });
 };
 
-export const updateRss = (state) => {
+/* export const updateRss1 = (state) => {
   const promises = state.rssLinks.map((link) => downloadRss(link).then((response) => {
     const { posts } = parserXML(response, link);
     state.feeds.forEach((feed) => {
@@ -85,6 +85,22 @@ export const updateRss = (state) => {
         }
       }
     });
+  }).catch((error) => { state.errorValue = error.name; }));
+  Promise.all(promises).then(() => setTimeout(() => updateRss1(state), 5000));
+}; */
+
+export const updateRss = (state) => {
+  const promises = state.feeds.map(({ id, rssLink }) => downloadRss(rssLink).then((response) => {
+    const { posts } = parserXML(response, rssLink);
+
+    const oldPosts = state.posts.filter((post) => post.id === id).map(({ post }) => post);
+
+    const difference = _.differenceBy(posts, oldPosts, 'postDate');
+
+    if (difference.length !== 0) {
+      state.posts.unshift({ id, post: difference[0] });
+      state.posts.forEach((post) => { updateFeeds(post); });
+    }
   }).catch((error) => { state.errorValue = error.name; }));
   Promise.all(promises).then(() => setTimeout(() => updateRss(state), 5000));
 };
