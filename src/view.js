@@ -38,7 +38,15 @@ const app = () => {
     const watchedState = onChange(state, (path, value) => {
       switch (path) {
         case 'formStatus':
-          formStatusHandler(state, value, form, inputField, feedBackField, fieldset, i18Instance);
+          formStatusHandler(
+            state,
+            value,
+            form,
+            inputField,
+            feedBackField,
+            fieldset,
+            i18Instance,
+          );
           break;
         case 'errorValue':
           errorsRender(
