@@ -126,13 +126,18 @@ const renderAll = (feeds, posts) => {
 
     posts.forEach((post) => {
       const postsCard = document.querySelector('.posts > .card');
-      if (post.id === id) {
-        const { postTitle, postDescription, postLink } = post.post;
-        if (!post.post.rendered) {
+      if (post.feedId === id) {
+        const { postTitle, postDescription, postLink } = post;
+        if (!post.rendered) {
           div.append(renderMarkupPost(postTitle, postDescription, postLink));
-          post.post.rendered = true;
+          post.rendered = true;
         }
       }
+      /* const { postTitle, postDescription, postLink } = post;
+      if (!post.rendered) {
+        div.append(renderMarkupPost(postTitle, postDescription, postLink));
+        post.rendered = true;
+      } */
       postsCard.after(div);
       postsSection.prepend(postsCard);
     });
@@ -140,11 +145,11 @@ const renderAll = (feeds, posts) => {
 };
 
 export const updateFeeds = (post) => {
-  const div = document.getElementById(`${post.post.rssLink}`);
-  const { postTitle, postDescription, postLink } = post.post;
-  if (!post.post.rendered) {
+  const div = document.getElementById(`${post.rssLink}`);
+  const { postTitle, postDescription, postLink } = post;
+  if (!post.rendered) {
     div.prepend(renderMarkupPost(postTitle, postDescription, postLink));
-    post.post.rendered = true;
+    post.rendered = true;
   }
 };
 
