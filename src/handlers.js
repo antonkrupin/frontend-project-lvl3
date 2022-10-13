@@ -31,6 +31,7 @@ export const formStatusHandler = (
     inputField,
     form,
   } = formElements;
+  console.log(state.posts);
   switch (state.formStatus) {
     case 'processing':
       feedBackField.classList.add('text-success');
@@ -53,6 +54,7 @@ export const formStatusHandler = (
 };
 
 const errorHandler = (state, error) => {
+  console.log(state.posts);
   switch (error.name) {
     case 'AxiosError': {
       state.errorValue = 'errors.networkProblems';
@@ -90,7 +92,7 @@ const handler = (event, state) => {
       const { feed, posts } = parserXML(response, link);
       feed.id = id;
       posts.forEach((post) => {
-        state.posts.push({ id, post });
+        state.posts.push({ id, ...post });
       });
       state.feeds.push(feed);
       state.rssLinks.push(feed.rssLink);
