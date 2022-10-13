@@ -1,6 +1,5 @@
 // import _ from 'lodash';
 
-/* eslint-disable no-param-reassign */
 const createTitle = (text) => {
   const div = document.createElement('div');
   div.classList.add('card', 'border-0');
@@ -149,11 +148,16 @@ export const updateFeeds = (post) => {
   }
 };
 
-export const errorsRender = (input, feedback, fieldset, i18Instance) => {
-  input.classList.add('is-invalid');
-  feedback.classList.add('text-danger');
-  feedback.classList.remove('text-success');
-  feedback.textContent = i18Instance;
+export const errorsRender = (formElements, i18Instance) => {
+  const {
+    inputField,
+    feedBackField,
+    fieldset,
+  } = formElements;
+  inputField.classList.add('is-invalid');
+  feedBackField.classList.add('text-danger');
+  feedBackField.classList.remove('text-success');
+  feedBackField.textContent = i18Instance;
   fieldset.removeAttribute('disabled', 'disabled');
 };
 
