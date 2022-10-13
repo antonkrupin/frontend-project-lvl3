@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import * as yup from 'yup';
 import axios from 'axios';
 import _ from 'lodash';
@@ -23,14 +22,16 @@ const downloadRss = (rssUrl) => {
 
 export const formStatusHandler = (
   state,
-  formStatus,
-  form,
-  inputField,
-  feedBackField,
-  fieldset,
+  formElements,
   i18Instance,
 ) => {
-  switch (formStatus) {
+  const {
+    feedBackField,
+    fieldset,
+    inputField,
+    form,
+  } = formElements;
+  switch (state.formStatus) {
     case 'processing':
       feedBackField.classList.add('text-success');
       feedBackField.classList.remove('text-danger');
