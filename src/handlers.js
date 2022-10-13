@@ -31,7 +31,6 @@ export const formStatusHandler = (
     inputField,
     form,
   } = formElements;
-  console.log(state.posts);
   switch (state.formStatus) {
     case 'processing':
       feedBackField.classList.add('text-success');
@@ -54,7 +53,6 @@ export const formStatusHandler = (
 };
 
 const errorHandler = (state, error) => {
-  console.log(state.posts);
   switch (error.name) {
     case 'AxiosError': {
       state.errorValue = 'errors.networkProblems';
@@ -88,17 +86,18 @@ const handler = (event, state) => {
       return downloadRss(link);
     })
     .then((response) => {
-      const id = _.uniqueId();
+      const feedId = _.uniqueId();
       const { feed, posts } = parserXML(response, link);
-      feed.id = id;
+      feed.id = feedId;
       posts.forEach((post) => {
-        state.posts.push({ id, ...post });
+        state.posts.push({ feedId, ...post });
       });
       state.feeds.push(feed);
       state.rssLinks.push(feed.rssLink);
       state.formStatus = 'processed';
     })
     .catch((error) => {
+      console.log(error);
       errorHandler(state, error);
     });
 };
@@ -107,12 +106,12 @@ export const updateRss = (state) => {
   const promises = state.feeds.map(({ id, rssLink }) => downloadRss(rssLink).then((response) => {
     const { posts } = parserXML(response, rssLink);
 
-    const oldPosts = state.posts.filter((post) => post.id === id).map(({ post }) => post);
+    const oldPosts = state.posts.filter((post) => post.feedId === id);
 
     const difference = _.differenceBy(posts, oldPosts, 'postDate');
 
     if (difference.length !== 0) {
-      state.posts.unshift({ id, post: difference[0] });
+      state.posts.unshift({ feedId: id, ...difference[0] });
       state.posts.forEach((post) => { updateFeeds(post); });
     }
   }).catch((error) => { state.errorValue = error.name; }));
