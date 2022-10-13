@@ -20,6 +20,13 @@ const app = () => {
   const form = document.querySelector('.rss-form');
   const fieldset = form.querySelector('fieldset');
 
+  const formElements = {
+    form,
+    inputField,
+    feedBackField,
+    fieldset,
+  };
+
   const i18Instance = i18next.createInstance();
 
   i18Instance.init({
@@ -40,19 +47,13 @@ const app = () => {
         case 'formStatus':
           formStatusHandler(
             state,
-            value,
-            form,
-            inputField,
-            feedBackField,
-            fieldset,
+            formElements,
             i18Instance,
           );
           break;
         case 'errorValue':
           errorsRender(
-            inputField,
-            feedBackField,
-            fieldset,
+            formElements,
             i18Instance.t(value),
           );
           break;
