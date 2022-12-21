@@ -268,7 +268,7 @@ const renderPostItem = (post, state, i18) => {
   postButton.textContent = i18.t('button.view');
 
   postLi.append(postHref, postButton);
-  postsUl.prepend(postLi);
+  postsUl.append(postLi);
   /* if (type === 'new') {
     postsUl.prepend(postLi);
   } else {
@@ -307,4 +307,13 @@ export const renderModal = (state) => {
   a.href = href;
   modalTitle.textContent = post.post.postTitle;
   modalBody.textContent = post.post.postDescription;
+};
+
+export const updateFeeds = (post) => {
+  const div = document.getElementById(`${post.post.rssLink}`);
+  const { postTitle, postDescription, postLink } = post.post;
+  if (!post.post.rendered) {
+    div.prepend(renderMarkupPost(postTitle, postDescription, postLink));
+    post.post.rendered = true;
+  }
 };
