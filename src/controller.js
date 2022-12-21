@@ -3,7 +3,8 @@ import axios from 'axios';
 import _ from 'lodash';
 
 import parserXML from './parser';
-import renderAll, { updateFeeds, renderPosts } from './view';
+// import renderAll, { updateFeeds, renderPosts } from './view';
+import { renderPosts } from './view';
 
 const validateRss = (state, url) => {
   const rssValidateSchema = yup.object().shape({
