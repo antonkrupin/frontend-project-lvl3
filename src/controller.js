@@ -3,7 +3,7 @@ import axios from 'axios';
 import _ from 'lodash';
 
 import parserXML from './parser';
-import renderAll, { updateFeeds } from './renders';
+import renderAll, { updateFeeds } from './view';
 
 const validateRss = (state, url) => {
   const rssValidateSchema = yup.object().shape({
@@ -17,7 +17,7 @@ const downloadRss = (rssUrl) => {
   const rssLink = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(rssUrl)}`;
   return axios
     .get(rssLink)
-    .then((response) => [response.data.contents]);
+    .then((response) => response.data.contents);
 };
 
 export const formStatusHandler = (
@@ -92,6 +92,7 @@ const handler = (event, state) => {
       posts.forEach((post) => {
         state.posts.push({ id, post });
       });
+
       state.feeds.push(feed);
       state.rssLinks.push(feed.rssLink);
       state.formStatus = 'processed';
@@ -101,6 +102,14 @@ const handler = (event, state) => {
     });
 };
 
+export const test = (event, state) => {
+  const { target } = event;
+  const link = target.closest('li');
+  link.classList.remove('fw-bold');
+  link.classList.add('fw-normal');
+  state.modal.postLink = event.target;
+};
+
 export const updateRss = (state) => {
   const promises = state.feeds.map(({ id, rssLink }) => downloadRss(rssLink).then((response) => {
     const { posts } = parserXML(response, rssLink);
@@ -108,6 +117,8 @@ export const updateRss = (state) => {
     const oldPosts = state.posts.filter((post) => post.id === id).map(({ post }) => post);
 
     const difference = _.differenceBy(posts, oldPosts, 'postDate');
+
+    console.log('posts', posts);
 
     if (difference.length !== 0) {
       state.posts.unshift({ id, post: difference[0] });

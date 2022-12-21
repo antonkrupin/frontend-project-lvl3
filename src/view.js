@@ -1,73 +1,164 @@
-import onChange from 'on-change';
-import * as yup from 'yup';
-import i18next from 'i18next';
+// import _ from 'lodash';
 
-import resources from './locales/index';
-import handler, { formStatusHandler, updateRss } from './handlers';
-import { errorsRender } from './renders';
+const createTitle = (text) => {
+  const div = document.createElement('div');
+  div.classList.add('card', 'border-0');
 
-const app = () => {
-  const state = {
-    rssLinks: [],
-    feeds: [],
-    posts: [],
-    errorValue: '',
-    formStatus: 'filling',
-  };
+  const cardBody = document.createElement('div');
+  cardBody.classList.add('card-body');
 
-  const inputField = document.querySelector('#url-input');
-  const feedBackField = document.querySelector('.feedback');
-  const form = document.querySelector('.rss-form');
-  const fieldset = form.querySelector('fieldset');
+  const title = document.createElement('h2');
+  title.classList.add('card-title', 'h4');
+  title.textContent = text;
 
-  const formElements = {
-    form,
-    inputField,
-    feedBackField,
-    fieldset,
-  };
+  cardBody.append(title);
+  div.append(cardBody);
+  return div;
+};
 
-  const i18Instance = i18next.createInstance();
+const buttonHandler = (button) => {
+  const modal = document.querySelector('#exampleModal');
+  const modalTitle = modal.querySelector('.modal-title');
+  const modalBody = modal.querySelector('.modal-body');
+  const modalButton = modal.querySelector('.modal-footer a');
 
-  i18Instance.init({
-    lng: 'ru',
-    resources,
-  }).then(() => {
-    yup.setLocale({
-      string: {
-        url: 'notValidUrlFormat',
-      },
-      mixed: {
-        notOneOf: 'rssRepeat',
-      },
-    });
+  const closest = button.closest('li');
+  const link = closest.querySelector('a');
 
-    const watchedState = onChange(state, (path, value) => {
-      switch (path) {
-        case 'formStatus':
-          formStatusHandler(
-            state,
-            formElements,
-            i18Instance,
-          );
-          break;
-        case 'errorValue':
-          errorsRender(
-            formElements,
-            i18Instance.t(value),
-          );
-          break;
-        default:
-          break;
+  link.classList.remove('fw-bold');
+  link.classList.add('fw-normal');
+
+  modalTitle.textContent = link.textContent;
+  modalBody.textContent = link.getAttribute('data-description');
+
+  modalButton.setAttribute('href', link.getAttribute('href'));
+};
+
+const renderMarkupFeed = (title, description) => {
+  const li = document.createElement('li');
+  li.classList.add(
+    'list-group-item',
+    'border-0',
+    'border-end-0',
+  );
+
+  const h3 = document.createElement('h3');
+  h3.classList.add('h6', 'm-0');
+  h3.textContent = title;
+
+  const p = document.createElement('p');
+  p.classList.add(
+    'm-0',
+    'small',
+    'text-black-50',
+  );
+  p.textContent = description;
+
+  li.append(h3);
+  li.append(p);
+
+  return li;
+};
+
+const renderMarkupPost = (text, description, link, buttonText = 'Просмотр') => {
+  const li = document.createElement('li');
+  li.classList.add(
+    'list-group-item',
+    'd-flex',
+    'justify-content-between',
+    'align-items-start',
+    'border-0',
+    'border-end-0',
+  );
+
+  const themeLink = document.createElement('a');
+  themeLink.classList.add('fw-bold');
+  themeLink.setAttribute('href', link);
+  themeLink.setAttribute('target', '_blank');
+  themeLink.setAttribute('data-description', description);
+  themeLink.textContent = text;
+
+  const button = document.createElement('button');
+  button.classList.add('btn', 'btn-outline-primary');
+  button.setAttribute('type', 'button');
+  button.setAttribute('data-bs-toggle', 'modal');
+  button.setAttribute('data-bs-target', '#exampleModal');
+
+  button.addEventListener('click', (event) => buttonHandler(event.target));
+
+  button.textContent = buttonText;
+
+  li.append(themeLink, button);
+
+  return li;
+};
+
+const renderFeed = (title, description) => {
+  const feedsSection = document.querySelector('.feeds');
+  const feedsCard = document.querySelector('.feeds > .card');
+  feedsCard.after(renderMarkupFeed(title, description));
+  feedsSection.prepend(feedsCard);
+};
+
+const renderAll = (feeds, posts) => {
+  const postsSection = document.querySelector('.posts');
+  const feedsSection = document.querySelector('.feeds');
+
+  if (!document.querySelector('.posts .card')) {
+    postsSection.prepend(createTitle('Посты'));
+  }
+  if (!document.querySelector('.feeds .card')) {
+    feedsSection.prepend(createTitle('Фиды'));
+  }
+
+  feeds.forEach((feed) => {
+    const {
+      id, title, description, rssLink,
+    } = feed;
+
+    const div = document.getElementById(`${rssLink}`) ?? document.createElement('div');
+    div.setAttribute('id', `${rssLink}`);
+
+    if (!feed.rendered) {
+      renderFeed(title, description);
+      feed.rendered = true;
+    }
+
+    posts.forEach((post) => {
+      const postsCard = document.querySelector('.posts > .card');
+      if (post.id === id) {
+        const { postTitle, postDescription, postLink } = post.post;
+        if (!post.post.rendered) {
+          div.append(renderMarkupPost(postTitle, postDescription, postLink));
+          post.post.rendered = true;
+        }
       }
+      postsCard.after(div);
+      postsSection.prepend(postsCard);
     });
-
-    form.addEventListener('submit', (e) => {
-      handler(e, watchedState);
-    });
-
-    updateRss(state);
   });
 };
 
-export default app;
+export const updateFeeds = (post) => {
+  const div = document.getElementById(`${post.post.rssLink}`);
+  const { postTitle, postDescription, postLink } = post.post;
+  if (!post.post.rendered) {
+    div.prepend(renderMarkupPost(postTitle, postDescription, postLink));
+    post.post.rendered = true;
+  }
+};
+
+export const errorsRender = (formElements, i18Instance) => {
+  const {
+    inputField,
+    feedBackField,
+    fieldset,
+  } = formElements;
+  inputField.classList.add('is-invalid');
+  feedBackField.classList.add('text-danger');
+  feedBackField.classList.remove('text-success');
+  feedBackField.textContent = i18Instance;
+  fieldset.removeAttribute('disabled', 'disabled');
+};
+
+export default renderAll;

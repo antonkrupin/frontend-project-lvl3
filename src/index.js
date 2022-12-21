@@ -1,6 +1,6 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
-import app from './view';
+import app from './app';
 
 app();
