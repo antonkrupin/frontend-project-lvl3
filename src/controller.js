@@ -136,7 +136,8 @@ export const updateRss = (state) => {
 
     if (difference.length !== 0) {
       state.posts.unshift({ id, post: difference[0] });
-      state.posts.forEach((post) => { updateFeeds(post); });
+      // state.posts.forEach((post) => { updateFeeds(post); });
+      state.posts.forEach((post) => { renderPosts(post); });
     }
   }).catch((error) => { state.errorValue = error.name; }));
   Promise.all(promises).then(() => setTimeout(() => updateRss(state), 5000));
