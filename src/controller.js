@@ -142,7 +142,7 @@ export const updateRss = (state, elements, i18n) => {
       renderPosts(state, elements, i18n);
     }
   }).catch((error) => { state.errorValue = error.name; }));
-  Promise.all(promises).then(() => setTimeout(() => updateRss(state), 5000));
+  Promise.all(promises).then(() => setTimeout(() => updateRss(state, elements, i18n), 5000));
 };
 
 export default handler;

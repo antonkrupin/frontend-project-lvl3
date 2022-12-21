@@ -58,6 +58,10 @@ const app = () => {
           renderFeeds(state, elements, i18Instance);
           break;
         }
+        case 'posts': {
+          renderPosts(state, elements, i18Instance);
+          break;
+        }
         case 'formStatus':
           formStatusHandler(
             state,
