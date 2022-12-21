@@ -1,6 +1,6 @@
 // import _ from 'lodash';
 
-const createTitle = (text) => {
+/* const createTitle = (text) => {
   const div = document.createElement('div');
   div.classList.add('card', 'border-0');
 
@@ -32,6 +32,22 @@ const buttonHandler = (button) => {
   modalBody.textContent = link.getAttribute('data-description');
 
   modalButton.setAttribute('href', link.getAttribute('href'));
+};
+
+const findPostByLink = (url, state) => {
+  const posts = state.posts.flat().filter((post) => post.itemLink === url);
+  return posts[0];
+};
+
+export const renderModal = (state) => {
+  const href = state.ui.clickedLink;
+  const post = findPostByLink(href, state);
+  const modalTitle = document.querySelector('.modal-title');
+  const modalBody = document.querySelector('.modal-body');
+  const a = document.querySelector('.full-article');
+  a.href = href;
+  modalTitle.textContent = post.itemTitle;
+  modalBody.textContent = post.itemDescription;
 };
 
 const renderMarkupFeed = (title, description) => {
@@ -148,12 +164,18 @@ export const updateFeeds = (post) => {
   }
 };
 
-export const errorsRender = (formElements, i18Instance) => {
+export default renderAll; */
+
+export const renderPosts = (state) => {
+  console.log('renderPosts state', state);
+};
+
+export const errorsRender = (elements, i18Instance) => {
   const {
     inputField,
     feedBackField,
     fieldset,
-  } = formElements;
+  } = elements;
   inputField.classList.add('is-invalid');
   feedBackField.classList.add('text-danger');
   feedBackField.classList.remove('text-success');
@@ -161,4 +183,44 @@ export const errorsRender = (formElements, i18Instance) => {
   fieldset.removeAttribute('disabled', 'disabled');
 };
 
-export default renderAll;
+const renderFeedsContainer = (elements, i18n) => {
+  const { feedsContainer } = elements;
+  feedsContainer.textContent = '';
+  const feedCard = document.createElement('div');
+  const feedCardBody = document.createElement('div');
+  const feedCardTitle = document.createElement('h2');
+  const feedsUl = document.createElement('ul');
+
+  feedCard.classList.add('card', 'border-0');
+  feedCardBody.classList.add('card-body');
+  feedCardTitle.classList.add('card-title', 'h4');
+  feedsUl.classList.add('list-group', 'border-0', 'rounded-0');
+  feedsUl.setAttribute('id', 'feedUl');
+  feedCardBody.append(feedCardTitle);
+  feedCardTitle.textContent = i18n.t('titles.feeds');
+  feedCard.append(feedCardBody, feedsUl);
+  feedsContainer.append(feedCard);
+};
+
+const renderFeedItem = (feed) => {
+  const feedLi = document.createElement('li');
+  const feedTitle = document.createElement('h3');
+  const feedDescription = document.createElement('p');
+  const feedsUl = document.querySelector('#feedUl');
+  feedLi.classList.add('list-group-item', 'border-0', 'border-end-0');
+  feedTitle.classList.add('h6', 'm-0');
+  feedDescription.classList.add('m-0', 'small', 'text-black-50');
+  feedTitle.textContent = feed.title;
+  feedDescription.textContent = feed.description;
+  feedLi.append(feedTitle);
+  feedLi.append(feedDescription);
+  feedsUl.prepend(feedLi);
+};
+
+export const renderFeeds = (state, elements, i18n) => {
+  renderFeedsContainer(elements, i18n);
+  state.feeds.forEach((feed) => {
+    console.log('feed', feed);
+    renderFeedItem(feed);
+  });
+};
