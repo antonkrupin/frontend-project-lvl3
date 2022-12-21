@@ -9,5 +9,9 @@ export default {
     },
     watching: 'Идет загрузка RSS',
     rssAdded: 'RSS успешно загружен',
+    titles: {
+      feeds: 'Фиды',
+      posts: 'Посты',
+    },
   },
 };
