@@ -22,7 +22,7 @@ const downloadRss = (rssUrl) => {
 
 export const formStatusHandler = (
   state,
-  formElements,
+  elements,
   i18Instance,
 ) => {
   const {
@@ -30,7 +30,7 @@ export const formStatusHandler = (
     fieldset,
     inputField,
     form,
-  } = formElements;
+  } = elements;
   switch (state.formStatus) {
     case 'processing':
       feedBackField.classList.add('text-success');
@@ -102,12 +102,26 @@ const handler = (event, state) => {
     });
 };
 
-export const test = (event, state) => {
-  const { target } = event;
-  const link = target.closest('li');
-  link.classList.remove('fw-bold');
-  link.classList.add('fw-normal');
-  state.modal.postLink = event.target;
+const markAsVisited = (element, watchedState) => {
+  const { href } = element;
+  watchedState.ui.viewedPostLinks.add(href);
+};
+
+export const handlePostClick = (element, watchedState) => {
+  switch (element.tagName) {
+    case 'A': {
+      markAsVisited(element, watchedState);
+      break;
+    }
+    case 'BUTTON': {
+      const a = element.parentNode.querySelector('a');
+      markAsVisited(a, watchedState);
+      watchedState.ui.clickedLink = a.href;
+      break;
+    }
+    default:
+      throw new Error('unexpected tagname in handlePostClick controller');
+  }
 };
 
 export const updateRss = (state) => {
@@ -117,8 +131,6 @@ export const updateRss = (state) => {
     const oldPosts = state.posts.filter((post) => post.id === id).map(({ post }) => post);
 
     const difference = _.differenceBy(posts, oldPosts, 'postDate');
-
-    console.log('posts', posts);
 
     if (difference.length !== 0) {
       state.posts.unshift({ id, post: difference[0] });
