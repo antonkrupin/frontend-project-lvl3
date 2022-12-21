@@ -3,7 +3,7 @@ import axios from 'axios';
 import _ from 'lodash';
 
 import parserXML from './parser';
-import renderAll, { updateFeeds } from './view';
+import renderAll, { updateFeeds, renderPosts } from './view';
 
 const validateRss = (state, url) => {
   const rssValidateSchema = yup.object().shape({
@@ -44,7 +44,8 @@ export const formStatusHandler = (
       feedBackField.classList.add('text-success');
       feedBackField.classList.remove('text-danger');
       feedBackField.textContent = i18Instance.t('rssAdded');
-      renderAll(state.feeds, state.posts);
+      // renderAll(state.feeds, state.posts);
+      renderPosts(state, elements, i18Instance);
       form.elements.url.value = '';
       break;
     default:
@@ -98,6 +99,7 @@ const handler = (event, state) => {
       state.formStatus = 'processed';
     })
     .catch((error) => {
+      console.log('error', error);
       errorHandler(state, error);
     });
 };

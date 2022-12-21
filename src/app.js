@@ -53,8 +53,6 @@ const app = () => {
     });
 
     const watchedState = onChange(state, (path, value) => {
-      console.log('path', path);
-      console.log(value);
       switch (path) {
         case 'feeds': {
           renderFeeds(state, elements, i18Instance);
@@ -74,7 +72,7 @@ const app = () => {
           );
           break;
         case 'ui.viewedPostLinks':
-          renderPosts(state);
+          renderPosts(state, elements, i18Instance);
           break;
         case 'ui.clickedLink':
           renderModal(state);
