@@ -90,7 +90,7 @@ const app = () => {
       handlePostClick(e.target, watchedState);
     });
 
-    updateRss(state);
+    updateRss(state, elements, i18Instance);
   });
 };
 

@@ -278,7 +278,9 @@ const renderPostItem = (post, state, i18) => {
 
 export const renderPosts = (state, elements, i18) => {
   renderPostsContainer(elements);
+	console.log(state);
   state.posts.forEach((post) => {
+    console.log('post', post);
     renderPostItem(post.post, state, i18);
   });
   /* state.posts

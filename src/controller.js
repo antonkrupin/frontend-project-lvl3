@@ -127,7 +127,7 @@ export const handlePostClick = (element, watchedState) => {
   }
 };
 
-export const updateRss = (state) => {
+export const updateRss = (state, elements, i18n) => {
   const promises = state.feeds.map(({ id, rssLink }) => downloadRss(rssLink).then((response) => {
     const { posts } = parserXML(response, rssLink);
 
@@ -138,7 +138,8 @@ export const updateRss = (state) => {
     if (difference.length !== 0) {
       state.posts.unshift({ id, post: difference[0] });
       // state.posts.forEach((post) => { updateFeeds(post); });
-      state.posts.forEach((post) => { renderPosts(post); });
+      // state.posts.forEach((post) => { renderPosts(post); });
+      renderPosts(state, elements, i18n);
     }
   }).catch((error) => { state.errorValue = error.name; }));
   Promise.all(promises).then(() => setTimeout(() => updateRss(state), 5000));
