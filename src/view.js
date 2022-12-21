@@ -309,11 +309,11 @@ export const renderModal = (state) => {
   modalBody.textContent = post.post.postDescription;
 };
 
-export const updateFeeds = (post) => {
+/* export const updateFeeds = (post) => {
   const div = document.getElementById(`${post.post.rssLink}`);
   const { postTitle, postDescription, postLink } = post.post;
   if (!post.post.rendered) {
     div.prepend(renderMarkupPost(postTitle, postDescription, postLink));
     post.post.rendered = true;
   }
-};
+}; */
