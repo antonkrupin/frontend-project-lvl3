@@ -269,11 +269,6 @@ const renderPostItem = (post, state, i18) => {
 
   postLi.append(postHref, postButton);
   postsUl.append(postLi);
-  /* if (type === 'new') {
-    postsUl.prepend(postLi);
-  } else {
-    postsUl.append(postLi);
-  } */
 };
 
 export const renderPosts = (state, elements, i18) => {
@@ -283,16 +278,6 @@ export const renderPosts = (state, elements, i18) => {
     console.log('post', post);
     renderPostItem(post.post, state, i18);
   });
-  /* state.posts
-    .flat()
-    .sort((a, b) => {
-      const aDate = new Date(a.pubDate);
-      const bDate = new Date(b.pubDate);
-      return (aDate < bDate ? 1 : -1);
-    })
-    .forEach((post) => {
-      renderPostItem(post, 'old', state, i18);
-    }); */
 };
 
 const findPostByLink = (url, state) => {
