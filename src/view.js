@@ -1,171 +1,3 @@
-// import _ from 'lodash';
-
-/* const createTitle = (text) => {
-  const div = document.createElement('div');
-  div.classList.add('card', 'border-0');
-
-  const cardBody = document.createElement('div');
-  cardBody.classList.add('card-body');
-
-  const title = document.createElement('h2');
-  title.classList.add('card-title', 'h4');
-  title.textContent = text;
-
-  cardBody.append(title);
-  div.append(cardBody);
-  return div;
-};
-
-const buttonHandler = (button) => {
-  const modal = document.querySelector('#exampleModal');
-  const modalTitle = modal.querySelector('.modal-title');
-  const modalBody = modal.querySelector('.modal-body');
-  const modalButton = modal.querySelector('.modal-footer a');
-
-  const closest = button.closest('li');
-  const link = closest.querySelector('a');
-
-  link.classList.remove('fw-bold');
-  link.classList.add('fw-normal');
-
-  modalTitle.textContent = link.textContent;
-  modalBody.textContent = link.getAttribute('data-description');
-
-  modalButton.setAttribute('href', link.getAttribute('href'));
-};
-
-const findPostByLink = (url, state) => {
-  const posts = state.posts.flat().filter((post) => post.itemLink === url);
-  return posts[0];
-};
-
-export const renderModal = (state) => {
-  const href = state.ui.clickedLink;
-  const post = findPostByLink(href, state);
-  const modalTitle = document.querySelector('.modal-title');
-  const modalBody = document.querySelector('.modal-body');
-  const a = document.querySelector('.full-article');
-  a.href = href;
-  modalTitle.textContent = post.itemTitle;
-  modalBody.textContent = post.itemDescription;
-};
-
-const renderMarkupFeed = (title, description) => {
-  const li = document.createElement('li');
-  li.classList.add(
-    'list-group-item',
-    'border-0',
-    'border-end-0',
-  );
-
-  const h3 = document.createElement('h3');
-  h3.classList.add('h6', 'm-0');
-  h3.textContent = title;
-
-  const p = document.createElement('p');
-  p.classList.add(
-    'm-0',
-    'small',
-    'text-black-50',
-  );
-  p.textContent = description;
-
-  li.append(h3);
-  li.append(p);
-
-  return li;
-};
-
-const renderMarkupPost = (text, description, link, buttonText = 'Просмотр') => {
-  const li = document.createElement('li');
-  li.classList.add(
-    'list-group-item',
-    'd-flex',
-    'justify-content-between',
-    'align-items-start',
-    'border-0',
-    'border-end-0',
-  );
-
-  const themeLink = document.createElement('a');
-  themeLink.classList.add('fw-bold');
-  themeLink.setAttribute('href', link);
-  themeLink.setAttribute('target', '_blank');
-  themeLink.setAttribute('data-description', description);
-  themeLink.textContent = text;
-
-  const button = document.createElement('button');
-  button.classList.add('btn', 'btn-outline-primary');
-  button.setAttribute('type', 'button');
-  button.setAttribute('data-bs-toggle', 'modal');
-  button.setAttribute('data-bs-target', '#exampleModal');
-
-  button.addEventListener('click', (event) => buttonHandler(event.target));
-
-  button.textContent = buttonText;
-
-  li.append(themeLink, button);
-
-  return li;
-};
-
-const renderFeed = (title, description) => {
-  const feedsSection = document.querySelector('.feeds');
-  const feedsCard = document.querySelector('.feeds > .card');
-  feedsCard.after(renderMarkupFeed(title, description));
-  feedsSection.prepend(feedsCard);
-};
-
-const renderAll = (feeds, posts) => {
-  const postsSection = document.querySelector('.posts');
-  const feedsSection = document.querySelector('.feeds');
-
-  if (!document.querySelector('.posts .card')) {
-    postsSection.prepend(createTitle('Посты'));
-  }
-  if (!document.querySelector('.feeds .card')) {
-    feedsSection.prepend(createTitle('Фиды'));
-  }
-
-  feeds.forEach((feed) => {
-    const {
-      id, title, description, rssLink,
-    } = feed;
-
-    const div = document.getElementById(`${rssLink}`) ?? document.createElement('div');
-    div.setAttribute('id', `${rssLink}`);
-
-    if (!feed.rendered) {
-      renderFeed(title, description);
-      feed.rendered = true;
-    }
-
-    posts.forEach((post) => {
-      const postsCard = document.querySelector('.posts > .card');
-      if (post.id === id) {
-        const { postTitle, postDescription, postLink } = post.post;
-        if (!post.post.rendered) {
-          div.append(renderMarkupPost(postTitle, postDescription, postLink));
-          post.post.rendered = true;
-        }
-      }
-      postsCard.after(div);
-      postsSection.prepend(postsCard);
-    });
-  });
-};
-
-export const updateFeeds = (post) => {
-  const div = document.getElementById(`${post.post.rssLink}`);
-  const { postTitle, postDescription, postLink } = post.post;
-  if (!post.post.rendered) {
-    div.prepend(renderMarkupPost(postTitle, postDescription, postLink));
-    post.post.rendered = true;
-  }
-};
-
-export default renderAll; */
-
 const renderErrors = (elements, i18Instance) => {
   const {
     inputField,
@@ -178,39 +10,6 @@ const renderErrors = (elements, i18Instance) => {
   feedBackField.textContent = i18Instance;
   fieldset.removeAttribute('disabled', 'disabled');
 };
-
-/* export const formStatusHandler = (
-  state,
-  elements,
-  i18Instance,
-) => {
-  const {
-    feedBackField,
-    fieldset,
-    inputField,
-    form,
-  } = elements;
-  switch (state.formStatus) {
-    case 'processing':
-      feedBackField.classList.add('text-success');
-      feedBackField.classList.remove('text-danger');
-      feedBackField.textContent = i18Instance.t('watching');
-      break;
-    case 'processed':
-      fieldset.removeAttribute('disabled', 'disabled');
-      inputField.classList.add('is-valid');
-      inputField.classList.remove('is-invalid');
-      feedBackField.classList.add('text-success');
-      feedBackField.classList.remove('text-danger');
-      feedBackField.textContent = i18Instance.t('rssAdded');
-      // renderAll(state.feeds, state.posts);
-      // renderPosts(state, elements, i18Instance);
-      form.elements.url.value = '';
-      break;
-    default:
-      throw new Error('Unexpected formStatus value');
-  }
-}; */
 
 const renderFeedsContainer = (elements, i18n) => {
   const { feedsContainer } = elements;
@@ -272,7 +71,6 @@ const renderPostsContainer = (state, elements, i18) => {
   postsContainer.append(postCard);
 
   state.rssLinks.forEach((link) => {
-    console.log(state.rssLinks);
     const div = document.createElement('div');
     div.setAttribute('id', `${link}`);
     postsContainer.append(div);
@@ -280,12 +78,9 @@ const renderPostsContainer = (state, elements, i18) => {
 };
 
 const renderPostItem = (post, state, i18) => {
-  // console.log(post.rssLink);
   const postLi = document.createElement('li');
   const postHref = document.createElement('a');
   const postButton = document.createElement('button');
-  // const postsUl = document.getElementById(`${post.rssLink}`);
-  // const postsUl = document.querySelector('#postsUl');
   postHref.setAttribute('href', post.postLink);
   postHref.setAttribute('target', '_blank');
   postLi.classList.add(
@@ -310,26 +105,15 @@ const renderPostItem = (post, state, i18) => {
   postButton.textContent = i18.t('button.view');
 
   postLi.append(postHref, postButton);
-  // postsUl.append(postLi);
   return postLi;
 };
 
 const renderPosts = (state, elements, i18) => {
   renderPostsContainer(state, elements, i18);
-  /* state.posts.forEach((post) => {
-  // console.log(post.post.rssLink);
-    const postsUl = document.getElementById(`${post.post.rssLink}`);
-  // console.log('postsUl', postsUl);
-  const test = renderPostItem(post.post, state, i18);
-    postsUl.append(test);
-  // console.log(renderPostItem(post.post, state, i18));
-  }); */
-
   state.rssLinks.forEach((link) => {
     const postsUl = document.getElementById(`${link}`);
     state.posts.forEach((post) => {
       if (post.post.rssLink === link) {
-        console.log(`${link} - good`);
         postsUl.append(renderPostItem(post.post, state, i18));
       }
     });
@@ -359,6 +143,7 @@ const renderForm = (state, elements, i18Instance) => {
     inputField,
     form,
   } = elements;
+  feedBackField.textContent = i18Instance.t('watching');
   switch (state.status) {
     case 'processing':
       feedBackField.classList.add('text-success');
@@ -376,6 +161,12 @@ const renderForm = (state, elements, i18Instance) => {
       renderPosts(state, elements, i18Instance);
       form.elements.url.value = '';
       break;
+    case 'processingErrors': {
+      feedBackField.classList.add('text-success');
+      feedBackField.classList.remove('text-danger');
+      feedBackField.textContent = i18Instance.t('watching');
+      break;
+    }
     default:
       throw new Error('Unexpected status value');
   }
@@ -398,12 +189,3 @@ export {
   renderForm,
   renderDisable,
 };
-
-/* export const updateFeeds = (post) => {
-  const div = document.getElementById(`${post.post.rssLink}`);
-  const { postTitle, postDescription, postLink } = post.post;
-  if (!post.post.rendered) {
-    div.prepend(renderMarkupPost(postTitle, postDescription, postLink));
-    post.post.rendered = true;
-  }
-}; */
