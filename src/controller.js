@@ -38,16 +38,13 @@ const errorHandler = (state, error) => {
   }
 };
 
-const handler = (event, elements, state) => {
+const handler = (event, state) => {
   event.preventDefault();
 
   const formData = new FormData(event.target);
 
   const link = formData.get('url').trim();
 
-  // const { fieldset } = elements;
-
-  // fieldset.setAttribute('disabled', 'disabled');
   state.isDisabled = true;
 
   validateRss(state, { link })
@@ -64,14 +61,13 @@ const handler = (event, elements, state) => {
       });
 
       state.feeds.push(feed);
-      // state.rssLinks.push(feed.rssLink);
       state.rssLinks.unshift(feed.rssLink);
       state.isDisabled = false;
       state.status = 'processed';
     })
     .catch((error) => {
-      // fieldset.removeAttribute('disabled', 'disabled');
       state.isDisabled = false;
+      state.status = 'processingErrors';
       errorHandler(state, error);
     });
 };
