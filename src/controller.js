@@ -67,6 +67,7 @@ const handler = (event, elements, state) => {
       state.status = 'processed';
     })
     .catch((error) => {
+      fieldset.removeAttribute('disabled', 'disabled');
       errorHandler(state, error);
     });
 };
