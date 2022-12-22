@@ -3,9 +3,13 @@ import * as yup from 'yup';
 import i18next from 'i18next';
 
 import resources from './locales/index';
-import handler, { formStatusHandler, updateRss, handlePostClick } from './controller';
+import handler, {
+  // formStatusHandler,
+  updateRss,
+  handlePostClick,
+} from './controller';
 import {
-  errorsRender, renderModal, renderPosts, renderFeeds,
+  errorsRender, renderModal, renderPosts, renderFeeds, renderForm,
 } from './view';
 
 const app = () => {
@@ -63,7 +67,12 @@ const app = () => {
           break;
         }
         case 'formStatus':
-          formStatusHandler(
+          /* formStatusHandler(
+            state,
+            elements,
+            i18Instance,
+          ); */
+          renderForm(
             state,
             elements,
             i18Instance,
@@ -94,7 +103,7 @@ const app = () => {
       handlePostClick(e.target, watchedState);
     });
 
-    updateRss(state, elements, i18Instance);
+    updateRss(watchedState, elements, i18Instance);
   });
 };
 

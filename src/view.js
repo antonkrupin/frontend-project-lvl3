@@ -179,6 +179,39 @@ export const errorsRender = (elements, i18Instance) => {
   fieldset.removeAttribute('disabled', 'disabled');
 };
 
+/* export const formStatusHandler = (
+  state,
+  elements,
+  i18Instance,
+) => {
+  const {
+    feedBackField,
+    fieldset,
+    inputField,
+    form,
+  } = elements;
+  switch (state.formStatus) {
+    case 'processing':
+      feedBackField.classList.add('text-success');
+      feedBackField.classList.remove('text-danger');
+      feedBackField.textContent = i18Instance.t('watching');
+      break;
+    case 'processed':
+      fieldset.removeAttribute('disabled', 'disabled');
+      inputField.classList.add('is-valid');
+      inputField.classList.remove('is-invalid');
+      feedBackField.classList.add('text-success');
+      feedBackField.classList.remove('text-danger');
+      feedBackField.textContent = i18Instance.t('rssAdded');
+      // renderAll(state.feeds, state.posts);
+      // renderPosts(state, elements, i18Instance);
+      form.elements.url.value = '';
+      break;
+    default:
+      throw new Error('Unexpected formStatus value');
+  }
+}; */
+
 const renderFeedsContainer = (elements, i18n) => {
   const { feedsContainer } = elements;
   feedsContainer.textContent = '';
@@ -292,6 +325,35 @@ export const renderModal = (state) => {
   a.href = href;
   modalTitle.textContent = post.post.postTitle;
   modalBody.textContent = post.post.postDescription;
+};
+
+export const renderForm = (state, elements, i18Instance) => {
+  const {
+    feedBackField,
+    fieldset,
+    inputField,
+    form,
+  } = elements;
+  switch (state.formStatus) {
+    case 'processing':
+      feedBackField.classList.add('text-success');
+      feedBackField.classList.remove('text-danger');
+      feedBackField.textContent = i18Instance.t('watching');
+      break;
+    case 'processed':
+      fieldset.removeAttribute('disabled', 'disabled');
+      inputField.classList.add('is-valid');
+      inputField.classList.remove('is-invalid');
+      feedBackField.classList.add('text-success');
+      feedBackField.classList.remove('text-danger');
+      feedBackField.textContent = i18Instance.t('rssAdded');
+      // renderAll(state.feeds, state.posts);
+      renderPosts(state, elements, i18Instance);
+      form.elements.url.value = '';
+      break;
+    default:
+      throw new Error('Unexpected formStatus value');
+  }
 };
 
 /* export const updateFeeds = (post) => {

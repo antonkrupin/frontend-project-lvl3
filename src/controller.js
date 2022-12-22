@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import parserXML from './parser';
 // import renderAll, { updateFeeds, renderPosts } from './view';
-import { renderPosts } from './view';
+// import { renderPosts } from './view';
 
 const validateRss = (state, url) => {
   const rssValidateSchema = yup.object().shape({
@@ -21,7 +21,7 @@ const downloadRss = (rssUrl) => {
     .then((response) => response.data.contents);
 };
 
-export const formStatusHandler = (
+/* export const formStatusHandler = (
   state,
   elements,
   i18Instance,
@@ -52,7 +52,7 @@ export const formStatusHandler = (
     default:
       throw new Error('Unexpected formStatus value');
   }
-};
+}; */
 
 const errorHandler = (state, error) => {
   switch (error.name) {
@@ -100,7 +100,6 @@ const handler = (event, state) => {
       state.formStatus = 'processed';
     })
     .catch((error) => {
-      console.log('error', error);
       errorHandler(state, error);
     });
 };
@@ -135,12 +134,14 @@ export const updateRss = (state, elements, i18n) => {
 
     const difference = _.differenceBy(posts, oldPosts, 'postDate');
 
-    if (difference.length !== 0) {
-      state.posts.unshift({ id, post: difference[0] });
-      // state.posts.forEach((post) => { updateFeeds(post); });
-      // state.posts.forEach((post) => { renderPosts(post); });
-      renderPosts(state, elements, i18n);
-    }
+    if (difference.length !== 0) state.posts.unshift({ id, post: difference[0] });
+    // console.log('new posts loaded');
+    // console.log('old posts state', state.posts);
+    // state.posts.unshift({ id, post: difference[0] });
+    // console.log('updated posts state', state.posts);
+    // state.posts.forEach((post) => { updateFeeds(post); });
+    // state.posts.forEach((post) => { renderPosts(post); });
+    // renderPosts(state, elements, i18n);
   }).catch((error) => { state.errorValue = error.name; }));
   Promise.all(promises).then(() => setTimeout(() => updateRss(state, elements, i18n), 5000));
 };
