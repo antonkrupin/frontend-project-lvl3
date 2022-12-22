@@ -84,6 +84,19 @@ const app = () => {
             i18Instance.t(value),
           );
           break;
+        /* case 'ui.viewedPostLinks':
+          renderPosts(state, elements, i18Instance);
+          break;
+        case 'ui.clickedLink':
+          renderModal(state);
+          break; */
+        default:
+          break;
+      }
+    });
+
+    const watchedStateUi = onChange(state, (path) => {
+      switch (path) {
         case 'ui.viewedPostLinks':
           renderPosts(state, elements, i18Instance);
           break;
@@ -100,7 +113,7 @@ const app = () => {
     });
 
     postsContainer.addEventListener('click', (e) => {
-      handlePostClick(e.target, watchedState);
+      handlePostClick(e.target, watchedStateUi);
     });
 
     updateRss(watchedState, elements, i18Instance);
