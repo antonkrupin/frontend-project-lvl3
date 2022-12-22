@@ -253,7 +253,7 @@ const renderFeeds = (state, elements, i18n) => {
   });
 };
 
-const renderPostsContainer = (elements) => {
+const renderPostsContainer = (state, elements, i18) => {
   const { postsContainer } = elements;
   postsContainer.textContent = '';
   const postCard = document.createElement('div');
@@ -266,17 +266,25 @@ const renderPostsContainer = (elements) => {
   postCardTitle.classList.add('card-title', 'h4');
   postsUl.classList.add('list-group', 'border-0', 'rounded-0');
   postsUl.setAttribute('id', 'postsUl');
-  postCardTitle.textContent = 'Посты';
+  postCardTitle.textContent = i18.t('titles.posts');
   postCard.append(postCardBody, postsUl);
   postCardBody.append(postCardTitle);
   postsContainer.append(postCard);
+
+  state.rssLinks.forEach((link) => {
+    const div = document.createElement('div');
+    div.setAttribute('id', `${link}`);
+    postsContainer.append(div);
+  });
 };
 
 const renderPostItem = (post, state, i18) => {
+  console.log(post.rssLink);
   const postLi = document.createElement('li');
   const postHref = document.createElement('a');
   const postButton = document.createElement('button');
-  const postsUl = document.querySelector('#postsUl');
+  // const postsUl = document.getElementById(`${post.rssLink}`);
+  // const postsUl = document.querySelector('#postsUl');
   postHref.setAttribute('href', post.postLink);
   postHref.setAttribute('target', '_blank');
   postLi.classList.add(
@@ -301,13 +309,29 @@ const renderPostItem = (post, state, i18) => {
   postButton.textContent = i18.t('button.view');
 
   postLi.append(postHref, postButton);
-  postsUl.append(postLi);
+  // postsUl.append(postLi);
+  return postLi;
 };
 
 const renderPosts = (state, elements, i18) => {
-  renderPostsContainer(elements);
-  state.posts.forEach((post) => {
-    renderPostItem(post.post, state, i18);
+  renderPostsContainer(state, elements, i18);
+  /* state.posts.forEach((post) => {
+  // console.log(post.post.rssLink);
+    const postsUl = document.getElementById(`${post.post.rssLink}`);
+  // console.log('postsUl', postsUl);
+  const test = renderPostItem(post.post, state, i18);
+    postsUl.append(test);
+  // console.log(renderPostItem(post.post, state, i18));
+  }); */
+
+  state.rssLinks.forEach((link) => {
+    const postsUl = document.getElementById(`${link}`);
+    state.posts.forEach((post) => {
+      if (post.post.rssLink === link) {
+        console.log(`${link} - good`);
+        postsUl.append(renderPostItem(post.post, state, i18));
+      }
+    });
   });
 };
 
