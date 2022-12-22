@@ -139,7 +139,6 @@ const renderModal = (state) => {
 const renderForm = (state, elements, i18Instance) => {
   const {
     feedBackField,
-    fieldset,
     inputField,
     form,
   } = elements;
@@ -151,13 +150,11 @@ const renderForm = (state, elements, i18Instance) => {
       feedBackField.textContent = i18Instance.t('watching');
       break;
     case 'processed':
-      fieldset.removeAttribute('disabled', 'disabled');
       inputField.classList.add('is-valid');
       inputField.classList.remove('is-invalid');
       feedBackField.classList.add('text-success');
       feedBackField.classList.remove('text-danger');
       feedBackField.textContent = i18Instance.t('rssAdded');
-      // renderAll(state.feeds, state.posts);
       renderPosts(state, elements, i18Instance);
       form.elements.url.value = '';
       break;
@@ -172,10 +169,10 @@ const renderForm = (state, elements, i18Instance) => {
   }
 };
 
-const renderDisable = (state, elements) => {
+const disableForm = (state, elements) => {
   const { fieldset } = elements;
   if (state.isDisabled) {
-    fieldset.setAttribute('disabled', 'disabled');
+    fieldset.setAttribute('disabled', state.isDisabled);
   } else {
     fieldset.removeAttribute('disabled', 'disabled');
   }
@@ -187,5 +184,5 @@ export {
   renderPosts,
   renderModal,
   renderForm,
-  renderDisable,
+  disableForm,
 };

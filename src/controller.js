@@ -38,7 +38,7 @@ const errorHandler = (state, error) => {
   }
 };
 
-const handler = (event, state) => {
+const loadRssHandler = (event, state) => {
   event.preventDefault();
 
   const formData = new FormData(event.target);
@@ -77,7 +77,7 @@ const markAsVisited = (element, watchedState) => {
   watchedState.ui.viewedPostLinks.add(href);
 };
 
-export const handlePostClick = (element, watchedState) => {
+const postClickHandler = (element, watchedState) => {
   switch (element.tagName) {
     case 'A': {
       markAsVisited(element, watchedState);
@@ -94,7 +94,7 @@ export const handlePostClick = (element, watchedState) => {
   }
 };
 
-export const updateRss = (state, elements, i18n) => {
+const updateRss = (state, elements, i18n) => {
   const promises = state.feeds.map(({ id, rssLink }) => downloadRss(rssLink).then((response) => {
     const { posts } = parserXML(response, rssLink);
 
@@ -109,4 +109,8 @@ export const updateRss = (state, elements, i18n) => {
   Promise.all(promises).then(() => setTimeout(() => updateRss(state, elements, i18n), 5000));
 };
 
-export default handler;
+export {
+  loadRssHandler,
+  postClickHandler,
+  updateRss,
+};

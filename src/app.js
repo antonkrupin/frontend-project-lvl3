@@ -3,12 +3,20 @@ import * as yup from 'yup';
 import i18next from 'i18next';
 
 import resources from './locales/index';
-import handler, {
-  updateRss,
-  handlePostClick,
-} from './controller';
+
 import {
-  renderErrors, renderModal, renderPosts, renderFeeds, renderForm, renderDisable,
+  loadRssHandler,
+  postClickHandler,
+  updateRss,
+} from './controller';
+
+import {
+  renderErrors,
+  renderModal,
+  renderPosts,
+  renderFeeds,
+  renderForm,
+  disableForm,
 } from './view';
 
 const app = () => {
@@ -67,7 +75,7 @@ const app = () => {
           break;
         }
         case 'isDisabled': {
-          renderDisable(state, elements);
+          disableForm(state, elements);
           break;
         }
         case 'status':
@@ -76,6 +84,7 @@ const app = () => {
             elements,
             i18Instance,
           );
+          disableForm(state, elements);
           break;
         case 'errorValue':
           renderErrors(
@@ -102,11 +111,11 @@ const app = () => {
     });
 
     form.addEventListener('submit', (e) => {
-      handler(e, watchedState);
+      loadRssHandler(e, watchedState);
     });
 
     postsContainer.addEventListener('click', (e) => {
-      handlePostClick(e.target, watchedStateUi);
+      postClickHandler(e.target, watchedStateUi);
     });
 
     updateRss(watchedState, elements, i18Instance);
