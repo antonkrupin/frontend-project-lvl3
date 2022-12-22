@@ -132,9 +132,13 @@ export const updateRss = (state, elements, i18n) => {
 
     const oldPosts = state.posts.filter((post) => post.id === id).map(({ post }) => post);
 
-    const difference = _.differenceBy(posts, oldPosts, 'postDate');
+    // const difference = _.differenceBy(posts, oldPosts, 'postDate');
 
-    if (difference.length !== 0) state.posts.unshift({ id, post: difference[0] });
+    const difference = _.differenceBy(posts, oldPosts, 'postLink');
+
+    const [temp] = [...difference];
+
+    if (difference.length) state.posts.unshift({ id, post: temp });
     // console.log('new posts loaded');
     // console.log('old posts state', state.posts);
     // state.posts.unshift({ id, post: difference[0] });
