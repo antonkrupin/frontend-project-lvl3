@@ -166,7 +166,7 @@ export const updateFeeds = (post) => {
 
 export default renderAll; */
 
-export const errorsRender = (elements, i18Instance) => {
+const renderErrors = (elements, i18Instance) => {
   const {
     inputField,
     feedBackField,
@@ -246,7 +246,7 @@ const renderFeedItem = (feed) => {
   feedsUl.prepend(feedLi);
 };
 
-export const renderFeeds = (state, elements, i18n) => {
+const renderFeeds = (state, elements, i18n) => {
   renderFeedsContainer(elements, i18n);
   state.feeds.forEach((feed) => {
     renderFeedItem(feed);
@@ -304,7 +304,7 @@ const renderPostItem = (post, state, i18) => {
   postsUl.append(postLi);
 };
 
-export const renderPosts = (state, elements, i18) => {
+const renderPosts = (state, elements, i18) => {
   renderPostsContainer(elements);
   state.posts.forEach((post) => {
     renderPostItem(post.post, state, i18);
@@ -316,7 +316,7 @@ const findPostByLink = (url, state) => {
   return posts[0];
 };
 
-export const renderModal = (state) => {
+const renderModal = (state) => {
   const href = state.ui.clickedLink;
   const post = findPostByLink(href, state);
   const modalTitle = document.querySelector('.modal-title');
@@ -327,7 +327,7 @@ export const renderModal = (state) => {
   modalBody.textContent = post.post.postDescription;
 };
 
-export const renderForm = (state, elements, i18Instance) => {
+const renderForm = (state, elements, i18Instance) => {
   const {
     feedBackField,
     fieldset,
@@ -354,6 +354,14 @@ export const renderForm = (state, elements, i18Instance) => {
     default:
       throw new Error('Unexpected status value');
   }
+};
+
+export {
+  renderErrors,
+  renderFeeds,
+  renderPosts,
+  renderModal,
+  renderForm,
 };
 
 /* export const updateFeeds = (post) => {

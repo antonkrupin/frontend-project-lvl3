@@ -4,12 +4,11 @@ import i18next from 'i18next';
 
 import resources from './locales/index';
 import handler, {
-  // formStatusHandler,
   updateRss,
   handlePostClick,
 } from './controller';
 import {
-  errorsRender, renderModal, renderPosts, renderFeeds, renderForm,
+  renderErrors, renderModal, renderPosts, renderFeeds, renderForm,
 } from './view';
 
 const app = () => {
@@ -67,11 +66,6 @@ const app = () => {
           break;
         }
         case 'status':
-          /* formStatusHandler(
-            state,
-            elements,
-            i18Instance,
-          ); */
           renderForm(
             state,
             elements,
@@ -79,17 +73,11 @@ const app = () => {
           );
           break;
         case 'errorValue':
-          errorsRender(
+          renderErrors(
             elements,
             i18Instance.t(value),
           );
           break;
-        /* case 'ui.viewedPostLinks':
-          renderPosts(state, elements, i18Instance);
-          break;
-        case 'ui.clickedLink':
-          renderModal(state);
-          break; */
         default:
           break;
       }
@@ -109,7 +97,7 @@ const app = () => {
     });
 
     form.addEventListener('submit', (e) => {
-      handler(e, watchedState);
+      handler(e, elements, watchedState);
     });
 
     postsContainer.addEventListener('click', (e) => {
