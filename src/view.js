@@ -272,6 +272,7 @@ const renderPostsContainer = (state, elements, i18) => {
   postsContainer.append(postCard);
 
   state.rssLinks.forEach((link) => {
+    console.log(state.rssLinks);
     const div = document.createElement('div');
     div.setAttribute('id', `${link}`);
     postsContainer.append(div);
@@ -279,7 +280,7 @@ const renderPostsContainer = (state, elements, i18) => {
 };
 
 const renderPostItem = (post, state, i18) => {
-  console.log(post.rssLink);
+  // console.log(post.rssLink);
   const postLi = document.createElement('li');
   const postHref = document.createElement('a');
   const postButton = document.createElement('button');
@@ -380,12 +381,22 @@ const renderForm = (state, elements, i18Instance) => {
   }
 };
 
+const renderDisable = (state, elements) => {
+  const { fieldset } = elements;
+  if (state.isDisabled) {
+    fieldset.setAttribute('disabled', 'disabled');
+  } else {
+    fieldset.removeAttribute('disabled', 'disabled');
+  }
+};
+
 export {
   renderErrors,
   renderFeeds,
   renderPosts,
   renderModal,
   renderForm,
+  renderDisable,
 };
 
 /* export const updateFeeds = (post) => {

@@ -8,7 +8,7 @@ import handler, {
   handlePostClick,
 } from './controller';
 import {
-  renderErrors, renderModal, renderPosts, renderFeeds, renderForm,
+  renderErrors, renderModal, renderPosts, renderFeeds, renderForm, renderDisable,
 } from './view';
 
 const app = () => {
@@ -18,6 +18,7 @@ const app = () => {
     posts: [],
     errorValue: '',
     status: 'filling',
+    isDisabled: false,
     ui: {
       clickedLink: null,
       viewedPostLinks: new Set(),
@@ -56,6 +57,8 @@ const app = () => {
     });
 
     const watchedState = onChange(state, (path, value) => {
+      console.log('path', path);
+      console.log('value', value);
       switch (path) {
         case 'feeds': {
           renderFeeds(state, elements, i18Instance);
@@ -65,18 +68,24 @@ const app = () => {
           renderPosts(state, elements, i18Instance);
           break;
         }
+        case 'isDisabled': {
+          renderDisable(state, elements);
+          break;
+        }
         case 'status':
           renderForm(
             state,
             elements,
             i18Instance,
           );
+          // renderDisable(state, elements);
           break;
         case 'errorValue':
           renderErrors(
             elements,
             i18Instance.t(value),
           );
+          // renderDisable(state, elements);
           break;
         default:
           break;

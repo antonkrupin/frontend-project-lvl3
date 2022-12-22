@@ -45,9 +45,10 @@ const handler = (event, elements, state) => {
 
   const link = formData.get('url').trim();
 
-  const { fieldset } = elements;
+  // const { fieldset } = elements;
 
-  fieldset.setAttribute('disabled', 'disabled');
+  // fieldset.setAttribute('disabled', 'disabled');
+  state.isDisabled = true;
 
   validateRss(state, { link })
     .then(() => {
@@ -63,11 +64,14 @@ const handler = (event, elements, state) => {
       });
 
       state.feeds.push(feed);
-      state.rssLinks.push(feed.rssLink);
+      // state.rssLinks.push(feed.rssLink);
+      state.rssLinks.unshift(feed.rssLink);
+      state.isDisabled = false;
       state.status = 'processed';
     })
     .catch((error) => {
-      fieldset.removeAttribute('disabled', 'disabled');
+      // fieldset.removeAttribute('disabled', 'disabled');
+      state.isDisabled = false;
       errorHandler(state, error);
     });
 };
