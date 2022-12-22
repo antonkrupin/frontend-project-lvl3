@@ -18,7 +18,7 @@ const app = () => {
     feeds: [],
     posts: [],
     errorValue: '',
-    formStatus: 'filling',
+    status: 'filling',
     ui: {
       clickedLink: null,
       viewedPostLinks: new Set(),
@@ -66,7 +66,7 @@ const app = () => {
           renderPosts(state, elements, i18Instance);
           break;
         }
-        case 'formStatus':
+        case 'status':
           /* formStatusHandler(
             state,
             elements,

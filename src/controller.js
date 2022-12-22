@@ -84,7 +84,7 @@ const handler = (event, state) => {
 
   validateRss(state, { link })
     .then(() => {
-      state.formStatus = 'processing';
+      state.status = 'processing';
       return downloadRss(link);
     })
     .then((response) => {
@@ -97,7 +97,7 @@ const handler = (event, state) => {
 
       state.feeds.push(feed);
       state.rssLinks.push(feed.rssLink);
-      state.formStatus = 'processed';
+      state.status = 'processed';
     })
     .catch((error) => {
       errorHandler(state, error);

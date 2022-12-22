@@ -334,7 +334,7 @@ export const renderForm = (state, elements, i18Instance) => {
     inputField,
     form,
   } = elements;
-  switch (state.formStatus) {
+  switch (state.status) {
     case 'processing':
       feedBackField.classList.add('text-success');
       feedBackField.classList.remove('text-danger');
@@ -352,7 +352,7 @@ export const renderForm = (state, elements, i18Instance) => {
       form.elements.url.value = '';
       break;
     default:
-      throw new Error('Unexpected formStatus value');
+      throw new Error('Unexpected status value');
   }
 };
 
