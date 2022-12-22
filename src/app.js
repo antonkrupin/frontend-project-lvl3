@@ -57,8 +57,6 @@ const app = () => {
     });
 
     const watchedState = onChange(state, (path, value) => {
-      console.log('path', path);
-      console.log('value', value);
       switch (path) {
         case 'feeds': {
           renderFeeds(state, elements, i18Instance);
@@ -78,14 +76,12 @@ const app = () => {
             elements,
             i18Instance,
           );
-          // renderDisable(state, elements);
           break;
         case 'errorValue':
           renderErrors(
             elements,
             i18Instance.t(value),
           );
-          // renderDisable(state, elements);
           break;
         default:
           break;
@@ -106,7 +102,7 @@ const app = () => {
     });
 
     form.addEventListener('submit', (e) => {
-      handler(e, elements, watchedState);
+      handler(e, watchedState);
     });
 
     postsContainer.addEventListener('click', (e) => {
